@@ -7,6 +7,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * This Class includes the static List<Date> entries function to list all data points stored for one day.
+ * @author ChaosMelone9
+ * @since 0.0.1
+ */
 public class EntriesPerDay {
     public static List<Date> entries(Date day) throws ParseException {
         List<Date> entries = new ArrayList<>();

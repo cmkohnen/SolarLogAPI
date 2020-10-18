@@ -4,7 +4,11 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-
+/**
+ * This Class includes functions to extract data from lines found in the backup files.
+ * @author ChaosMelone9
+ * @since 0.0.1
+ */
 public class GetData  {
     /*
     Positions of values in List<String> format

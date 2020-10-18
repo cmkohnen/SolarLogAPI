@@ -5,7 +5,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
-
+/**
+ * This Class includes functions to get the content of a file.
+ * @author ChaosMelone9
+ * @since 0.0.1
+ */
 public class GetFileContent {
 
     private static String FileContent(Path path) throws IOException {
