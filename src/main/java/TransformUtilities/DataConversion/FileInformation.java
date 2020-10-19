@@ -5,7 +5,11 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-
+/**
+ * This Class includes functions to get information about the device of a file.
+ * @author ChaosMelone9
+ * @since 0.0.1
+ */
 public class FileInformation {
 
     static final String DATE_FORMAT = "dd.MM.yyhh:mm:ss";

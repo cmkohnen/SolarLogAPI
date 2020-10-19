@@ -6,7 +6,11 @@ import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 import java.io.File;
 import java.io.IOException;
-
+/**
+ * This Class includes presets for a JFileChooser to filter .dat files.
+ * @author ChaosMelone9
+ * @since 0.0.2
+ */
 public class JFileChooserPreset {
 
     public static JFileChooser importer(File path){
