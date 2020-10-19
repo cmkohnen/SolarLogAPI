@@ -1,6 +1,7 @@
 # SolarLogAPI
-![Java CI with Maven](https://github.com/ChaosMelone9/SolarLogAPI/workflows/Java%20CI%20with%20Maven/badge.svg)
+![Maven](https://github.com/ChaosMelone9/SolarLogAPI/workflows/Java%20CI%20with%20Maven/badge.svg)
 ![CodeQL](https://github.com/ChaosMelone9/SolarLogAPI/workflows/CodeQL/badge.svg)
+![Builds](https://badgen.net/github/commits/micromatch/micromatch)
 
 Hello everyone and thank you for checking out this little project. This API is for reading data and converting it from the weekly backup files sent by your Solarlog.
 
