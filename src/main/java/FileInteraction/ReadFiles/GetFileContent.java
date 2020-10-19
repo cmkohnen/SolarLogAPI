@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class GetFileContent {
 
-    private static String FileContent(Path path) throws IOException {
+    public static String FileContent(Path path) throws IOException {
         return new String(Files.readAllBytes(path));
     }
 

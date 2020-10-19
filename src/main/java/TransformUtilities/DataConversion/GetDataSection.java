@@ -13,6 +13,17 @@ public class GetDataSection {
     static int StartMinuteSection = 55;
     static int EndMinuteSection = 9271;
 
+    static int InfoRowPosition = 0;
+    static int FileVersionPosition = 1;
+
+    public static String InfoRow(List<String> data) {
+        return data.get(InfoRowPosition);
+    }
+
+    public static String FileVersion(List<String> data) {
+        return data.get(FileVersionPosition);
+    }
+
 
     public static List<String> MinuteData(List<String> data) {
         List<String> mindata = new ArrayList<>(Collections.singletonList(""));
