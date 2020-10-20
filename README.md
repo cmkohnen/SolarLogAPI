@@ -10,7 +10,9 @@ The goal is to keep a modular way to easily read and manipulate the data to be a
 
 If you want to improve some functions or contribute feel free to do so, also feel free to use this project in any way that could help you personally.
 
+Also check out the Wiki for information how this system works and the steaps led to it.
 
+In there i've documented the System which I intend to store data using a proprietary format.
 
 
 Greetings, Chaosmelone9
