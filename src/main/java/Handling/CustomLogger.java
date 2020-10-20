@@ -1,6 +1,5 @@
 package Handling;
 
-import java.util.Objects;
 /**
  * This Class includes functions to log objects to some form of output.
  * @author ChaosMelone9

@@ -4,7 +4,7 @@ import FileInteraction.GetFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
+
 /**
  * This Class includes functions to validate a file.
  * @author ChaosMelone9
@@ -18,7 +18,7 @@ public class Validate {
         boolean valid = false;
         if(file.getName().contains(".dat") & file.canRead()) {
             if(GetFileContent.FileContent(GetFile.Path(file)).startsWith("#")){
-                if(GetFileContent.FileContentAsList(GetFile.Path(file)).get(1).startsWith("8;4")){
+                if(GetFileContent.FileContentAsList(GetFile.Path(file)).get(1).startsWith(identifier)){
                     valid = true;
                 }
             }

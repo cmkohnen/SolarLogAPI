@@ -4,12 +4,8 @@ import FileInteraction.ReadFiles.Validate;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
-import javax.swing.filechooser.FileSystemView;
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
 
 /**
  * This Class includes presets for a JFileChooser to filter .dat files.
@@ -62,7 +58,7 @@ public class JFileChooserPreset {
     }
 
     public static JFileChooser ReadfromFile(File path) {
-        JFileChooser j = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+        JFileChooser j = new JFileChooser(path);
 
         // invoke the showsSaveDialog function to show the save dialog
         j.setDialogTitle("Import");
