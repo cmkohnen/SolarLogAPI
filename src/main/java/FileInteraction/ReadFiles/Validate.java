@@ -16,7 +16,7 @@ public class Validate {
 
     public static boolean IsValidDataFile(File file) throws IOException {
         boolean valid = false;
-        if(file.getName().contains(".dat")) {
+        if(file.getName().contains(".dat") & file.canRead()) {
             if(GetFileContent.FileContent(GetFile.Path(file)).startsWith("#")){
                 if(GetFileContent.FileContentAsList(GetFile.Path(file)).get(1).startsWith("8;4")){
                     valid = true;

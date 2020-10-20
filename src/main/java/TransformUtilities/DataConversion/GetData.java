@@ -21,10 +21,12 @@ public class GetData  {
      */
      static final String DATEFORMAT = "dd.MM.yy HH:mm:ss";
 
-    public static Map<Date, List<Integer>> MinuteDataMap(List<String> MinuteData)  {
+    public static Map<Date, List<Integer>> MinuteDataMap(List<String> MinuteData) throws ParseException {
         Map<Date, List<Integer>> Data = new HashMap<>();
 
-            MinuteData.forEach(item->{
+            //MinuteData.forEach(item->{
+        for (String item : MinuteData) {
+
                 String[] str = item.split(";");
                 List<String> values = Arrays.asList(str);
 
@@ -39,12 +41,8 @@ public class GetData  {
 
                 //String timestamp = DateConverter.Timestamp(values.get(2));
                 DateFormat formatter = new SimpleDateFormat(DATEFORMAT);
-                Date d = null;
-                try {
-                    d = formatter.parse(values.get(2));
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
+                Date d = formatter.parse(values.get(2));
+
 
                 //getting values
                 verbrauchw = Integer.parseInt(values.get(6));
@@ -64,7 +62,7 @@ public class GetData  {
 
                 //Writing List to Map
                 Data.put(d, valueseach);
-            });
+            }//);
         return Data;
     }
 }

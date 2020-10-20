@@ -1,6 +1,10 @@
 package TransformUtilities.DataConversion;
 
+import FileInteraction.GetFile;
+import FileInteraction.ReadFiles.GetFileContent;
+
 import java.io.File;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -14,10 +18,14 @@ public class FileInformation {
 
     static final String DATE_FORMAT = "dd.MM.yyhh:mm:ss";
 
-    public static Map<String,Object> information(File file){
+    public static Map<String,Object> information(File file) throws IOException, ParseException {
         Map<String,Object> information = new HashMap<>();
 
-        //information.put("");
+        String inforow = GetDataSection.InfoRow(GetFileContent.FileContentAsList(GetFile.Path(file)));
+
+        information.put("model", model(inforow));
+        information.put("date", date(inforow));
+        information.put("build",build(inforow));
 
 
         return information;
