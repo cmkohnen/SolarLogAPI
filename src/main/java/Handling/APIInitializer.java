@@ -1,5 +1,7 @@
 package Handling;
 
+import java.util.Arrays;
+
 /**
  * This Class is called when the jar package is executed.
  * @author ChaosMelone9
@@ -7,6 +9,7 @@ package Handling;
  */
 public class APIInitializer {
     public static void main(String[] args) {
+        Logger.log("API Initiated via Runtime with args " + Arrays.toString(args));
 
     }
 
