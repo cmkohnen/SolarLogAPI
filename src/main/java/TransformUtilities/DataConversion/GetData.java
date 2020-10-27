@@ -1,5 +1,7 @@
 package TransformUtilities.DataConversion;
 
+import Handling.Logger;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -24,7 +26,6 @@ public class GetData  {
     public static Map<Date, List<Integer>> MinuteDataMap(List<String> MinuteData) throws ParseException {
         Map<Date, List<Integer>> Data = new HashMap<>();
 
-            //MinuteData.forEach(item->{
         for (String item : MinuteData) {
 
                 String[] str = item.split(";");
@@ -62,7 +63,8 @@ public class GetData  {
 
                 //Writing List to Map
                 Data.put(d, valueseach);
-            }//);
+            }
+        Logger.log("Converting done!");
         return Data;
     }
 }

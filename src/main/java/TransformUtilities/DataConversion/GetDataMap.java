@@ -6,15 +6,20 @@ import FileInteraction.ReadFiles.GetFileContent;
 import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class GetDataMap {
     public static Map<Date, List<Integer>> DataFromFiles(List<File> paths) throws IOException, ParseException {
-        List<List<String>> lists = new ArrayList<>();
-        for (File file : paths) {
-            lists.add(GetDataSection.MinuteData(GetFileContent.FileContentAsList(GetFile.Path(file))));
+        Map<Date, List<Integer>> data = new HashMap<>();
+        int i = 0;
+        for (File path : paths) {
+            i++;
+            System.out.println("Getting from File " + path.toString() + " (" + i + " of " + paths.size() + ")");
+            GetData.MinuteDataMap(GetDataSection.MinuteData(GetFileContent.FileContentAsList(GetFile.Path(path)))).forEach(data::putIfAbsent);
         }
-        List<String> minutedata = MergeData.mergedMinuteDataSection(lists);
-        return GetData.MinuteDataMap(minutedata);
+        return data;
     }
 }

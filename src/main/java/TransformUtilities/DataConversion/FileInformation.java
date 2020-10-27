@@ -44,6 +44,10 @@ public class FileInformation {
         return list1(InfoRow).get(10) + " " + list1(InfoRow).get(11) + " " + list1(InfoRow).get(12);
     }
 
+    public static String buildMajorandMinor(String InfoRow){
+        return list1(InfoRow).get(10).substring(1,6);
+    }
+
     private static List<String> list1(String InfoRow) {
         return Arrays.asList(InfoRow.split(" "));
     }

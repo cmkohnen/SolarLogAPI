@@ -1,4 +1,4 @@
-package Graph;
+package Interface.Graph;
 
 import javax.swing.*;
 import java.awt.*;

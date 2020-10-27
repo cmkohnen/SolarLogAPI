@@ -77,6 +77,25 @@ public class JFileChooserPreset {
 
     }
 
+    public static JFileChooser importtar(File path){
+        JFileChooser j = new JFileChooser(path);
+        j.setDialogTitle("Import");
+        j.setAcceptAllFileFilterUsed(false);
+        j.setFileFilter(new FileFilter() {
+            @Override
+            public boolean accept(File f) {
+                if(f.isDirectory()) {return true;}
+                return f.getName().contains(".tar.gz");
+            }
+
+            @Override
+            public String getDescription() {
+                return "Tar archives (*.tar.gz)";
+            }
+        });
+        return j;
+    }
+
     public static JFileChooser importdirectory(File path) {
         JFileChooser j = new JFileChooser(path);
         j.setDialogTitle("Import");

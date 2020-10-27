@@ -17,16 +17,6 @@ public class GetDirectory {
         return Arrays.asList(Objects.requireNonNull(directory.listFiles()));
     }
 
-    public static List<File> validfiles(List<File> files) throws IOException {
-        List<File> validfiles = new ArrayList<>();
-        for (File file : files) {
-            if(Validate.IsValidDataFile(file)){
-                validfiles.add(file);
-            }
-        }
-        return validfiles;
-    }
-
     public static File ChosenDirectory(){
         File path = FileSystemView.getFileSystemView().getHomeDirectory();
         JFileChooser j = JFileChooserPreset.importdirectory(path);

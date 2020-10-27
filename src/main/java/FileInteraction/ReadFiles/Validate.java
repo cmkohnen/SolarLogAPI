@@ -1,9 +1,14 @@
 package FileInteraction.ReadFiles;
 
 import FileInteraction.GetFile;
+import Handling.Logger;
+import TransformUtilities.DataConversion.FileInformation;
+import TransformUtilities.DataConversion.GetDataSection;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This Class includes functions to validate a file.
@@ -19,7 +24,9 @@ public class Validate {
         if(file.getName().contains(".dat") & file.canRead()) {
             if(GetFileContent.FileContent(GetFile.Path(file)).startsWith("#")){
                 if(GetFileContent.FileContentAsList(GetFile.Path(file)).get(1).startsWith(identifier)){
-                    valid = true;
+                    if(FileInformation.buildMajorandMinor(GetDataSection.InfoRow(GetFileContent.FileContentAsList(GetFile.Path(file)))).equals("4.2.7")){
+                        valid = true;
+                    }
                 }
             }
         }
@@ -27,5 +34,20 @@ public class Validate {
 
         return valid;
 
+    }
+
+    public static List<File> validfiles(List<File> files) throws IOException {
+        List<File> ValidFiles = new ArrayList<>();
+        int i = 0;
+        int i2 = 0;
+        for (File file : files) {
+            i++;
+            Logger.log("Validating file " + file + " (" + i + " of " + files.size() + " done, found: " + i2 + ")");
+            if(IsValidDataFile(file)) {
+                ValidFiles.add(file);
+                i2++;
+            }
+        }
+        return ValidFiles;
     }
 }
