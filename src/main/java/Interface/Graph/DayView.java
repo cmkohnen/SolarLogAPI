@@ -1,11 +1,17 @@
 package Interface.Graph;
 
+import TransformUtilities.DataConversion.EntriesPerDay;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 import java.util.List;
 
 public class DayView extends JPanel {
+
+        private final List<List<Double>> data;
 
         private Color GridColor = Color.DARK_GRAY;
         private Color BackgroundColor = Color.WHITE;
@@ -19,9 +25,7 @@ public class DayView extends JPanel {
 
         private int padding = 25;
         private int labelPadding = 25;
-        private final int sidespacing = 0;
-        private final int pointsperday = 287;
-        private final int topspacing = 0;
+        private int valuepadding = 10;
 
         private boolean Row1Visible = true;
         private boolean Row2Visible = true;
@@ -29,8 +33,12 @@ public class DayView extends JPanel {
         private boolean Row4Visible = true;
         private boolean Row5Visible = true;
 
+        private boolean mousegui = true;
+
+        private int mouseX;
+        private int mouseY;
+
         private static final Stroke GRAPH_STROKE = new BasicStroke(2f);
-        private final List<List<Double>> data;
 
         public DayView(List<List<Double>> data) {
             this.data = data;
@@ -41,24 +49,26 @@ public class DayView extends JPanel {
             super.paintComponent(g);
             Graphics2D g2 = (Graphics2D) g;
             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-            double xScale = ((double) getWidth() - sidespacing - (2 * padding) - labelPadding - labelPadding) / (pointsperday - 1);
+            double xScale = ((double) getWidth() - (2 * padding) - labelPadding - labelPadding) / (data.size() - 1);
 
-             double yaScale = ((double) getHeight()- topspacing - 2 * padding - labelPadding) / (getMaxaScore() - getMinScore());
-             double ybScale = ((double) getHeight()- topspacing - 2 * padding - labelPadding) / (getMaxbScore() - getMinScore());
+            Stroke stroke = g2.getStroke();
+
+             double yaScale = ((double) getHeight() - 2 * padding - labelPadding) / (getMaxaScore() - getMinScore());
+             double ybScale = ((double) getHeight() - 2 * padding - labelPadding) / (getMaxbScore() - getMinScore());
 
             List<Point> Row1 = new ArrayList<>();
             List<Point> Row2 = new ArrayList<>();
             List<Point> Row3 = new ArrayList<>();
             List<Point> Row4 = new ArrayList<>();
             List<Point> Row5 = new ArrayList<>();
-            for (int i = 0; i < pointsperday; i++) {
-                int x = (int) (i * xScale + padding + labelPadding + sidespacing);
+            for (int i = 0; i < data.size(); i++) {
+                int x = (int) (i * xScale + padding + labelPadding);
 
-                int Row1y = (int) ((getMaxaScore() - data.get(i).get(0)) * yaScale + padding + topspacing);
-                int Row2y = (int) ((getMaxbScore() - data.get(i).get(1)) * ybScale + padding + topspacing);
-                int Row3y = (int) ((getMaxaScore() - data.get(i).get(2)) * yaScale + padding + topspacing);
-                int Row4y = (int) ((getMaxbScore() - data.get(i).get(3)) * ybScale + padding + topspacing);
-                int Row5y = (int) ((getMaxaScore() - data.get(i).get(4)) * yaScale + padding + topspacing);
+                int Row1y = (int) ((getMaxaScore() - data.get(i).get(0)) * yaScale + padding);
+                int Row2y = (int) ((getMaxbScore() - data.get(i).get(1)) * ybScale + padding);
+                int Row3y = (int) ((getMaxaScore() - data.get(i).get(2)) * yaScale + padding);
+                int Row4y = (int) ((getMaxbScore() - data.get(i).get(3)) * ybScale + padding);
+                int Row5y = (int) ((getMaxaScore() - data.get(i).get(4)) * yaScale + padding);
                 Row1.add(new Point(x, Row1y));
                 Row2.add(new Point(x, Row2y));
                 Row3.add(new Point(x, Row3y));
@@ -78,14 +88,14 @@ public class DayView extends JPanel {
             int pointWidth = 4;
             int numberYDivisions = 10;
             for (int i = 0; i < numberYDivisions + 1; i++) {
-                int x0 = padding + labelPadding + sidespacing;
-                int x1 = pointWidth + padding + labelPadding + sidespacing;
-                int y0 = getHeight() - ((i * (getHeight() - padding * 2 - labelPadding - topspacing)) / numberYDivisions + padding + labelPadding);
+                int x0 = padding + labelPadding;
+                int x1 = pointWidth + padding + labelPadding;
+                int y0 = getHeight() - ((i * (getHeight() - padding * 2 - labelPadding)) / numberYDivisions + padding + labelPadding);
                 g2.setColor(GridColor);
-                g2.drawLine(padding + labelPadding + 1 + pointWidth + sidespacing, y0, getWidth() - padding - labelPadding, y0);
+                g2.drawLine(padding + labelPadding + 1 + pointWidth, y0, getWidth() - padding - labelPadding, y0);
                 g2.setColor(LabelColor);
-                String y1Label = ((int) ((getMinScore() + (getMaxaScore() - getMinScore()) * ((i * 1.0) / numberYDivisions)) * 100)) / 100.0 + "";
-                String y2Label = ((int) ((getMinScore() + (getMaxbScore() - getMinScore()) * ((i * 1.0) / numberYDivisions)) * 100)) / 100.0 + "";
+                String y1Label = ((int) ((getMinScore() + (getMaxaScore() - getMinScore()) * ((i * 1.0) / numberYDivisions)) * 100)) / 100 + "";
+                String y2Label = ((int) ((getMinScore() + (getMaxbScore() - getMinScore()) * ((i * 1.0) / numberYDivisions)) * 100)) / 100 + "";
                 FontMetrics metrics = g2.getFontMetrics();
                 int label1Width = metrics.stringWidth(y1Label);
                 g2.drawString(y1Label, x0 - label1Width - 5, y0 + (metrics.getHeight() / 2) - 3);
@@ -94,17 +104,22 @@ public class DayView extends JPanel {
             }
 
             // and for x axis
-            for (int i = 0; i < pointsperday; i++) {
-                //int x0 = i * (getWidth() - padding * 2 - labelPadding) / (scores.size() - 1) + padding + labelPadding;
-                int x0 = i * (getWidth() - sidespacing - padding * 2 - labelPadding - labelPadding) / 24 + sidespacing + padding + labelPadding;
+            for (int i = 0; i < 25; i++) {
+                int x0 = i * (getWidth() - padding * 2 - labelPadding * 2) / 24 + padding + labelPadding;
                 int y0 = getHeight() - padding - labelPadding;
                 int y1 = y0 - pointWidth;
-                // if ((i % ((int) ((scores.size() / 20.0)) + 1)) == 0) {
-                if ((i % ((pointsperday / 144) + 1)) == 0) {
+                int i2 = 96;
+                if(getWidth() > 740) {
+                    i2 = i2 * 2;
+                }
+                if(getWidth() > 1560) {
+                    i2 = i2 * 3;
+                }
+                if ((i % ((data.size() / i2) + 1)) == 0) {
                     g2.setColor(GridColor);
-                    g2.drawLine(x0, getHeight() - padding - labelPadding - 1 - pointWidth , x0, padding + topspacing);
+                    g2.drawLine(x0, getHeight() - padding - labelPadding - 1 - pointWidth , x0, padding);
                     g2.setColor(LabelColor);
-                    String xLabel = i + "";
+                    String xLabel = i + ":00";
                     FontMetrics metrics = g2.getFontMetrics();
                     int labelWidth = metrics.stringWidth(xLabel);
                     g2.drawString(xLabel, x0 - labelWidth / 2, y0 + metrics.getHeight() + 3);
@@ -114,9 +129,9 @@ public class DayView extends JPanel {
 
             // create x and y*2 axes
             g2.setColor(AxisColor);
-            g2.drawLine(padding + labelPadding + sidespacing, getHeight() - padding - labelPadding, padding + labelPadding + sidespacing, padding + topspacing);
-            g2.drawLine(padding + labelPadding + sidespacing, getHeight() - padding - labelPadding, getWidth() - padding - labelPadding , getHeight() - padding - labelPadding);
-            g2.drawLine(getWidth() - padding - labelPadding, getHeight() - padding - labelPadding, getWidth() - padding - labelPadding ,   padding + topspacing);
+            g2.drawLine(padding + labelPadding, getHeight() - padding - labelPadding, padding + labelPadding, padding);
+            g2.drawLine(padding + labelPadding, getHeight() - padding - labelPadding, getWidth() - padding - labelPadding , getHeight() - padding - labelPadding);
+            g2.drawLine(getWidth() - padding - labelPadding, getHeight() - padding - labelPadding, getWidth() - padding - labelPadding ,   padding);
 
             g2.setStroke(GRAPH_STROKE);
             if(Row1Visible) {
@@ -170,6 +185,39 @@ public class DayView extends JPanel {
                 }
             }
 
+            if(mouseX >= labelPadding + padding & mouseX <= getWidth() - labelPadding - padding & mouseY >= padding & mouseY <= getHeight() - padding - labelPadding & mousegui){
+                g2.setStroke(stroke);
+                g2.setColor(BackgroundColor);
+                g2.fillRect(padding + labelPadding, padding, 200, ((valuepadding + 12) * visibleRows()) + 20);
+                g2.setColor(GridColor);
+                g2.drawRect(padding + labelPadding, padding, 200, ((valuepadding + 12) * visibleRows()) + 20);
+                double ExactMouseXValue = (mouseX - padding -labelPadding) / xScale;
+
+                g2.setColor(LabelColor);
+                g2.drawString("Values at " + EntriesPerDay.timestamps().get((int)Math.floor(ExactMouseXValue)), padding + labelPadding + valuepadding, padding + valuepadding * 2);
+                g2.drawString("verbrauchw: " + Math.round(data.get((int)ExactMouseXValue).get(0)), padding + labelPadding + valuepadding, padding + (valuepadding * 2) * 2);
+                g2.drawString("verbrauchkwh: " + Math.round(data.get((int)ExactMouseXValue).get(1)), padding + labelPadding + valuepadding, padding + (valuepadding * 2) * 3);
+                g2.drawString("leistungw: " + Math.round(data.get((int)ExactMouseXValue).get(2)), padding + labelPadding + valuepadding, padding + (valuepadding * 2) * 4);
+                g2.drawString("ertragkwh: " + Math.round(data.get((int)ExactMouseXValue).get(3)), padding + labelPadding + valuepadding, padding + (valuepadding * 2) * 5);
+                g2.drawString("energieverbrauchw: " + Math.round(data.get((int)ExactMouseXValue).get(4)), padding + labelPadding + valuepadding, padding + (valuepadding * 2) * 6);
+            }
+
+            if(mousegui) {
+                addMouseMotionListener(new MouseMotionListener() {
+                    @Override
+                    public void mouseDragged(MouseEvent mouseEvent) {
+
+                    }
+
+                    @Override
+                    public void mouseMoved(MouseEvent mouseEvent) {
+                        mouseX = mouseEvent.getX();
+                        mouseY = mouseEvent.getY();
+
+                        repaint();
+                    }
+                });
+            }
 
         }
 
@@ -190,6 +238,7 @@ public class DayView extends JPanel {
                 maxScore = Math.max(maxScore, score.get(2));
                 maxScore = Math.max(maxScore, score.get(4));
             }
+            maxScore = Math.ceil(maxScore / 1000) * 1000;
             return maxScore;
         }
 
@@ -199,8 +248,20 @@ public class DayView extends JPanel {
                 maxScore = Math.max(maxScore, score.get(1));
                 maxScore = Math.max(maxScore, score.get(3));
             }
+            maxScore = Math.ceil(maxScore / 1000) * 1000;
             return maxScore;
         }
+
+        public int visibleRows() {
+            int i = 0;
+            if(Row1Visible) {i++;}
+            if(Row2Visible) {i++;}
+            if(Row3Visible) {i++;}
+            if(Row4Visible) {i++;}
+            if(Row5Visible) {i++;}
+            return i;
+        }
+
 
         public void setGridColor(Color color){
             GridColor = color;
@@ -246,6 +307,8 @@ public class DayView extends JPanel {
             labelPadding = i;
         }
 
+        public void setValuePadding(int i) {valuepadding = i; }
+
         public void setRow1Visible(boolean rowVisible) {
             Row1Visible = rowVisible;
         }
@@ -264,6 +327,10 @@ public class DayView extends JPanel {
 
         public void setRow5Visible(boolean rowVisible) {
             Row5Visible = rowVisible;
+        }
+
+        public void setMouseGUIVisible(boolean mouseGUIVisible) {
+            mousegui = mouseGUIVisible;
         }
 
 }
