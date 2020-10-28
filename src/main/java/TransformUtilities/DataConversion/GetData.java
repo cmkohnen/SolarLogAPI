@@ -1,7 +1,12 @@
 package TransformUtilities.DataConversion;
 
+import FileInteraction.GetFile;
+import FileInteraction.ReadFiles.GetFileContent;
+import FileInteraction.Tools.FileVersion;
 import Handling.Logger;
 
+import java.io.File;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -23,48 +28,70 @@ public class GetData  {
      */
      static final String DATEFORMAT = "dd.MM.yy HH:mm:ss";
 
-    public static Map<Date, List<Integer>> MinuteDataMap(List<String> MinuteData) throws ParseException {
+    public static Map<Date, List<Integer>> MinuteDataMap(File file) throws ParseException, IOException {
+        String fileVersion = FileVersion.getFileVersion(file);
+        List<Integer> positions = matrix().get(fileVersion);
+
+        List<String> MinuteData = GetDataSection.MinuteData(GetFileContent.FileContentAsList(GetFile.Path(file)));
         Map<Date, List<Integer>> Data = new HashMap<>();
 
         for (String item : MinuteData) {
 
-                String[] str = item.split(";");
-                List<String> values = Arrays.asList(str);
+            String[] str = item.split(";");
+            List<String> values = Arrays.asList(str);
 
-                //intitialize variables
-                int verbrauchw;
-                int verbrauchkwh;
-                int leistungw;
-                int ertragkwh;
-                int energieverbrauchw;
+            //intitialize variables
+            int verbrauchw;
+            int verbrauchkwh;
+            int leistungw;
+            int ertragkwh;
+            int energieverbrauchw;
 
-                List<Integer> valueseach = new ArrayList<>();
+            List<Integer> valueseach = new ArrayList<>();
 
-                //String timestamp = DateConverter.Timestamp(values.get(2));
-                DateFormat formatter = new SimpleDateFormat(DATEFORMAT);
-                Date d = formatter.parse(values.get(2));
+            //String timestamp = DateConverter.Timestamp(values.get(2));
+            DateFormat formatter = new SimpleDateFormat("dd.MM.yy HH:mm:ss");
+            Date d = formatter.parse(values.get(2));
 
-
-                //getting values
-                verbrauchw = Integer.parseInt(values.get(6));
-                verbrauchkwh = Integer.parseInt(values.get(10));
-                leistungw = Integer.parseInt(values.get(17));
-                ertragkwh = Integer.parseInt(values.get(23));
-                energieverbrauchw = Integer.parseInt(values.get(44));
-
-
-                //writing values to List
-                valueseach.add(verbrauchw);
-                valueseach.add(verbrauchkwh);
-                valueseach.add(leistungw);
-                valueseach.add(ertragkwh);
-                valueseach.add(energieverbrauchw);
+            //getting values
+            verbrauchw = Integer.parseInt(values.get(positions.get(0)));
+            verbrauchkwh = Integer.parseInt(values.get(positions.get(1)));
+            leistungw = Integer.parseInt(values.get(positions.get(2)));
+            ertragkwh = Integer.parseInt(values.get(positions.get(3)));
+            energieverbrauchw = Integer.parseInt(values.get(positions.get(4)));
 
 
-                //Writing List to Map
-                Data.put(d, valueseach);
-            }
+            //writing values to List
+            valueseach.add(verbrauchw);
+            valueseach.add(verbrauchkwh);
+            valueseach.add(leistungw);
+            valueseach.add(ertragkwh);
+            valueseach.add(energieverbrauchw);
+
+
+            //Writing List to Map
+            Data.put(d, valueseach);
+        }
         Logger.log("Converting done!");
         return Data;
+    }
+
+    private static Map<String, List<Integer>> matrix() {
+        Map<String, List<Integer>> matrix = new HashMap<>();
+        List<Integer> version300 = new ArrayList<>();
+        version300.add(6);
+        version300.add(8);
+        version300.add(15);
+        version300.add(21);
+        version300.add(36);
+        matrix.put("3.0.0",version300);
+        List<Integer> version427 = new ArrayList<>();
+        version427.add(6);
+        version427.add(10);
+        version427.add(17);
+        version427.add(23);
+        version427.add(44);
+        matrix.put("4.2.7",version427);
+        return matrix;
     }
 }

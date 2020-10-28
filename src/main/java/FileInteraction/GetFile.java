@@ -2,11 +2,11 @@ package FileInteraction;
 
 import FileInteraction.ReadFiles.GetDirectory;
 import FileInteraction.ReadFiles.Validate;
+import FileInteraction.Tools.JFileChooserPreset;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileSystemView;
 import java.io.File;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;

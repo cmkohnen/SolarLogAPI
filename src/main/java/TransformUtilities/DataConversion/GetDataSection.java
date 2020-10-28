@@ -26,7 +26,17 @@ public class GetDataSection {
 
 
     public static List<String> MinuteData(List<String> data) {
-        List<String> mindata = new ArrayList<>(Collections.singletonList(""));
+
+        for (String s : data) {
+            if(s.startsWith("#MIN")) {
+                StartMinuteSection = data.indexOf(s) + 2;
+            }
+            if(s.startsWith("#Day")) {
+                EndMinuteSection = data.indexOf(s) - 1;
+            }
+        }
+
+        List<String> mindata = new ArrayList<>();
         for(int i = StartMinuteSection; i < EndMinuteSection; i++) {
             mindata.add(data.get(i));
         }

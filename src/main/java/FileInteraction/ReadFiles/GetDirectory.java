@@ -1,6 +1,6 @@
 package FileInteraction.ReadFiles;
 
-import FileInteraction.JFileChooserPreset;
+import FileInteraction.Tools.JFileChooserPreset;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileSystemView;

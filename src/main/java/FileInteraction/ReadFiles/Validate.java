@@ -1,9 +1,8 @@
 package FileInteraction.ReadFiles;
 
 import FileInteraction.GetFile;
+import FileInteraction.Tools.FileVersion;
 import Handling.Logger;
-import TransformUtilities.DataConversion.FileInformation;
-import TransformUtilities.DataConversion.GetDataSection;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,17 +15,12 @@ import java.util.List;
  * @since 0.0.1
  */
 public class Validate {
-    static String identifier = "8;4";
-
-
     public static boolean IsValidDataFile(File file) throws IOException {
         boolean valid = false;
         if(file.getName().contains(".dat") & file.canRead()) {
             if(GetFileContent.FileContent(GetFile.Path(file)).startsWith("#")){
-                if(GetFileContent.FileContentAsList(GetFile.Path(file)).get(1).startsWith(identifier)){
-                    if(FileInformation.buildMajorandMinor(GetDataSection.InfoRow(GetFileContent.FileContentAsList(GetFile.Path(file)))).equals("4.2.7")){
+                if(FileVersion.isSupported(file)){
                         valid = true;
-                    }
                 }
             }
         }

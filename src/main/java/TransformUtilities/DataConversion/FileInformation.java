@@ -44,7 +44,7 @@ public class FileInformation {
         return list1(InfoRow).get(10) + " " + list1(InfoRow).get(11) + " " + list1(InfoRow).get(12);
     }
 
-    public static String buildMajorandMinor(String InfoRow){
+    public static String buildVersion(String InfoRow){
         return list1(InfoRow).get(10).substring(1,6);
     }
 
