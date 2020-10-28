@@ -36,12 +36,13 @@ public class Validate {
         int i2 = 0;
         for (File file : files) {
             i++;
-            Logger.log("Validating file " + file + " (" + i + " of " + files.size() + " done, found: " + i2 + ")");
+            Logger.log("Validating file " + file + " (" + (i - 1) + " of " + files.size() + " done, found: " + i2 + ")");
             if(IsValidDataFile(file)) {
                 ValidFiles.add(file);
                 i2++;
             }
         }
+        Logger.log("Done. Checked " + i + ", found " + i2);
         return ValidFiles;
     }
 }

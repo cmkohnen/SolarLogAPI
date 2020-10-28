@@ -30,7 +30,7 @@ public class GetData  {
 
     public static Map<Date, List<Integer>> MinuteDataMap(File file) throws ParseException, IOException {
         String fileVersion = FileVersion.getFileVersion(file);
-        List<Integer> positions = matrix().get(fileVersion);
+        List<Integer> positions = FileVersion.matrix().get(fileVersion);
 
         List<String> MinuteData = GetDataSection.MinuteData(GetFileContent.FileContentAsList(GetFile.Path(file)));
         Map<Date, List<Integer>> Data = new HashMap<>();
@@ -72,26 +72,7 @@ public class GetData  {
             //Writing List to Map
             Data.put(d, valueseach);
         }
-        Logger.log("Converting done!");
         return Data;
     }
 
-    private static Map<String, List<Integer>> matrix() {
-        Map<String, List<Integer>> matrix = new HashMap<>();
-        List<Integer> version300 = new ArrayList<>();
-        version300.add(6);
-        version300.add(8);
-        version300.add(15);
-        version300.add(21);
-        version300.add(36);
-        matrix.put("3.0.0",version300);
-        List<Integer> version427 = new ArrayList<>();
-        version427.add(6);
-        version427.add(10);
-        version427.add(17);
-        version427.add(23);
-        version427.add(44);
-        matrix.put("4.2.7",version427);
-        return matrix;
-    }
 }

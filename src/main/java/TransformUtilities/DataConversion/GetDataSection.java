@@ -10,8 +10,8 @@ import java.util.List;
  */
 public class GetDataSection {
 
-    static int StartMinuteSection = 55;
-    static int EndMinuteSection = 9271;
+    static int StartMinuteSection = 0;
+    static int EndMinuteSection = 0;
 
     static int InfoRowPosition = 0;
     static int FileVersionPosition = 1;
@@ -29,7 +29,7 @@ public class GetDataSection {
 
         for (String s : data) {
             if(s.startsWith("#MIN")) {
-                StartMinuteSection = data.indexOf(s) + 2;
+                StartMinuteSection = data.indexOf(s) + 1;
             }
             if(s.startsWith("#Day")) {
                 EndMinuteSection = data.indexOf(s) - 1;
@@ -37,10 +37,11 @@ public class GetDataSection {
         }
 
         List<String> mindata = new ArrayList<>();
-        for(int i = StartMinuteSection; i < EndMinuteSection; i++) {
-            mindata.add(data.get(i));
+        if(!(StartMinuteSection == 0 || EndMinuteSection == 0)) {
+            for(int i = StartMinuteSection; i < EndMinuteSection; i++) {
+                mindata.add(data.get(i));
+            }
         }
-        mindata.remove("");
         return mindata;
     }
 }

@@ -15,8 +15,6 @@ public class GetDataMap {
         for (File path : paths) {
             i++;
             System.out.println("Getting from File " + path.toString() + " (" + i + " of " + paths.size() + ")");
-            //Objects.requireNonNull(GetData.MinuteDataMap(path)).forEach(data::putIfAbsent);
-
             GetData.MinuteDataMap(path).forEach(data::putIfAbsent);
         }
         return data;
