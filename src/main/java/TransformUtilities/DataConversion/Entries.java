@@ -3,7 +3,9 @@ package TransformUtilities.DataConversion;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.YearMonth;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -12,8 +14,8 @@ import java.util.List;
  * @author ChaosMelone9
  * @since 0.0.1
  */
-public class EntriesPerDay {
-    public static List<Date> entries(Date day) throws ParseException {
+public class Entries {
+    public static List<Date> entriesperday(Date day) throws ParseException {
         List<Date> entries = new ArrayList<>();
 
         int min = 0;
@@ -73,6 +75,22 @@ public class EntriesPerDay {
             entries.add(timestamp.toString());
         }
         return entries;
+      }
+
+      public static List<Date> entriespermonth(YearMonth yearMonth) {
+          List<Date> dateList = new ArrayList<>();
+
+          Calendar cal = Calendar.getInstance();
+          cal.set(Calendar.MONTH, yearMonth.getMonthValue());
+          cal.set(Calendar.DAY_OF_MONTH, 1);
+          cal.set(Calendar.YEAR, yearMonth.getYear());
+          int maxDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+          for (int i = 1; i < maxDay; i++)
+          {
+              cal.set(yearMonth.getYear(),yearMonth.getMonthValue() ,i + 1,0,0,0);
+              dateList.add(cal.getTime());
+          }
+          return dateList;
       }
   }
 

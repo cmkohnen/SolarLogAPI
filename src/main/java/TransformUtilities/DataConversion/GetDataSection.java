@@ -1,8 +1,8 @@
 package TransformUtilities.DataConversion;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+
 /**
  * This Class includes functions to only use lines in files which contain the wanted information.
  * @author ChaosMelone9

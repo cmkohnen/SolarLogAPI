@@ -1,6 +1,9 @@
 package TransformUtilities.DataConversion;
 
+import Handling.Logger;
+
 import java.text.ParseException;
+import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -8,7 +11,7 @@ import java.util.Map;
 
 public class GetGraphData {
     public static List<List<Double>> dayView(Date day, Map<Date, List<Integer>> data) throws ParseException {
-        List<Date> timestamps = EntriesPerDay.entries(day);
+        List<Date> timestamps = Entries.entriesperday(day);
 
         List<List<Double>> values = new ArrayList<>();
 
@@ -30,4 +33,42 @@ public class GetGraphData {
         }
         return values;
     }
+
+
+    public static List<List<Double>> monthView(YearMonth month, Map<Date, List<Integer>> data) throws ParseException {
+        List<Date> timestamps = Entries.entriespermonth(month);
+
+        List<List<Double>> values = new ArrayList<>();
+
+        for (Date timestamp : timestamps) {
+                Logger.log("Importing from " + timestamp);
+                List<Double> currentdata = new ArrayList<>();
+                int Erzeugungkwh = 0;
+                int Verbrauchkwh = 0;
+                int Eigenverbrauchkwh = 0;
+
+                List<Date> days = Entries.entriesperday(timestamp);
+                for (Date date : days) {
+                    if (data.containsKey(date)) {
+                        int verbrauchw = data.get(date).get(0);
+                        int leistungw = data.get(date).get(2);
+                        int energieverbrauchw = data.get(date).get(4);
+
+                        Erzeugungkwh = Erzeugungkwh + leistungw;
+                        Verbrauchkwh = Verbrauchkwh + verbrauchw;
+                        Eigenverbrauchkwh = Eigenverbrauchkwh + energieverbrauchw;
+                    }
+                }
+
+                currentdata.add((double) Erzeugungkwh);
+                currentdata.add((double) Verbrauchkwh);
+                currentdata.add((double) Eigenverbrauchkwh);
+
+                values.add(currentdata);
+        }
+        return values;
+    }
+
+
+
 }

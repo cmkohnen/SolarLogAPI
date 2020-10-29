@@ -55,7 +55,7 @@ public class GetFile {
     }
 
     public static File ChosenReadLocation(){
-        File path = FileSystemView.getFileSystemView().getHomeDirectory();
+        File path = FileSystemView.getFileSystemView().getDefaultDirectory();
         JFileChooser j = JFileChooserPreset.ReadfromFile(path);
         j.showOpenDialog(null);
         return j.getSelectedFile();
