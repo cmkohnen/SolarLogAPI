@@ -5,7 +5,6 @@ import FileInteraction.ReadFiles.Validate;
 import FileInteraction.Tools.JFileChooserPreset;
 
 import javax.swing.*;
-import javax.swing.filechooser.FileSystemView;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -29,22 +28,19 @@ public class GetFile {
     }
 
     public static File ValidChosenDataFile() {
-        File path = FileSystemView.getFileSystemView().getHomeDirectory();
-        JFileChooser j = JFileChooserPreset.importer(path);
+        JFileChooser j = JFileChooserPreset.importer();
         j.showOpenDialog(null);
         return j.getSelectedFile();
     }
 
     public static File ChosenTarArchive() {
-        File path = FileSystemView.getFileSystemView().getHomeDirectory();
-        JFileChooser j = JFileChooserPreset.importtar(path);
+        JFileChooser j = JFileChooserPreset.importtar();
         j.showOpenDialog(null);
         return j.getSelectedFile();
     }
 
     public static File ChosenSafeLocation(){
-        File path = FileSystemView.getFileSystemView().getHomeDirectory();
-        JFileChooser j = JFileChooserPreset.SafetoFile(path);
+        JFileChooser j = JFileChooserPreset.SafetoFile();
         j.showOpenDialog(null);
         File f = j.getSelectedFile();
         if(!f.getName().contains(".solarlog")) {
@@ -55,8 +51,7 @@ public class GetFile {
     }
 
     public static File ChosenReadLocation(){
-        File path = FileSystemView.getFileSystemView().getDefaultDirectory();
-        JFileChooser j = JFileChooserPreset.ReadfromFile(path);
+        JFileChooser j = JFileChooserPreset.ReadfromFile();
         j.showOpenDialog(null);
         return j.getSelectedFile();
     }

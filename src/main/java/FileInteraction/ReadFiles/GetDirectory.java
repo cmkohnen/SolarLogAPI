@@ -17,7 +17,7 @@ public class GetDirectory {
 
     public static File ChosenDirectory(){
         File path = FileSystemView.getFileSystemView().getHomeDirectory();
-        JFileChooser j = JFileChooserPreset.importdirectory(path);
+        JFileChooser j = JFileChooserPreset.importdirectory();
         j.showOpenDialog(null);
         return j.getSelectedFile();
     }

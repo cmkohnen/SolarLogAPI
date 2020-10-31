@@ -14,8 +14,8 @@ import java.io.IOException;
  */
 public class JFileChooserPreset {
 
-    public static JFileChooser importer(File path){
-        JFileChooser j = new JFileChooser(path);
+    public static JFileChooser importer(){
+        JFileChooser j = new JFileChooser();
         j.setDialogTitle("Import");
         j.setAcceptAllFileFilterUsed(false);
         j.setFileFilter(new FileFilter() {
@@ -39,8 +39,8 @@ public class JFileChooserPreset {
         return j;
     }
 
-    public static JFileChooser SafetoFile(File path) {
-        JFileChooser j = new JFileChooser(path);
+    public static JFileChooser SafetoFile() {
+        JFileChooser j = new JFileChooser();
         j.setDialogTitle("Safe");
         j.setAcceptAllFileFilterUsed(false);
         j.setFileFilter(new FileFilter() {
@@ -57,8 +57,8 @@ public class JFileChooserPreset {
         return j;
     }
 
-    public static JFileChooser ReadfromFile(File path) {
-        JFileChooser j = new JFileChooser(path);
+    public static JFileChooser ReadfromFile() {
+        JFileChooser j = new JFileChooser();
 
         // invoke the showsSaveDialog function to show the save dialog
         j.setDialogTitle("Import");
@@ -77,8 +77,8 @@ public class JFileChooserPreset {
 
     }
 
-    public static JFileChooser importtar(File path){
-        JFileChooser j = new JFileChooser(path);
+    public static JFileChooser importtar(){
+        JFileChooser j = new JFileChooser();
         j.setDialogTitle("Import");
         j.setAcceptAllFileFilterUsed(false);
         j.setFileFilter(new FileFilter() {
@@ -96,8 +96,8 @@ public class JFileChooserPreset {
         return j;
     }
 
-    public static JFileChooser importdirectory(File path) {
-        JFileChooser j = new JFileChooser(path);
+    public static JFileChooser importdirectory() {
+        JFileChooser j = new JFileChooser();
         j.setDialogTitle("Import");
         j.setAcceptAllFileFilterUsed(false);
         j.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
