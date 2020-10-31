@@ -17,7 +17,7 @@ import java.util.zip.GZIPInputStream;
 
 public class GetFromTar {
 
-    public static List<File> unTar(final File inputFile, final File outputDir) throws IOException, ArchiveException {
+    public static List<File> unTar(final File inputFile, final File outputDir) throws Exception {
 
         Logger.log(String.format("Untaring %s to dir %s.", inputFile.getAbsolutePath(), outputDir.getAbsolutePath()));
 
@@ -37,6 +37,9 @@ public class GetFromTar {
                 }
             } else {
                 //Logger.log(String.format("Creating output file %s.", outputFile.getAbsolutePath()));
+                if(!outputFile.toPath().normalize().startsWith(outputDir.toPath())) {
+                    throw new Exception("Bad Zip Entry!");
+                }
                 if(!outputFile.exists()) {
                     final OutputStream outputFileStream = new FileOutputStream(outputFile);
                     IOUtils.copy(debInputStream, outputFileStream);
@@ -50,11 +53,14 @@ public class GetFromTar {
         return untaredFiles;
     }
 
-    public static File unGzip(final File inputFile, final File outputDir) throws IOException {
+    public static File unGzip(final File inputFile, final File outputDir) throws Exception {
 
         Logger.log(String.format("Ungzipping %s to dir %s.", inputFile.getAbsolutePath(), outputDir.getAbsolutePath()));
 
         final File outputFile = new File(outputDir, inputFile.getName().substring(0, inputFile.getName().length() - 3));
+        if(!outputFile.toPath().normalize().startsWith(outputDir.toPath())) {
+            throw new Exception("Bad Zip Entry!");
+        }
 
         if(!outputFile.exists()) {
             final GZIPInputStream in = new GZIPInputStream(new FileInputStream(inputFile));
@@ -69,7 +75,7 @@ public class GetFromTar {
         return outputFile;
     }
 
-    public static List<File> getValidFilesFromTarArchive(File tar) throws IOException, ArchiveException {
+    public static List<File> getValidFilesFromTarArchive(File tar) throws Exception {
         String tardir = FilenameUtils.removeExtension(FilenameUtils.removeExtension(String.valueOf(tar)));
         File outputdir = GetFile.File(tardir);
         if(!outputdir.exists()){
@@ -82,7 +88,7 @@ public class GetFromTar {
         return Validate.validfiles(unTar(unGzip(tar,outputdir),outputdir));
     }
 
-    public static List<File> getValidFilesFromTarArchives(List<File> tars) throws IOException, ArchiveException {
+    public static List<File> getValidFilesFromTarArchives(List<File> tars) throws Exception {
         List<File> validfiles = new ArrayList<>();
         for (File tar : tars) {
             Logger.log("Extracting data from " + tar.getAbsolutePath());
