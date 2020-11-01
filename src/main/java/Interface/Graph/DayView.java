@@ -195,11 +195,22 @@ public class DayView extends JPanel {
 
                 g2.setColor(LabelColor);
                 g2.drawString("Values at " + Entries.timestamps().get((int)Math.floor(ExactMouseXValue)), padding + labelPadding + valuepadding, padding + valuepadding * 2);
-                g2.drawString("verbrauchw: " + Math.round(data.get((int)ExactMouseXValue).get(0)), padding + labelPadding + valuepadding, padding + (valuepadding * 2) * 2);
-                g2.drawString("verbrauchkwh: " + Math.round(data.get((int)ExactMouseXValue).get(1)), padding + labelPadding + valuepadding, padding + (valuepadding * 2) * 3);
-                g2.drawString("leistungw: " + Math.round(data.get((int)ExactMouseXValue).get(2)), padding + labelPadding + valuepadding, padding + (valuepadding * 2) * 4);
-                g2.drawString("ertragkwh: " + Math.round(data.get((int)ExactMouseXValue).get(3)), padding + labelPadding + valuepadding, padding + (valuepadding * 2) * 5);
-                g2.drawString("energieverbrauchw: " + Math.round(data.get((int)ExactMouseXValue).get(4)), padding + labelPadding + valuepadding, padding + (valuepadding * 2) * 6);
+
+                if(Row1Visible) {
+                    g2.drawString("verbrauchw: " + Math.round(data.get((int)ExactMouseXValue).get(0)), padding + labelPadding + valuepadding, padding + (valuepadding * 2) * 2);
+                }
+                if(Row2Visible) {
+                    g2.drawString("verbrauchkwh: " + Math.round(data.get((int)ExactMouseXValue).get(1)), padding + labelPadding + valuepadding, padding + (valuepadding * 2) * 3);
+                }
+                if(Row3Visible) {
+                    g2.drawString("leistungw: " + Math.round(data.get((int)ExactMouseXValue).get(2)), padding + labelPadding + valuepadding, padding + (valuepadding * 2) * 4);
+                }
+                if(Row4Visible) {
+                    g2.drawString("ertragkwh: " + Math.round(data.get((int)ExactMouseXValue).get(3)), padding + labelPadding + valuepadding, padding + (valuepadding * 2) * 5);
+                }
+                if(Row5Visible) {
+                    g2.drawString("energieverbrauchw: " + Math.round(data.get((int)ExactMouseXValue).get(4)), padding + labelPadding + valuepadding, padding + (valuepadding * 2) * 6);
+                }
             }
 
             if(mousegui) {
