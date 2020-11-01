@@ -1,6 +1,7 @@
 package FileInteraction.ReadFiles;
 
 import FileInteraction.GetFile;
+import FileInteraction.Tools.FileObject;
 import FileInteraction.Tools.FileVersion;
 import Handling.Logger;
 
@@ -44,5 +45,13 @@ public class Validate {
         }
         Logger.log("Done. Checked " + i + ", found " + i2);
         return ValidFiles;
+    }
+
+    public static boolean isValidSolarLogFile(File f) throws IOException, ClassNotFoundException {
+        if(f.getName().contains(".solarlog")) {
+            FileObject fileObject = (FileObject) ReadFileObject.fileObject(GetFile.ChosenReadLocation());
+            return (boolean) fileObject.getInformation("valid");
+        }
+        return false;
     }
 }

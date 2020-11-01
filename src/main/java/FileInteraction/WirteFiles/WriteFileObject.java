@@ -1,5 +1,7 @@
 package FileInteraction.WirteFiles;
 
+import Handling.Logger;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -11,10 +13,12 @@ import java.io.ObjectOutputStream;
  */
 public class WriteFileObject {
     public static void write(File file, Object object) throws IOException {
+        Logger.log("Writing to " + file + ". This may take a while.");
         FileOutputStream f = new FileOutputStream(file);
         ObjectOutputStream s = new ObjectOutputStream(f);
         s.writeObject(object);
         s.flush();
         s.close();
+        Logger.log("done.");
     }
 }

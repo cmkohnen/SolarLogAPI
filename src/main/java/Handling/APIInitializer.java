@@ -1,12 +1,12 @@
 package Handling;
 
-import FileInteraction.GetFile;
-import FileInteraction.ReadFiles.ReadFileObject;
 import Interface.BasicUI.BasicConversion;
 import Interface.BasicUI.GraphCustomizer;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * This Class is called when the jar package is executed.
@@ -20,8 +20,7 @@ public class APIInitializer {
         Logger.log("API starts via Runtime Environment. Used Arguments: " + argsAsList);
 
         if(argsAsList.contains("simplegui")) {
-            Map<Date, List<Integer>> data = (Map<Date, List<Integer>>) ReadFileObject.fileObject(GetFile.ChosenReadLocation());
-            GraphCustomizer.run(data);
+            GraphCustomizer.run();
         }
 
         if(argsAsList.contains("convert")) {

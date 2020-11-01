@@ -1,8 +1,12 @@
 package Interface.BasicUI;
 
+import FileInteraction.GetFile;
+import FileInteraction.ReadFiles.ReadFileObject;
+import FileInteraction.Tools.FileObject;
 import Interface.SimpleFrame;
 
 import javax.swing.*;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -17,7 +21,9 @@ public class GraphCustomizer extends JTabbedPane {
         addTab("Month View",new MonthCustomizer(data));
     }
 
-    public static void run(Map<Date,List<Integer>> data) {
+    public static void run() throws IOException, ClassNotFoundException {
+        FileObject fileObject = (FileObject) ReadFileObject.fileObject(GetFile.ChosenReadLocation());
+        Map<Date, List<Integer>> data = fileObject.getData();
         JFrame f = new SimpleFrame(new GraphCustomizer(data));
         f.setSize(200,300);
         f.setResizable(false);

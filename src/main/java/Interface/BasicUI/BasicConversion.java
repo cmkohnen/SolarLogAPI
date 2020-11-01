@@ -2,6 +2,7 @@ package Interface.BasicUI;
 
 import FileInteraction.GetFile;
 import FileInteraction.ReadFiles.GetFromTar;
+import FileInteraction.Tools.FileObject;
 import FileInteraction.WirteFiles.WriteFileObject;
 import Interface.SimpleFrame;
 import TransformUtilities.DataConversion.GetDataMap;
@@ -71,7 +72,8 @@ public class BasicConversion extends JPanel {
         convert.addActionListener(e -> {
             try {
                 Map<Date, List<Integer>> data = GetDataMap.DataFromFiles(files);
-                WriteFileObject.write(GetFile.ChosenSafeLocation(),data);
+                FileObject fileObject = new FileObject(data);
+                WriteFileObject.write(GetFile.ChosenSafeLocation(),fileObject);
             } catch (IOException | ParseException ioException) {
                 ioException.printStackTrace();
             }

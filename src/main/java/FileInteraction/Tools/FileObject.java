@@ -1,17 +1,33 @@
 package FileInteraction.Tools;
 
-import java.util.*;
+import java.io.Serializable;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-public class FileObject {
+public class FileObject implements Serializable {
 
-    public static Map<String, Object> object(Map<Date, List<Integer>> data, Map<String,Object> information){
-        Map<String, Object> FileObject = new HashMap<>();
+    private final Map<String, Object> object = new HashMap<>();
 
-        FileObject.put("data",data);
+    public FileObject(Map<Date, List<Integer>> data) {
+        this.object.put("data",data);
+    }
 
-        information.forEach(FileObject::put);
+    public Map<Date, List<Integer>> getData() {
+        return (Map<Date, List<Integer>>) object.get("data");
+    }
 
-        return FileObject;
+    public void putInformation(String key, Object info) {
+        object.put(key,info);
+    }
+
+    public Object getInformation(String key) {
+        return object.get(key);
+    }
+
+    public static Map<Date, List<Integer>> data(FileObject fileObject) {
+        return fileObject.getData();
     }
 
 

@@ -19,6 +19,7 @@ public class ReadFileObject {
         ObjectInputStream s = new ObjectInputStream(f);
         Object o = s.readObject();
         s.close();
+        Logger.log("done.");
         return o;
     }
 }
