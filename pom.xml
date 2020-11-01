@@ -10,6 +10,14 @@
     <version>0.1.1-DEVELOPEMENT-SNAPSHOT</version>
     <name>SolarLogAPI</name>
 
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub ChaosMelone9 Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/ChaosMelone9/SolarLogAPI</url>
+        </repository>
+    </distributionManagement>
+
     <dependencies>
         <dependency>
             <groupId>com.github.lgooddatepicker</groupId>
