@@ -1,10 +1,7 @@
 package FileInteraction.Tools;
 
 import java.io.Serializable;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class FileObject implements Serializable {
 
@@ -14,8 +11,14 @@ public class FileObject implements Serializable {
         this.object.put("data",data);
     }
 
-    public Map<Date, List<Integer>> getData() {
-        return (Map<Date, List<Integer>>) object.get("data");
+    public Map<Date, List<Integer>> getData()
+    {
+        Object o = object.get("data");
+        Map<Date, List<Integer>> map = new HashMap<>();
+        if(o instanceof Map) {
+            map = (HashMap<Date, List<Integer>>) o;
+        }
+        return (map);
     }
 
     public void putInformation(String key, Object info) {

@@ -149,14 +149,17 @@ public class MonthView extends JPanel {
 
             g2.setColor(LabelColor);
             g2.drawString("Values at " + Math.floor(ExactMouseXValue), padding + labelPadding + valuepadding, padding + valuepadding * 2);
+            int i = 2;
             if(Row1Visible) {
-                g2.drawString("Verbrauch kWH: " + Math.round(data.get((int)ExactMouseXValue).get(0)), padding + labelPadding + valuepadding, padding + (valuepadding * 2) * 2);
+                g2.drawString("Verbrauch kWH: " + Math.round(data.get((int)ExactMouseXValue).get(0)), padding + labelPadding + valuepadding, padding + (valuepadding * 2) * i);
+                i++;
             }
             if(Row2Visible) {
-                g2.drawString("EigenVerbrauch kWH: " + Math.round(data.get((int)ExactMouseXValue).get(1)), padding + labelPadding + valuepadding, padding + (valuepadding * 2) * 3);
+                g2.drawString("EigenVerbrauch kWH: " + Math.round(data.get((int)ExactMouseXValue).get(1)), padding + labelPadding + valuepadding, padding + (valuepadding * 2) * i);
+                i++;
             }
             if(Row3Visible) {
-                g2.drawString("Produktion kWH: " + Math.round(data.get((int)ExactMouseXValue).get(2)), padding + labelPadding + valuepadding, padding + (valuepadding * 2) * 4);
+                g2.drawString("Produktion kWH: " + Math.round(data.get((int)ExactMouseXValue).get(2)), padding + labelPadding + valuepadding, padding + (valuepadding * 2) * i);
             }
         }
 
