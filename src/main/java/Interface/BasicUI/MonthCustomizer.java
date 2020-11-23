@@ -1,33 +1,27 @@
 package Interface.BasicUI;
 
+import Handling.SolarMap;
 import Interface.DatePicker;
-import Interface.Graph.Graph;
 import Interface.Graph.MonthView;
+import TransformUtilities.DataConversion.GetStartOf;
 
 import javax.swing.*;
 import java.awt.*;
 import java.text.ParseException;
-import java.time.YearMonth;
-import java.time.ZoneId;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
 
 public class MonthCustomizer extends JPanel{
     static MonthView cmp = null;
 
-    public MonthCustomizer(Map<Date, List<Integer>> data) {
+    public MonthCustomizer(SolarMap data) {
         setLayout(new BorderLayout());
 
         DatePicker picker = new DatePicker();
         picker.addVetoPolicy(data);
         picker.setMaximumSize(new Dimension(200,40));
         picker.addDateChangeListener(event -> {
-            Date daystamp = Date.from(event.getNewDate().atStartOfDay(ZoneId.systemDefault()).toInstant());
-            if(data.containsKey(daystamp)){
+            if(data.includesMonth(GetStartOf.yearMonth(event.getNewDate()))){
                 try {
-                    YearMonth yearMonth = YearMonth.from(daystamp.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
-                    cmp = Graph.monthView(yearMonth,data);
+                    cmp = new MonthView(data.getMonthData(GetStartOf.yearMonth(event.getNewDate())));
                     paintcmp();
                 } catch (ParseException e) {
                     e.printStackTrace();

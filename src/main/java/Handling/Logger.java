@@ -8,8 +8,8 @@ package Handling;
  */
 public class Logger {
 
+    public Logger() {
 
-    protected Logger() {
     }
 
     public static void log(Object o){

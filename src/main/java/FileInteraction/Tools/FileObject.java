@@ -1,5 +1,7 @@
 package FileInteraction.Tools;
 
+import Handling.SolarMap;
+
 import java.io.Serializable;
 import java.util.*;
 
@@ -11,6 +13,10 @@ public class FileObject implements Serializable {
         this.object.put("data",data);
     }
 
+    public FileObject(SolarMap data) {
+        this.object.put("data",data.getAsMap());
+    }
+
     public Map<Date, List<Integer>> getData()
     {
         Object o = object.get("data");
@@ -19,6 +25,10 @@ public class FileObject implements Serializable {
             map = (HashMap<Date, List<Integer>>) o;
         }
         return (map);
+    }
+
+    public SolarMap getDataAsSolarMap() {
+        return new SolarMap(getData());
     }
 
     public void putInformation(String key, Object info) {

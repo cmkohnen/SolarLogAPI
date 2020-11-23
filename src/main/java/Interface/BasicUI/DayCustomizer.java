@@ -1,31 +1,27 @@
 package Interface.BasicUI;
 
+import Handling.SolarMap;
 import Interface.DatePicker;
 import Interface.Graph.DayView;
-import Interface.Graph.Graph;
+import TransformUtilities.DataConversion.GetStartOf;
 
 import javax.swing.*;
 import java.awt.*;
 import java.text.ParseException;
-import java.time.ZoneId;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
 
 public class DayCustomizer extends JPanel{
     static DayView cmp = null;
 
-    public DayCustomizer(Map<Date, List<Integer>> data) {
+    public DayCustomizer(SolarMap data) {
         setLayout(new BorderLayout());
 
         DatePicker picker = new DatePicker();
         picker.addVetoPolicy(data);
         picker.setMaximumSize(new Dimension(200,40));
         picker.addDateChangeListener(event -> {
-            Date daystamp = Date.from(event.getNewDate().atStartOfDay(ZoneId.systemDefault()).toInstant());
-            if(data.containsKey(daystamp)){
+            if(data.includesDay(event.getNewDate())){
                 try {
-                    cmp = Graph.dayView(daystamp,data);
+                    cmp = new DayView(data.getDayGraphData(GetStartOf.day(event.getNewDate())));
                     paintcmp();
                 } catch (ParseException e) {
                     e.printStackTrace();

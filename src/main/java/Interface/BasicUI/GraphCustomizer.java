@@ -1,30 +1,24 @@
 package Interface.BasicUI;
 
-import FileInteraction.GetFile;
-import FileInteraction.ReadFiles.ReadFileObject;
-import FileInteraction.Tools.FileObject;
+import Handling.SolarMap;
 import Interface.SimpleFrame;
 
 import javax.swing.*;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 public class GraphCustomizer extends JTabbedPane {
     static JFrame graphframe = new JFrame();
     static List<JComponent> cmps = new ArrayList<>();
 
-    public GraphCustomizer(Map<Date, List<Integer>> data) {
+    public GraphCustomizer(SolarMap data) {
         addTab("Day View",new DayCustomizer(data));
         addTab("Month View",new MonthCustomizer(data));
     }
 
-    public static void run() throws IOException, ClassNotFoundException {
-        FileObject fileObject = (FileObject) ReadFileObject.fileObject(GetFile.ChosenReadLocation());
-        Map<Date, List<Integer>> data = fileObject.getData();
-        JFrame f = new SimpleFrame(new GraphCustomizer(data));
+    public static void run() {
+        SolarMap solarMap = BasicSolarMapCustomizer.solarMap();
+        JFrame f = new SimpleFrame(new GraphCustomizer(solarMap));
         f.setSize(200,300);
         f.setResizable(false);
         f.setTitle("Visuilization");

@@ -17,7 +17,7 @@ import java.util.zip.GZIPInputStream;
 
 public class GetFromTar {
 
-    public static List<File> unTar(final File inputFile, final File outputDir) throws Exception {
+    private static List<File> unTar(final File inputFile, final File outputDir) throws Exception {
 
         Logger.log(String.format("Untaring %s to dir %s.", inputFile.getAbsolutePath(), outputDir.getAbsolutePath()));
 
@@ -53,7 +53,7 @@ public class GetFromTar {
         return untaredFiles;
     }
 
-    public static File unGzip(final File inputFile, final File outputDir) throws Exception {
+    private static File unGzip(final File inputFile, final File outputDir) throws Exception {
 
         Logger.log(String.format("Ungzipping %s to dir %s.", inputFile.getAbsolutePath(), outputDir.getAbsolutePath()));
 
