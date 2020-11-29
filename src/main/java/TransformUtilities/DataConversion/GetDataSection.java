@@ -36,12 +36,12 @@ public class GetDataSection {
             }
         }
 
-        List<String> mindata = new ArrayList<>();
+        List<String> minuteData = new ArrayList<>();
         if(!(StartMinuteSection == 0 || EndMinuteSection == 0)) {
             for(int i = StartMinuteSection; i < EndMinuteSection; i++) {
-                mindata.add(data.get(i));
+                minuteData.add(data.get(i));
             }
         }
-        return mindata;
+        return minuteData;
     }
 }

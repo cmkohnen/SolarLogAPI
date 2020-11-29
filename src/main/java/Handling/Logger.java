@@ -13,7 +13,7 @@ public class Logger {
     public Logger() {
     }
 
-    public static void logWithIncommingBoolean(Object o) {
+    public static void logWithIncomingBoolean(Object o) {
         booleanMissing = true;
         System.out.print(o);
     }

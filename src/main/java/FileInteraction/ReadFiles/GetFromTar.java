@@ -19,9 +19,9 @@ public class GetFromTar {
 
     private static List<File> unTar(final File inputFile, final File outputDir) throws Exception {
 
-        Logger.log(String.format("Untaring %s to dir %s.", inputFile.getAbsolutePath(), outputDir.getAbsolutePath()));
+        Logger.log(String.format("UnTaring %s to dir %s.", inputFile.getAbsolutePath(), outputDir.getAbsolutePath()));
 
-        final List<File> untaredFiles = new LinkedList<>();
+        final List<File> unTaredFiles = new LinkedList<>();
         final InputStream is = new FileInputStream(inputFile);
         final TarArchiveInputStream debInputStream = (TarArchiveInputStream) new ArchiveStreamFactory().createArchiveInputStream("tar", is);
         TarArchiveEntry entry;
@@ -46,16 +46,16 @@ public class GetFromTar {
                     outputFileStream.close();
                 }
             }
-            untaredFiles.add(outputFile);
+            unTaredFiles.add(outputFile);
         }
         debInputStream.close();
 
-        return untaredFiles;
+        return unTaredFiles;
     }
 
     private static File unGzip(final File inputFile, final File outputDir) throws Exception {
 
-        Logger.log(String.format("Ungzipping %s to dir %s.", inputFile.getAbsolutePath(), outputDir.getAbsolutePath()));
+        Logger.log(String.format("UnGZipping %s to dir %s.", inputFile.getAbsolutePath(), outputDir.getAbsolutePath()));
 
         final File outputFile = new File(outputDir, inputFile.getName().substring(0, inputFile.getName().length() - 3));
         if(!outputFile.toPath().normalize().startsWith(outputDir.toPath())) {
@@ -76,24 +76,24 @@ public class GetFromTar {
     }
 
     public static List<File> getValidFilesFromTarArchive(File tar) throws Exception {
-        String tardir = FilenameUtils.removeExtension(FilenameUtils.removeExtension(String.valueOf(tar)));
-        File outputdir = GetFile.File(tardir);
-        if(!outputdir.exists()){
-            boolean b = outputdir.mkdir();
+        String tarDirectory = FilenameUtils.removeExtension(FilenameUtils.removeExtension(String.valueOf(tar)));
+        File outputDirectory = GetFile.File(tarDirectory);
+        if(!outputDirectory.exists()){
+            boolean b = outputDirectory.mkdir();
             if(!b) {
-                Logger.log("Cant create the directory " + outputdir.getAbsolutePath());
+                Logger.log("Cant create the directory " + outputDirectory.getAbsolutePath());
                 throw new ArchiveException("cant create directory");
             }
         }
-        return Validate.validfiles(unTar(unGzip(tar,outputdir),outputdir));
+        return Validate.validFiles(unTar(unGzip(tar,outputDirectory),outputDirectory));
     }
 
     public static List<File> getValidFilesFromTarArchives(List<File> tars) throws Exception {
-        List<File> validfiles = new ArrayList<>();
+        List<File> validFiles = new ArrayList<>();
         for (File tar : tars) {
             Logger.log("Extracting data from " + tar.getAbsolutePath());
-            validfiles.addAll(getValidFilesFromTarArchive(tar));
+            validFiles.addAll(getValidFilesFromTarArchive(tar));
         }
-        return validfiles;
+        return validFiles;
     }
 }

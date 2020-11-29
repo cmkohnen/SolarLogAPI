@@ -13,7 +13,7 @@ import java.util.List;
 
 public class BasicSolarMapCustomizer {
 
-    private static final JPanel filepanel = new JPanel();
+    private static final JPanel filePanel = new JPanel();
     private final JPanel files = new JPanel();
     private final SolarMap map = new SolarMap();
     private boolean done = false;
@@ -31,7 +31,7 @@ public class BasicSolarMapCustomizer {
         f.setSize(300,500);
         f.setTitle("Customization");
         BasicSolarMapCustomizer basicSolarMapCustomizer = new BasicSolarMapCustomizer();
-        f.add(filepanel);
+        f.add(filePanel);
         f.setVisible(true);
         while (!basicSolarMapCustomizer.done) {
             System.getSecurityManager();
@@ -42,7 +42,7 @@ public class BasicSolarMapCustomizer {
     }
 
     private void initPanel() {
-        filepanel.setLayout(new BorderLayout());
+        filePanel.setLayout(new BorderLayout());
 
         JPanel buttons = new JPanel();
         buttons.setLayout(new BoxLayout(buttons, BoxLayout.Y_AXIS));
@@ -106,16 +106,16 @@ public class BasicSolarMapCustomizer {
         buttons.add(addTars);
         buttons.add(addDataFile);
 
-        filepanel.setLayout(new BorderLayout());
+        filePanel.setLayout(new BorderLayout());
 
         files.setLayout(new BoxLayout(files, BoxLayout.Y_AXIS));
 
-        filepanel.add(files, BorderLayout.CENTER);
+        filePanel.add(files, BorderLayout.CENTER);
 
-        filepanel.add(buttons, BorderLayout.PAGE_START);
+        filePanel.add(buttons, BorderLayout.PAGE_START);
 
         JButton retrain = new JButton("Return");
-        filepanel.add(retrain, BorderLayout.PAGE_END);
+        filePanel.add(retrain, BorderLayout.PAGE_END);
         retrain.addActionListener(e -> {
             try {
                 if(importFiles.size() > 0) {

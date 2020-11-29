@@ -39,7 +39,7 @@ public class JFileChooserPreset {
         return j;
     }
 
-    public static JFileChooser SafetoFile() {
+    public static JFileChooser SafeToFile() {
         JFileChooser j = new JFileChooser();
         j.setDialogTitle("Safe");
         j.setAcceptAllFileFilterUsed(false);
@@ -57,7 +57,7 @@ public class JFileChooserPreset {
         return j;
     }
 
-    public static JFileChooser ReadfromFile() {
+    public static JFileChooser ReadFromFile() {
         JFileChooser j = new JFileChooser();
 
         // invoke the showsSaveDialog function to show the save dialog
@@ -77,7 +77,7 @@ public class JFileChooserPreset {
 
     }
 
-    public static JFileChooser importtar(){
+    public static JFileChooser importFromTar(){
         JFileChooser j = new JFileChooser();
         j.setDialogTitle("Import");
         j.setAcceptAllFileFilterUsed(false);
@@ -96,7 +96,7 @@ public class JFileChooserPreset {
         return j;
     }
 
-    public static JFileChooser importdirectory() {
+    public static JFileChooser importFromDirectory() {
         JFileChooser j = new JFileChooser();
         j.setDialogTitle("Import");
         j.setAcceptAllFileFilterUsed(false);

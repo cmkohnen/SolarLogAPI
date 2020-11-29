@@ -21,13 +21,13 @@ public class MonthView extends JPanel {
 
     private int padding = 25;
     private int labelPadding = 25;
-    private int valuepadding = 10;
+    private int valuePadding = 10;
 
     private boolean Row1Visible = true;
     private boolean Row2Visible = true;
     private boolean Row3Visible = true;
 
-    private boolean mousegui = true;
+    private boolean mouseGUI = true;
 
     private int mouseX;
     private int mouseY;
@@ -38,6 +38,7 @@ public class MonthView extends JPanel {
         this.data = data;
     }
 
+    @SuppressWarnings("DuplicatedCode")
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -47,16 +48,16 @@ public class MonthView extends JPanel {
 
         Stroke stroke = g2.getStroke();
 
-        double yaScale = ((double) getHeight() - 2 * padding - labelPadding) / (getMaxaScore() - getMinScore());
+        double yaScale = ((double) getHeight() - 2 * padding - labelPadding) / (getMaxScore() - getMinScore());
 
         List<Point> Row1 = new ArrayList<>();
         List<Point> Row2 = new ArrayList<>();
         List<Point> Row3 = new ArrayList<>();
         for (int i = 0; i < data.size(); i++) {
             int x = (int) (i * xScale + padding + labelPadding);
-            int Row1y = (int) ((getMaxaScore() - data.get(i).get(0)) * yaScale + padding);
-            int Row2y = (int) ((getMaxaScore() - data.get(i).get(1)) * yaScale + padding);
-            int Row3y = (int) ((getMaxaScore() - data.get(i).get(2)) * yaScale + padding);
+            int Row1y = (int) ((getMaxScore() - data.get(i).get(0)) * yaScale + padding);
+            int Row2y = (int) ((getMaxScore() - data.get(i).get(1)) * yaScale + padding);
+            int Row3y = (int) ((getMaxScore() - data.get(i).get(2)) * yaScale + padding);
             Row1.add(new Point(x, Row1y));
             Row2.add(new Point(x, Row2y));
             Row3.add(new Point(x, Row3y));
@@ -80,7 +81,7 @@ public class MonthView extends JPanel {
             g2.setColor(GridColor);
             g2.drawLine(padding + labelPadding + 1 + pointWidth, y0, getWidth() - padding, y0);
             g2.setColor(LabelColor);
-            String y1Label = ((int) ((getMinScore() + (getMaxaScore() - getMinScore()) * ((i * 1.0) / numberYDivisions)) * 100)) / 100 + "";
+            String y1Label = ((int) ((getMinScore() + (getMaxScore() - getMinScore()) * ((i * 1.0) / numberYDivisions)) * 100)) / 100 + "";
             FontMetrics metrics = g2.getFontMetrics();
             int label1Width = metrics.stringWidth(y1Label);
             g2.drawString(y1Label, x0 - label1Width - 5, y0 + (metrics.getHeight() / 2) - 3);
@@ -139,32 +140,32 @@ public class MonthView extends JPanel {
 
 
 
-        if(mouseX >= labelPadding + padding & mouseX <= getWidth() - labelPadding - padding & mouseY >= padding & mouseY <= getHeight() - padding & mousegui & visibleRows() > 0){
+        if(mouseX >= labelPadding + padding & mouseX <= getWidth() - labelPadding - padding & mouseY >= padding & mouseY <= getHeight() - padding & mouseGUI & visibleRows() > 0){
             g2.setStroke(stroke);
             g2.setColor(BackgroundColor);
-            g2.fillRect(padding + labelPadding, padding, 200, ((valuepadding + 12) * visibleRows()) + 20);
+            g2.fillRect(padding + labelPadding, padding, 200, ((valuePadding + 12) * visibleRows()) + 20);
             g2.setColor(GridColor);
-            g2.drawRect(padding + labelPadding, padding, 200, ((valuepadding + 12) * visibleRows()) + 20);
+            g2.drawRect(padding + labelPadding, padding, 200, ((valuePadding + 12) * visibleRows()) + 20);
             double ExactMouseXValue = (mouseX - padding -labelPadding) / xScale;
 
             g2.setColor(LabelColor);
-            g2.drawString("Values at " + Math.floor(ExactMouseXValue), padding + labelPadding + valuepadding, padding + valuepadding * 2);
+            g2.drawString("Values at " + Math.floor(ExactMouseXValue), padding + labelPadding + valuePadding, padding + valuePadding * 2);
             int i = 2;
             if(Row1Visible) {
-                g2.drawString("Verbrauch kWH: " + Math.round(data.get((int)ExactMouseXValue).get(0)), padding + labelPadding + valuepadding, padding + (valuepadding * 2) * i);
+                g2.drawString("Verbrauch kWH: " + Math.round(data.get((int)ExactMouseXValue).get(0)), padding + labelPadding + valuePadding, padding + (valuePadding * 2) * i);
                 i++;
             }
             if(Row2Visible) {
-                g2.drawString("EigenVerbrauch kWH: " + Math.round(data.get((int)ExactMouseXValue).get(1)), padding + labelPadding + valuepadding, padding + (valuepadding * 2) * i);
+                g2.drawString("EigenVerbrauch kWH: " + Math.round(data.get((int)ExactMouseXValue).get(1)), padding + labelPadding + valuePadding, padding + (valuePadding * 2) * i);
                 i++;
             }
             if(Row3Visible) {
-                g2.drawString("Produktion kWH: " + Math.round(data.get((int)ExactMouseXValue).get(2)), padding + labelPadding + valuepadding, padding + (valuepadding * 2) * i);
+                g2.drawString("Produktion kWH: " + Math.round(data.get((int)ExactMouseXValue).get(2)), padding + labelPadding + valuePadding, padding + (valuePadding * 2) * i);
             }
         }
 
 
-        if(mousegui) {
+        if(mouseGUI) {
             addMouseMotionListener(new MouseMotionListener() {
                 @Override
                 public void mouseDragged(MouseEvent mouseEvent) {
@@ -192,7 +193,7 @@ public class MonthView extends JPanel {
         return minScore;
     }
 
-    private double getMaxaScore() {
+    private double getMaxScore() {
         double maxScore = Double.MIN_VALUE;
         assert data != null;
         for (List<Double> score : data) {
@@ -249,7 +250,8 @@ public class MonthView extends JPanel {
         labelPadding = i;
     }
 
-    public void setValuePadding(int i) {valuepadding = i; }
+    public void setValuePadding(int i) {
+        valuePadding = i; }
 
     public void setRow1Visible(boolean rowVisible) {
         Row1Visible = rowVisible;
@@ -264,7 +266,7 @@ public class MonthView extends JPanel {
     }
 
     public void setMouseGUIVisible(boolean mouseGUIVisible) {
-        mousegui = mouseGUIVisible;
+        mouseGUI = mouseGUIVisible;
     }
 
 }

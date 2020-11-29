@@ -15,7 +15,7 @@ import java.util.List;
  * @since 0.0.1
  */
 public class Entries {
-    public static List<Date> entriesperday(Date day) throws ParseException {
+    public static List<Date> entriesPerDay(Date day) throws ParseException {
         List<Date> entries = new ArrayList<>();
 
         int min = 0;
@@ -29,7 +29,7 @@ public class Entries {
                 hour++;
                 min = 0;
             }
-            DateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
+            @SuppressWarnings("SpellCheckingInspection") DateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
             StringBuilder timestamp = new StringBuilder();
             timestamp.append(date);
             if(String.valueOf(hour).length() == 1) {
@@ -77,7 +77,7 @@ public class Entries {
         return entries;
       }
 
-      public static List<Date> entriespermonth(YearMonth yearMonth) {
+      public static List<Date> entriesPerMonth(YearMonth yearMonth) {
           List<Date> dateList = new ArrayList<>();
 
           Calendar cal = Calendar.getInstance();

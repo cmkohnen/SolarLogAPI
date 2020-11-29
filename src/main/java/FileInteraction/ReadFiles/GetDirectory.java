@@ -3,7 +3,6 @@ package FileInteraction.ReadFiles;
 import FileInteraction.Tools.JFileChooserPreset;
 
 import javax.swing.*;
-import javax.swing.filechooser.FileSystemView;
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
@@ -16,8 +15,7 @@ public class GetDirectory {
     }
 
     public static File ChosenDirectory(){
-        File path = FileSystemView.getFileSystemView().getHomeDirectory();
-        JFileChooser j = JFileChooserPreset.importdirectory();
+        JFileChooser j = JFileChooserPreset.importFromDirectory();
         j.showOpenDialog(null);
         return j.getSelectedFile();
     }

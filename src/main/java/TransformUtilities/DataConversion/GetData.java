@@ -48,10 +48,9 @@ public class GetData  {
             int ertragkwh;
             int energieverbrauchw;
 
-            List<Integer> valueseach = new ArrayList<>();
+            List<Integer> valuesEach = new ArrayList<>();
 
-            //String timestamp = DateConverter.Timestamp(values.get(2));
-            DateFormat formatter = new SimpleDateFormat("dd.MM.yy HH:mm:ss");
+            DateFormat formatter = new SimpleDateFormat(DATEFORMAT);
             Date d = formatter.parse(values.get(2));
 
             //getting values
@@ -63,15 +62,15 @@ public class GetData  {
 
 
             //writing values to List
-            valueseach.add(verbrauchw);
-            valueseach.add(verbrauchkwh);
-            valueseach.add(leistungw);
-            valueseach.add(ertragkwh);
-            valueseach.add(energieverbrauchw);
+            valuesEach.add(verbrauchw);
+            valuesEach.add(verbrauchkwh);
+            valuesEach.add(leistungw);
+            valuesEach.add(ertragkwh);
+            valuesEach.add(energieverbrauchw);
 
 
             //Writing List to Map
-            Data.put(d, valueseach);
+            Data.put(d, valuesEach);
         }
         return Data;
     }

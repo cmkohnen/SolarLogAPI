@@ -15,11 +15,11 @@ public class DatePicker extends com.github.lgooddatepicker.components.DatePicker
     public void addVetoPolicy(SolarMap data) {
         DatePickerSettings settings = this.getSettings();
         settings.setVetoPolicy(date -> {
-            Date dateasdate = GetStartOf.day(date);
+            Date dateAsDate = GetStartOf.day(date);
             boolean bool = false;
             try {
-                for(Date timestamp : Entries.entriesperday(dateasdate)) {
-                    if (data.containsKey(dateasdate)) {
+                for(Date ignored : Entries.entriesPerDay(dateAsDate)) {
+                    if (data.containsKey(dateAsDate)) {
                         bool = true;
                         break;
                     }

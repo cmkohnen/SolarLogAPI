@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GraphCustomizer extends JTabbedPane {
-    static JFrame graphframe = new JFrame();
-    static List<JComponent> cmps = new ArrayList<>();
+    static JFrame graphFrame = new JFrame();
+    static List<JComponent> components = new ArrayList<>();
 
     public GraphCustomizer(SolarMap data) {
         addTab("Day View",new DayCustomizer(data));
@@ -21,21 +21,21 @@ public class GraphCustomizer extends JTabbedPane {
         JFrame f = new SimpleFrame(new GraphCustomizer(solarMap));
         f.setSize(200,300);
         f.setResizable(false);
-        f.setTitle("Visuilization");
+        f.setTitle("Visualization");
 
-        graphframe.setSize(1000, 600);
-        graphframe.setLocationRelativeTo(f);
+        graphFrame.setSize(1000, 600);
+        graphFrame.setLocationRelativeTo(f);
     }
 
     public static void setCmp(JComponent c) {
-        for (JComponent cmp : cmps) {
-            graphframe.remove(cmp);
+        for (JComponent cmp : components) {
+            graphFrame.remove(cmp);
         }
-        graphframe.setTitle("Visualize - ");
-        graphframe.add(c);
-        cmps.add(c);
-        graphframe.repaint();
-        graphframe.setVisible(true);
+        graphFrame.setTitle("Visualize - ");
+        graphFrame.add(c);
+        components.add(c);
+        graphFrame.repaint();
+        graphFrame.setVisible(true);
     }
 
 }

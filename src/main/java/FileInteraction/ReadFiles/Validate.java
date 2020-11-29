@@ -31,13 +31,13 @@ public class Validate {
 
     }
 
-    public static List<File> validfiles(List<File> files) throws IOException {
+    public static List<File> validFiles(List<File> files) throws IOException {
         List<File> ValidFiles = new ArrayList<>();
         int i = 0;
         int i2 = 0;
         for (File file : files) {
             i++;
-            Logger.logWithIncommingBoolean("Validating file " + file + " (" + i + " of " + files.size() + ")");
+            Logger.logWithIncomingBoolean("Validating file " + file + " (" + i + " of " + files.size() + ")");
             if(IsValidDataFile(file)) {
                 ValidFiles.add(file);
                 i2++;

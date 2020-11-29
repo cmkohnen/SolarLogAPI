@@ -22,7 +22,7 @@ public class MonthCustomizer extends JPanel{
             if(data.includesMonth(GetStartOf.yearMonth(event.getNewDate()))){
                 try {
                     cmp = new MonthView(data.getMonthData(GetStartOf.yearMonth(event.getNewDate())));
-                    paintcmp();
+                    paintComponent();
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
@@ -49,33 +49,33 @@ public class MonthCustomizer extends JPanel{
         b3.setSelected(true);
         b1.addActionListener(actionEvent -> {
             cmp.setRow1Visible(b1.isSelected());
-            paintcmp();
+            paintComponent();
         });
         b2.addActionListener(actionEvent -> {
             cmp.setRow2Visible(b2.isSelected());
-            paintcmp();
+            paintComponent();
         });
         b3.addActionListener(actionEvent -> {
             cmp.setRow3Visible(b3.isSelected());
-            paintcmp();
+            paintComponent();
         });
         p.add(b1);
         p.add(b2);
         p.add(b3);
 
-        JCheckBox mousegui = new JCheckBox();
-        mousegui.setText("MouseGUI");
-        mousegui.setSelected(true);
-        mousegui.addActionListener(actionEvent -> {
-            cmp.setMouseGUIVisible(mousegui.isSelected());
-            paintcmp();
+        JCheckBox mouseGUI = new JCheckBox();
+        mouseGUI.setText("MouseGUI");
+        mouseGUI.setSelected(true);
+        mouseGUI.addActionListener(actionEvent -> {
+            cmp.setMouseGUIVisible(mouseGUI.isSelected());
+            paintComponent();
         });
-        p.add(mousegui);
+        p.add(mouseGUI);
 
         add(p,BorderLayout.WEST);
     }
 
-    public void paintcmp() {
+    public void paintComponent() {
         GraphCustomizer.setCmp(cmp);
     }
 

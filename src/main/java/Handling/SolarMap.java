@@ -151,7 +151,7 @@ public class SolarMap implements Serializable {
     }
 
     public boolean includesMonth(YearMonth yearMonth) {
-        for (Date date : Entries.entriespermonth(yearMonth)) {
+        for (Date date : Entries.entriesPerMonth(yearMonth)) {
             if(includesDay(date)) {
                 return true;
             }

@@ -33,13 +33,13 @@ public class GetFile {
     }
 
     public static File ChosenTarArchive() {
-        JFileChooser j = JFileChooserPreset.importtar();
+        JFileChooser j = JFileChooserPreset.importFromTar();
         j.showOpenDialog(null);
         return j.getSelectedFile();
     }
 
     public static File ChosenSafeLocation(){
-        JFileChooser j = JFileChooserPreset.SafetoFile();
+        JFileChooser j = JFileChooserPreset.SafeToFile();
         j.showOpenDialog(null);
         File f = j.getSelectedFile();
         if(!f.getName().contains(".solarlog")) {
@@ -50,7 +50,7 @@ public class GetFile {
     }
 
     public static File ChosenReadLocation(){
-        JFileChooser j = JFileChooserPreset.ReadfromFile();
+        JFileChooser j = JFileChooserPreset.ReadFromFile();
         j.showOpenDialog(null);
         return j.getSelectedFile();
     }
@@ -58,7 +58,7 @@ public class GetFile {
     public static List<File> ChosenValidFilesInDirectory() throws IOException {
         File dir = GetDirectory.ChosenDirectory();
         if(!(dir == null) && dir.exists()) {
-            return Validate.validfiles(GetDirectory.files(dir));
+            return Validate.validFiles(GetDirectory.files(dir));
         } else {
             return null;
         }

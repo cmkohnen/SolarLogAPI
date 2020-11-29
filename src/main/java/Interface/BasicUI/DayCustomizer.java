@@ -22,7 +22,7 @@ public class DayCustomizer extends JPanel{
             if(data.includesDay(event.getNewDate())){
                 try {
                     cmp = new DayView(data.getDayGraphData(GetStartOf.day(event.getNewDate())));
-                    paintcmp();
+                    paintComponent();
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
@@ -55,23 +55,23 @@ public class DayCustomizer extends JPanel{
         b5.setSelected(true);
         b1.addActionListener(actionEvent -> {
             cmp.setRow1Visible(b1.isSelected());
-            paintcmp();
+            paintComponent();
         });
         b2.addActionListener(actionEvent -> {
             cmp.setRow2Visible(b2.isSelected());
-            paintcmp();
+            paintComponent();
         });
         b3.addActionListener(actionEvent -> {
             cmp.setRow3Visible(b3.isSelected());
-            paintcmp();
+            paintComponent();
         });
         b4.addActionListener(actionEvent -> {
             cmp.setRow4Visible(b4.isSelected());
-            paintcmp();
+            paintComponent();
         });
         b5.addActionListener(actionEvent -> {
             cmp.setRow5Visible(b5.isSelected());
-            paintcmp();
+            paintComponent();
         });
         p.add(b1);
         p.add(b2);
@@ -79,19 +79,19 @@ public class DayCustomizer extends JPanel{
         p.add(b4);
         p.add(b5);
 
-        JCheckBox mousegui = new JCheckBox();
-        mousegui.setText("MouseGUI");
-        mousegui.setSelected(true);
-        mousegui.addActionListener(actionEvent -> {
-            cmp.setMouseGUIVisible(mousegui.isSelected());
-            paintcmp();
+        JCheckBox mouseGUI = new JCheckBox();
+        mouseGUI.setText("MouseGUI");
+        mouseGUI.setSelected(true);
+        mouseGUI.addActionListener(actionEvent -> {
+            cmp.setMouseGUIVisible(mouseGUI.isSelected());
+            paintComponent();
         });
-        p.add(mousegui);
+        p.add(mouseGUI);
 
         add(p,BorderLayout.WEST);
     }
 
-    public void paintcmp() {
+    public void paintComponent() {
         GraphCustomizer.setCmp(cmp);
     }
 
