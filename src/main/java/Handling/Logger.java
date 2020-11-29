@@ -8,8 +8,24 @@ package Handling;
  */
 public class Logger {
 
+    private static boolean booleanMissing = false;
 
-    protected Logger() {
+    public Logger() {
+    }
+
+    public static void logWithIncomingBoolean(Object o) {
+        booleanMissing = true;
+        System.out.print(o);
+    }
+    public static void logTheBoolean(Boolean b) {
+        if(booleanMissing) {
+            booleanMissing = false;
+            if(b) {
+                System.out.print("    yes\n");
+            } else {
+                System.out.print("    no\n");
+            }
+        }
     }
 
     public static void log(Object o){

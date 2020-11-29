@@ -1,32 +1,33 @@
 package Interface.BasicUI;
 
+import Handling.SolarMap;
 import Interface.DatePicker;
 import Interface.Graph.DayView;
-import Interface.Graph.Graph;
+import TransformUtilities.DataConversion.GetStartOf;
 
 import javax.swing.*;
 import java.awt.*;
 import java.text.ParseException;
-import java.time.ZoneId;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
 
+/**
+ * This Class includes a function to display daily graph data.
+ * @author ChaosMelone9
+ * @since 1.0.0
+ */
 public class DayCustomizer extends JPanel{
     static DayView cmp = null;
 
-    public DayCustomizer(Map<Date, List<Integer>> data) {
+    public DayCustomizer(SolarMap data) {
         setLayout(new BorderLayout());
 
         DatePicker picker = new DatePicker();
         picker.addVetoPolicy(data);
         picker.setMaximumSize(new Dimension(200,40));
         picker.addDateChangeListener(event -> {
-            Date daystamp = Date.from(event.getNewDate().atStartOfDay(ZoneId.systemDefault()).toInstant());
-            if(data.containsKey(daystamp)){
+            if(data.includesDay(event.getNewDate())){
                 try {
-                    cmp = Graph.dayView(daystamp,data);
-                    paintcmp();
+                    cmp = new DayView(data.getDayGraphData(GetStartOf.day(event.getNewDate())));
+                    paintComponent();
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
@@ -59,23 +60,23 @@ public class DayCustomizer extends JPanel{
         b5.setSelected(true);
         b1.addActionListener(actionEvent -> {
             cmp.setRow1Visible(b1.isSelected());
-            paintcmp();
+            paintComponent();
         });
         b2.addActionListener(actionEvent -> {
             cmp.setRow2Visible(b2.isSelected());
-            paintcmp();
+            paintComponent();
         });
         b3.addActionListener(actionEvent -> {
             cmp.setRow3Visible(b3.isSelected());
-            paintcmp();
+            paintComponent();
         });
         b4.addActionListener(actionEvent -> {
             cmp.setRow4Visible(b4.isSelected());
-            paintcmp();
+            paintComponent();
         });
         b5.addActionListener(actionEvent -> {
             cmp.setRow5Visible(b5.isSelected());
-            paintcmp();
+            paintComponent();
         });
         p.add(b1);
         p.add(b2);
@@ -83,19 +84,19 @@ public class DayCustomizer extends JPanel{
         p.add(b4);
         p.add(b5);
 
-        JCheckBox mousegui = new JCheckBox();
-        mousegui.setText("MouseGUI");
-        mousegui.setSelected(true);
-        mousegui.addActionListener(actionEvent -> {
-            cmp.setMouseGUIVisible(mousegui.isSelected());
-            paintcmp();
+        JCheckBox mouseGUI = new JCheckBox();
+        mouseGUI.setText("MouseGUI");
+        mouseGUI.setSelected(true);
+        mouseGUI.addActionListener(actionEvent -> {
+            cmp.setMouseGUIVisible(mouseGUI.isSelected());
+            paintComponent();
         });
-        p.add(mousegui);
+        p.add(mouseGUI);
 
         add(p,BorderLayout.WEST);
     }
 
-    public void paintcmp() {
+    public void paintComponent() {
         GraphCustomizer.setCmp(cmp);
     }
 

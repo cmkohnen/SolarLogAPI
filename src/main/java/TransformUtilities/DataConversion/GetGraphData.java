@@ -9,45 +9,50 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * This Class includes functions to get values to display in graph.
+ * @author ChaosMelone9
+ * @since 0.1.0
+ */
 public class GetGraphData {
     public static List<List<Double>> dayView(Date day, Map<Date, List<Integer>> data) throws ParseException {
-        List<Date> timestamps = Entries.entriesperday(day);
+        List<Date> timestamps = Entries.entriesPerDay(day);
 
         List<List<Double>> values = new ArrayList<>();
 
         for (Date timestamp : timestamps) {
-            List<Double> currentdata = new ArrayList<>();
+            List<Double> currentData = new ArrayList<>();
             int verbrauchw = data.get(timestamp).get(0);
             int verbrauchkwh = data.get(timestamp).get(1);
             int leistungw = data.get(timestamp).get(2);
             int ertragkwh = data.get(timestamp).get(3);
             int energieverbrauchw = data.get(timestamp).get(4);
 
-            currentdata.add((double) verbrauchw);
-            currentdata.add((double) verbrauchkwh);
-            currentdata.add((double) leistungw);
-            currentdata.add((double) ertragkwh);
-            currentdata.add((double) energieverbrauchw);
+            currentData.add((double) verbrauchw);
+            currentData.add((double) verbrauchkwh);
+            currentData.add((double) leistungw);
+            currentData.add((double) ertragkwh);
+            currentData.add((double) energieverbrauchw);
 
-            values.add(currentdata);
+            values.add(currentData);
         }
         return values;
     }
 
 
     public static List<List<Double>> monthView(YearMonth month, Map<Date, List<Integer>> data) throws ParseException {
-        List<Date> timestamps = Entries.entriespermonth(month);
+        List<Date> timestamps = Entries.entriesPerMonth(month);
 
         List<List<Double>> values = new ArrayList<>();
 
         for (Date timestamp : timestamps) {
                 Logger.log("Importing from " + timestamp);
-                List<Double> currentdata = new ArrayList<>();
+                List<Double> currentData = new ArrayList<>();
                 int Erzeugungkwh = 0;
                 int Verbrauchkwh = 0;
                 int Eigenverbrauchkwh = 0;
 
-                List<Date> days = Entries.entriesperday(timestamp);
+                List<Date> days = Entries.entriesPerDay(timestamp);
                 for (Date date : days) {
                     if (data.containsKey(date)) {
                         int verbrauchw = data.get(date).get(0);
@@ -60,11 +65,11 @@ public class GetGraphData {
                     }
                 }
 
-                currentdata.add((double) Erzeugungkwh);
-                currentdata.add((double) Verbrauchkwh);
-                currentdata.add((double) Eigenverbrauchkwh);
+                currentData.add((double) Erzeugungkwh);
+                currentData.add((double) Verbrauchkwh);
+                currentData.add((double) Eigenverbrauchkwh);
 
-                values.add(currentdata);
+                values.add(currentData);
         }
         return values;
     }

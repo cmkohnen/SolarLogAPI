@@ -9,6 +9,11 @@ import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This Class represents the implementation of a simple graph for daily scale.
+ * @author ChaosMelone9
+ * @since 0.1.0
+ */
 public class DayView extends JPanel {
 
         private final List<List<Double>> data;
@@ -25,7 +30,7 @@ public class DayView extends JPanel {
 
         private int padding = 25;
         private int labelPadding = 25;
-        private int valuepadding = 10;
+        private int valuePadding = 10;
 
         private boolean Row1Visible = true;
         private boolean Row2Visible = true;
@@ -33,7 +38,7 @@ public class DayView extends JPanel {
         private boolean Row4Visible = true;
         private boolean Row5Visible = true;
 
-        private boolean mousegui = true;
+        private boolean mouseGUI = true;
 
         private int mouseX;
         private int mouseY;
@@ -44,6 +49,7 @@ public class DayView extends JPanel {
             this.data = data;
         }
 
+        @SuppressWarnings("DuplicatedCode")
         @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
@@ -53,8 +59,8 @@ public class DayView extends JPanel {
 
             Stroke stroke = g2.getStroke();
 
-             double yaScale = ((double) getHeight() - 2 * padding - labelPadding) / (getMaxaScore() - getMinScore());
-             double ybScale = ((double) getHeight() - 2 * padding - labelPadding) / (getMaxbScore() - getMinScore());
+             double yaScale = ((double) getHeight() - 2 * padding - labelPadding) / (getMaxAScore() - getMinScore());
+             double ybScale = ((double) getHeight() - 2 * padding - labelPadding) / (getMaxBScore() - getMinScore());
 
             List<Point> Row1 = new ArrayList<>();
             List<Point> Row2 = new ArrayList<>();
@@ -64,11 +70,11 @@ public class DayView extends JPanel {
             for (int i = 0; i < data.size(); i++) {
                 int x = (int) (i * xScale + padding + labelPadding);
 
-                int Row1y = (int) ((getMaxaScore() - data.get(i).get(0)) * yaScale + padding);
-                int Row2y = (int) ((getMaxbScore() - data.get(i).get(1)) * ybScale + padding);
-                int Row3y = (int) ((getMaxaScore() - data.get(i).get(2)) * yaScale + padding);
-                int Row4y = (int) ((getMaxbScore() - data.get(i).get(3)) * ybScale + padding);
-                int Row5y = (int) ((getMaxaScore() - data.get(i).get(4)) * yaScale + padding);
+                int Row1y = (int) ((getMaxAScore() - data.get(i).get(0)) * yaScale + padding);
+                int Row2y = (int) ((getMaxBScore() - data.get(i).get(1)) * ybScale + padding);
+                int Row3y = (int) ((getMaxAScore() - data.get(i).get(2)) * yaScale + padding);
+                int Row4y = (int) ((getMaxBScore() - data.get(i).get(3)) * ybScale + padding);
+                int Row5y = (int) ((getMaxAScore() - data.get(i).get(4)) * yaScale + padding);
                 Row1.add(new Point(x, Row1y));
                 Row2.add(new Point(x, Row2y));
                 Row3.add(new Point(x, Row3y));
@@ -94,8 +100,8 @@ public class DayView extends JPanel {
                 g2.setColor(GridColor);
                 g2.drawLine(padding + labelPadding + 1 + pointWidth, y0, getWidth() - padding - labelPadding, y0);
                 g2.setColor(LabelColor);
-                String y1Label = ((int) ((getMinScore() + (getMaxaScore() - getMinScore()) * ((i * 1.0) / numberYDivisions)) * 100)) / 100 + "";
-                String y2Label = ((int) ((getMinScore() + (getMaxbScore() - getMinScore()) * ((i * 1.0) / numberYDivisions)) * 100)) / 100 + "";
+                String y1Label = ((int) ((getMinScore() + (getMaxAScore() - getMinScore()) * ((i * 1.0) / numberYDivisions)) * 100)) / 100 + "";
+                String y2Label = ((int) ((getMinScore() + (getMaxBScore() - getMinScore()) * ((i * 1.0) / numberYDivisions)) * 100)) / 100 + "";
                 FontMetrics metrics = g2.getFontMetrics();
                 int label1Width = metrics.stringWidth(y1Label);
                 g2.drawString(y1Label, x0 - label1Width - 5, y0 + (metrics.getHeight() / 2) - 3);
@@ -185,35 +191,40 @@ public class DayView extends JPanel {
                 }
             }
 
-            if(mouseX >= labelPadding + padding & mouseX <= getWidth() - labelPadding - padding & mouseY >= padding & mouseY <= getHeight() - padding - labelPadding & mousegui){
+            if(mouseX >= labelPadding + padding & mouseX <= getWidth() - labelPadding - padding & mouseY >= padding & mouseY <= getHeight() - padding - labelPadding & mouseGUI & visibleRows() > 0){
                 g2.setStroke(stroke);
                 g2.setColor(BackgroundColor);
-                g2.fillRect(padding + labelPadding, padding, 200, ((valuepadding + 12) * visibleRows()) + 20);
+                g2.fillRect(padding + labelPadding, padding, 200, ((valuePadding + 12) * visibleRows()) + 20);
                 g2.setColor(GridColor);
-                g2.drawRect(padding + labelPadding, padding, 200, ((valuepadding + 12) * visibleRows()) + 20);
+                g2.drawRect(padding + labelPadding, padding, 200, ((valuePadding + 12) * visibleRows()) + 20);
                 double ExactMouseXValue = (mouseX - padding -labelPadding) / xScale;
 
                 g2.setColor(LabelColor);
-                g2.drawString("Values at " + Entries.timestamps().get((int)Math.floor(ExactMouseXValue)), padding + labelPadding + valuepadding, padding + valuepadding * 2);
+                g2.drawString("Values at " + Entries.timestamps().get((int)Math.floor(ExactMouseXValue)), padding + labelPadding + valuePadding, padding + valuePadding * 2);
 
+                int i = 2;
                 if(Row1Visible) {
-                    g2.drawString("verbrauchw: " + Math.round(data.get((int)ExactMouseXValue).get(0)), padding + labelPadding + valuepadding, padding + (valuepadding * 2) * 2);
+                    g2.drawString("verbrauchw: " + Math.round(data.get((int)ExactMouseXValue).get(0)), padding + labelPadding + valuePadding, padding + (valuePadding * 2) * i);
+                    i++;
                 }
                 if(Row2Visible) {
-                    g2.drawString("verbrauchkwh: " + Math.round(data.get((int)ExactMouseXValue).get(1)), padding + labelPadding + valuepadding, padding + (valuepadding * 2) * 3);
+                    g2.drawString("verbrauchkwh: " + Math.round(data.get((int)ExactMouseXValue).get(1)), padding + labelPadding + valuePadding, padding + (valuePadding * 2) * i);
+                    i++;
                 }
                 if(Row3Visible) {
-                    g2.drawString("leistungw: " + Math.round(data.get((int)ExactMouseXValue).get(2)), padding + labelPadding + valuepadding, padding + (valuepadding * 2) * 4);
+                    g2.drawString("leistungw: " + Math.round(data.get((int)ExactMouseXValue).get(2)), padding + labelPadding + valuePadding, padding + (valuePadding * 2) * i);
+                    i++;
                 }
                 if(Row4Visible) {
-                    g2.drawString("ertragkwh: " + Math.round(data.get((int)ExactMouseXValue).get(3)), padding + labelPadding + valuepadding, padding + (valuepadding * 2) * 5);
+                    g2.drawString("ertragkwh: " + Math.round(data.get((int)ExactMouseXValue).get(3)), padding + labelPadding + valuePadding, padding + (valuePadding * 2) * i);
+                    i++;
                 }
                 if(Row5Visible) {
-                    g2.drawString("energieverbrauchw: " + Math.round(data.get((int)ExactMouseXValue).get(4)), padding + labelPadding + valuepadding, padding + (valuepadding * 2) * 6);
+                    g2.drawString("energieverbrauchw: " + Math.round(data.get((int)ExactMouseXValue).get(4)), padding + labelPadding + valuePadding, padding + (valuePadding * 2) * i);
                 }
             }
 
-            if(mousegui) {
+            if(mouseGUI) {
                 addMouseMotionListener(new MouseMotionListener() {
                     @Override
                     public void mouseDragged(MouseEvent mouseEvent) {
@@ -241,7 +252,7 @@ public class DayView extends JPanel {
             return minScore;
         }
 
-        private double getMaxaScore() {
+        private double getMaxAScore() {
             double maxScore = Double.MIN_VALUE;
             assert data != null;
             for (List<Double> score : data) {
@@ -253,7 +264,7 @@ public class DayView extends JPanel {
             return maxScore;
         }
 
-        private double getMaxbScore() {
+        private double getMaxBScore() {
             double maxScore = Double.MIN_VALUE;
             for (List<Double> score : data) {
                 maxScore = Math.max(maxScore, score.get(1));
@@ -318,7 +329,8 @@ public class DayView extends JPanel {
             labelPadding = i;
         }
 
-        public void setValuePadding(int i) {valuepadding = i; }
+        public void setValuePadding(int i) {
+            valuePadding = i; }
 
         public void setRow1Visible(boolean rowVisible) {
             Row1Visible = rowVisible;
@@ -341,7 +353,7 @@ public class DayView extends JPanel {
         }
 
         public void setMouseGUIVisible(boolean mouseGUIVisible) {
-            mousegui = mouseGUIVisible;
+            mouseGUI = mouseGUIVisible;
         }
 
 }
