@@ -3,8 +3,10 @@ package Interface.BasicUI;
 import FileInteraction.GetFile;
 import FileInteraction.Tools.FileObject;
 import FileInteraction.WirteFiles.WriteFileObject;
+import Handling.SolarMap;
 
 import javax.swing.*;
+import java.io.File;
 import java.io.IOException;
 
 /**
@@ -15,7 +17,10 @@ import java.io.IOException;
 public class BasicConversion extends JPanel {
 
     public static void run() throws IOException {
-        FileObject fileObject = new FileObject(BasicSolarMapCustomizer.solarMap().getAsMap());
-        WriteFileObject.write(GetFile.ChosenSafeLocation(),fileObject);
+        SolarMap solarMap = BasicSolarMapCustomizer.solarMap();
+        FileObject fileObject = new FileObject(solarMap.getAsMap());
+        File saveLocation = GetFile.ChosenSafeLocation();
+        WriteFileObject.write(saveLocation,fileObject);
+        System.exit(0);
     }
 }
