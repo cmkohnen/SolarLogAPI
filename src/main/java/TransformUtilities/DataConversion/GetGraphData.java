@@ -9,6 +9,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * This Class includes functions to get values to display in graph.
+ * @author ChaosMelone9
+ * @since 0.1.0
+ */
 public class GetGraphData {
     public static List<List<Double>> dayView(Date day, Map<Date, List<Integer>> data) throws ParseException {
         List<Date> timestamps = Entries.entriesPerDay(day);

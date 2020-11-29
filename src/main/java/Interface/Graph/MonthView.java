@@ -7,6 +7,11 @@ import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This Class represents the implementation of a simple graph for monthly scale.
+ * @author ChaosMelone9
+ * @since 0.1.1
+ */
 public class MonthView extends JPanel {
 
     private final List<List<Double>> data;

@@ -19,6 +19,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * This Class provides a universal way to handle the data and implements useful functions to convert data
+ * @author ChaosMelone9
+ * @since 2.0.0
+ */
 public class SolarMap implements Serializable {
     private Map<Date, List<Integer>> data = new HashMap<>();
 

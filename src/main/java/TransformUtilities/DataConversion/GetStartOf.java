@@ -5,6 +5,11 @@ import java.time.YearMonth;
 import java.time.ZoneId;
 import java.util.Date;
 
+/**
+ * This Class includes functions to get the start of something.
+ * @author ChaosMelone9
+ * @since 2.0.0
+ */
 public class GetStartOf {
     public static Date day(LocalDate date) {
         return Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant());

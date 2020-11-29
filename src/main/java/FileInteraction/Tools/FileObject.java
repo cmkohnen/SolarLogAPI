@@ -9,7 +9,7 @@ import java.util.Map;
 /**
  * DO NOT TOUCH
  * This class represents the object used to store data in permanent files. Changing it causes all old files to be incompatible.
- * @author Meloni
+ * @author ChaosMelone9
  * @version 2
  * @since 2.0.0
  */

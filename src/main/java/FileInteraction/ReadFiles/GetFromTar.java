@@ -15,6 +15,12 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.zip.GZIPInputStream;
 
+/**
+ * This Class includes functions to get the content of a tar archive.
+ * @author ChaosMelone9
+ * @since 1.0.0
+ * @version 2
+ */
 public class GetFromTar {
 
     private static List<File> unTar(final File inputFile, final File outputDir) throws Exception {

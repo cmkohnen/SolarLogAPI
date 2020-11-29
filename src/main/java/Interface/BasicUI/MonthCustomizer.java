@@ -9,6 +9,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.text.ParseException;
 
+/**
+ * This Class includes a function to display monthly graph data.
+ * @author ChaosMelone9
+ * @since 1.0.0
+ */
 public class MonthCustomizer extends JPanel{
     static MonthView cmp = null;
 

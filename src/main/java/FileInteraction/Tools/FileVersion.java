@@ -9,6 +9,11 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
+/**
+ * This Class includes functions to determine whether a file is usable and currently supported.
+ * @author ChaosMelone9
+ * @since 1.0.0
+ */
 public class FileVersion {
 
     public static boolean isSupported(File file) throws IOException {

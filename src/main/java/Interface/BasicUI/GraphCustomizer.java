@@ -7,6 +7,11 @@ import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This Class includes functions to customize a graph.
+ * @author ChaosMelone9
+ * @since 1.0.0
+ */
 public class GraphCustomizer extends JTabbedPane {
     static JFrame graphFrame = new JFrame();
     static List<JComponent> components = new ArrayList<>();

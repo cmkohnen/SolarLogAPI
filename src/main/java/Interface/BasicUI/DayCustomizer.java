@@ -9,6 +9,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.text.ParseException;
 
+/**
+ * This Class includes a function to display daily graph data.
+ * @author ChaosMelone9
+ * @since 1.0.0
+ */
 public class DayCustomizer extends JPanel{
     static DayView cmp = null;
 

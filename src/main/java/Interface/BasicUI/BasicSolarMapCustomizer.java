@@ -11,6 +11,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This Class includes a function to call a GUI capable of customizing a SolarMap to the users likes.
+ * @author ChaosMelone9
+ * @since 1.0.0
+ */
 public class BasicSolarMapCustomizer {
 
     private static final JPanel filePanel = new JPanel();

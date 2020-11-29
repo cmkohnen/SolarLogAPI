@@ -9,6 +9,11 @@ import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This Class represents the implementation of a simple graph for daily scale.
+ * @author ChaosMelone9
+ * @since 0.1.0
+ */
 public class DayView extends JPanel {
 
         private final List<List<Double>> data;
