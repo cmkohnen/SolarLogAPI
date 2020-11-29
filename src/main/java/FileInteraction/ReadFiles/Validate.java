@@ -18,7 +18,7 @@ import java.util.List;
 public class Validate {
     public static boolean IsValidDataFile(File file) throws IOException {
         boolean valid = false;
-        if(file.getName().contains(".dat") & file.canRead()) {
+        if(file.getName().contains(".dat") & file.getName().contains("backup_data") & file.canRead()) {
             if(GetFileContent.FileContent(GetFile.Path(file)).startsWith("#")){
                 if(FileVersion.isSupported(file)){
                         valid = true;
@@ -37,10 +37,13 @@ public class Validate {
         int i2 = 0;
         for (File file : files) {
             i++;
-            Logger.log("Validating file " + file + " (" + (i - 1) + " of " + files.size() + " done, found: " + i2 + ")");
+            Logger.logWithIncommingBoolean("Validating file " + file + " (" + i + " of " + files.size() + ")");
             if(IsValidDataFile(file)) {
                 ValidFiles.add(file);
                 i2++;
+                Logger.logTheBoolean(true);
+            } else {
+                Logger.logTheBoolean(false);
             }
         }
         Logger.log("Done. Checked " + i + ", found " + i2);
@@ -49,7 +52,7 @@ public class Validate {
 
     public static boolean isValidSolarLogFile(File f) throws IOException, ClassNotFoundException {
         if(f.getName().contains(".solarlog")) {
-            FileObject fileObject = (FileObject) ReadFileObject.fileObject(GetFile.ChosenReadLocation());
+            FileObject fileObject = ReadFileObject.fileObject(GetFile.ChosenReadLocation());
             return (boolean) fileObject.getInformation("valid");
         }
         return false;

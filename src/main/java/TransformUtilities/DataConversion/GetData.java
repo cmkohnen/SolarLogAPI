@@ -3,6 +3,7 @@ package TransformUtilities.DataConversion;
 import FileInteraction.GetFile;
 import FileInteraction.ReadFiles.GetFileContent;
 import FileInteraction.Tools.FileVersion;
+import Handling.Logger;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,6 +29,7 @@ public class GetData  {
      static final String DATEFORMAT = "dd.MM.yy HH:mm:ss";
 
     public static Map<Date, List<Integer>> MinuteDataMap(File file) throws ParseException, IOException {
+        Logger.log("Importing from " + file);
         String fileVersion = FileVersion.getFileVersion(file);
         List<Integer> positions = FileVersion.matrix().get(fileVersion);
 

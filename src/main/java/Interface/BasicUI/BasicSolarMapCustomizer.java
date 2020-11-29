@@ -3,7 +3,6 @@ package Interface.BasicUI;
 import FileInteraction.GetFile;
 import Handling.Logger;
 import Handling.SolarMap;
-import Interface.SimpleFrame;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,23 +13,26 @@ import java.util.List;
 
 public class BasicSolarMapCustomizer {
 
-    private static JPanel filepanel = new JPanel();
-    private JPanel files = new JPanel();
-    private SolarMap map = new SolarMap();
+    private static final JPanel filepanel = new JPanel();
+    private final JPanel files = new JPanel();
+    private final SolarMap map = new SolarMap();
     private boolean done = false;
-    private List<File> importFiles = new ArrayList<>();
-    private List<File> importTars = new ArrayList<>();
-    private List<File> dataFiles = new ArrayList<>();
+    private final List<File> importFiles = new ArrayList<>();
+    private final List<File> importTars = new ArrayList<>();
+    private final List<File> dataFiles = new ArrayList<>();
 
     public BasicSolarMapCustomizer() {
         initPanel();
     }
 
     public static SolarMap solarMap() {
-        JFrame f = new SimpleFrame(filepanel);
+        JFrame f = new JFrame();
+        f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         f.setSize(300,500);
         f.setTitle("Customization");
         BasicSolarMapCustomizer basicSolarMapCustomizer = new BasicSolarMapCustomizer();
+        f.add(filepanel);
+        f.setVisible(true);
         while (!basicSolarMapCustomizer.done) {
             System.getSecurityManager();
         }
@@ -47,15 +49,21 @@ public class BasicSolarMapCustomizer {
 
         JButton addFile = new JButton("Add File");
         addFile.addActionListener(e -> {
-            importFiles.add(GetFile.ValidChosenDataFile());
-            repaintList();
+            File f = GetFile.ValidChosenDataFile();
+            if(!(f == null) && f.exists()) {
+                importFiles.add(f);
+                repaintList();
+            }
         });
 
         JButton addDirectory = new JButton("Add from Folder");
         addDirectory.addActionListener(e -> {
             try {
-                importFiles.addAll(GetFile.ChosenValidFilesInDirectory());
-                repaintList();
+                List<File> files = GetFile.ChosenValidFilesInDirectory();
+                if(!(files == null)) {
+                    importFiles.addAll(files);
+                    repaintList();
+                }
             } catch (IOException ioException) {
                 ioException.printStackTrace();
             }
@@ -63,15 +71,21 @@ public class BasicSolarMapCustomizer {
 
         JButton addTar = new JButton("Add from tar");
         addTar.addActionListener(e -> {
-            importTars.add(GetFile.ChosenTarArchive());
-            repaintList();
+            File f = GetFile.ChosenTarArchive();
+            if(!(f == null) && f.exists()) {
+                importTars.add(GetFile.ChosenTarArchive());
+                repaintList();
+            }
         });
 
         JButton addTars = new JButton("Add from tars");
         addTars.addActionListener(e -> {
             try {
-                importTars.addAll(GetFile.ChosenTarsInDirectory());
-                repaintList();
+                List<File> files = GetFile.ChosenTarsInDirectory();
+                if(!(files == null)) {
+                    importTars.addAll(files);
+                    repaintList();
+                }
             } catch (Exception exception) {
                 exception.printStackTrace();
             }
@@ -79,8 +93,11 @@ public class BasicSolarMapCustomizer {
 
         JButton addDataFile = new JButton("Add from Data File");
         addDataFile.addActionListener(e -> {
-            dataFiles.add(GetFile.ChosenReadLocation());
-            repaintList();
+            File f = GetFile.ChosenReadLocation();
+            if(!(f == null) && f.exists()) {
+                dataFiles.add(f);
+                repaintList();
+            }
         });
 
         buttons.add(addFile);

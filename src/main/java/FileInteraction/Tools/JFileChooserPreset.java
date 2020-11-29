@@ -65,17 +65,7 @@ public class JFileChooserPreset {
         j.setFileFilter(new FileFilter() {
             @Override
             public boolean accept(File f) {
-                boolean bool = false;
-                if(f.getName().contains(".solarlog")) {
-                    try {
-                        bool =  Validate.isValidSolarLogFile(f);
-                    } catch (IOException | ClassNotFoundException e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    bool = f.isDirectory();
-                }
-                return bool;
+                return f.getName().contains(".solarlog") || f.isDirectory();
             }
 
             @Override

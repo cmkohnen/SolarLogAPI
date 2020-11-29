@@ -10,7 +10,7 @@ import java.io.IOException;
 public class BasicConversion extends JPanel {
 
     public static void run() throws IOException {
-        FileObject fileObject = new FileObject(BasicSolarMapCustomizer.solarMap());
+        FileObject fileObject = new FileObject(BasicSolarMapCustomizer.solarMap().getAsMap());
         WriteFileObject.write(GetFile.ChosenSafeLocation(),fileObject);
     }
 }

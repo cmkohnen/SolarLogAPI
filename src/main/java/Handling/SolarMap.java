@@ -42,8 +42,14 @@ public class SolarMap implements Serializable {
         map.forEach((date, integers) -> data.putIfAbsent(date, integers));
     }
 
+    public void addFromSolarMap(SolarMap map) {
+        addFromMap(map.getAsMap());
+    }
+
     public void addImportFromFile(File file) throws IOException, ParseException {
-        addFromMap(GetData.MinuteDataMap(file));
+        if(file.exists()) {
+            addFromMap(GetData.MinuteDataMap(file));
+        }
     }
 
     public void addImportFromFiles(List<File> files) throws IOException, ParseException {
@@ -53,7 +59,9 @@ public class SolarMap implements Serializable {
     }
 
     public void addFromTar(File file) throws Exception {
-        addImportFromFiles(GetFromTar.getValidFilesFromTarArchive(file));
+        if(file.exists()) {
+            addImportFromFiles(GetFromTar.getValidFilesFromTarArchive(file));
+        }
     }
 
     public void addFromTars(List<File> files) throws Exception {
@@ -65,7 +73,7 @@ public class SolarMap implements Serializable {
     }
 
     public void addFromDataFile(File file) throws IOException, ClassNotFoundException {
-        addFromFileObject((FileObject) ReadFileObject.fileObject(file));
+        addFromFileObject(ReadFileObject.fileObject(file));
     }
 
     public void addFromDataFiles(List<File> files) throws IOException, ClassNotFoundException {
@@ -73,6 +81,8 @@ public class SolarMap implements Serializable {
             addFromDataFile(file);
         }
     }
+
+
 
 
 
@@ -104,6 +114,10 @@ public class SolarMap implements Serializable {
 
     public List<List<Double>> getMonthData(YearMonth yearMonth) throws ParseException {
         return GetGraphData.monthView(yearMonth, data);
+    }
+
+    public FileObject getFileObject() {
+        return new FileObject(this.getAsMap());
     }
 
 
