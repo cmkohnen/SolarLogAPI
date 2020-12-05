@@ -17,7 +17,8 @@ public class MonthView extends JPanel {
     private final List<List<Double>> data;
 
     private Color GridColor = Color.DARK_GRAY;
-    private Color BackgroundColor = Color.WHITE;
+    private Color BackgroundColor = Color.GRAY;
+    private Color GraphBackgroundColor = Color.WHITE;
     private Color AxisColor = Color.BLACK;
     private Color LabelColor = Color.BLACK;
     private Color Row1Color = new Color(191, 97, 106);
@@ -68,11 +69,12 @@ public class MonthView extends JPanel {
             Row3.add(new Point(x, Row3y));
         }
 
-
         //paint background
         g2.setColor(BackgroundColor);
         g2.fillRect(0,0,getWidth(),getHeight());
 
+        g2.setColor(GraphBackgroundColor);
+        g2.fillRect(padding + labelPadding, padding, getWidth() - (padding * 2) - labelPadding, getHeight() - (padding * 2));
 
         g2.setColor(AxisColor);
 
@@ -143,8 +145,6 @@ public class MonthView extends JPanel {
             }
         }
 
-
-
         if(mouseX >= labelPadding + padding & mouseX <= getWidth() - labelPadding - padding & mouseY >= padding & mouseY <= getHeight() - padding & mouseGUI & visibleRows() > 0){
             g2.setStroke(stroke);
             g2.setColor(BackgroundColor);
@@ -169,7 +169,6 @@ public class MonthView extends JPanel {
             }
         }
 
-
         if(mouseGUI) {
             addMouseMotionListener(new MouseMotionListener() {
                 @Override
@@ -186,7 +185,6 @@ public class MonthView extends JPanel {
                 }
             });
         }
-
     }
 
     private double getMinScore() {
@@ -218,13 +216,16 @@ public class MonthView extends JPanel {
         return i;
     }
 
-
     public void setGridColor(Color color){
         GridColor = color;
     }
 
     public void setBackgroundColor(Color color){
         BackgroundColor = color;
+    }
+
+    public void setGraphBackgroundColor(Color graphBackgroundColor) {
+        GraphBackgroundColor = graphBackgroundColor;
     }
 
     public void setAxisColor(Color color){
@@ -273,5 +274,4 @@ public class MonthView extends JPanel {
     public void setMouseGUIVisible(boolean mouseGUIVisible) {
         mouseGUI = mouseGUIVisible;
     }
-
 }
