@@ -19,11 +19,9 @@ public class Validate {
     public static boolean IsValidDataFile(File file) throws IOException {
         boolean valid = false;
         if(file.getName().contains(".dat") & file.getName().contains("backup_data") & file.canRead()) {
-            if(GetFileContent.FileContent(GetFile.Path(file)).startsWith("#")){
                 if(FileVersion.isSupported(file)){
                         valid = true;
                 }
-            }
         }
 
 

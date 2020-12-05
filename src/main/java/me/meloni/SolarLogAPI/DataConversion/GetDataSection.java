@@ -1,7 +1,9 @@
 package me.meloni.SolarLogAPI.DataConversion;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * This Class includes functions to only use lines in files which contain the wanted information.
@@ -16,8 +18,18 @@ public class GetDataSection {
     static int InfoRowPosition = 0;
     static int FileVersionPosition = 1;
 
-    public static String InfoRow(List<String> data) {
-        return data.get(InfoRowPosition);
+    public static String InfoRow(List<String> data) { return data.get(InfoRowPosition); }
+
+    public static String InfoRow(File fromFile) throws IOException {
+        InputStream inputStream = new FileInputStream(fromFile);
+        Scanner scanner = new Scanner(inputStream, "UTF-8");
+        String info = null;
+        if(scanner.hasNextLine()) {
+            info = scanner.nextLine();
+        }
+        scanner.close();
+        inputStream.close();
+        return info;
     }
 
     public static String FileVersion(List<String> data) {

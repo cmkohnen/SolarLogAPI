@@ -42,14 +42,20 @@ public class FileInformation {
     }
 
     public static String build(String InfoRow){
-        return list1(InfoRow).get(10) + " " + list1(InfoRow).get(11) + " " + list1(InfoRow).get(12);
+        if(InfoRow != null) {
+            return list1(InfoRow).get(10) + " " + list1(InfoRow).get(11) + " " + list1(InfoRow).get(12);
+        } else return null;
     }
 
     public static String buildVersion(String InfoRow){
-        return list1(InfoRow).get(10).substring(1,6);
+        if(InfoRow != null) {
+            return list1(InfoRow).get(10).substring(1,6);
+        } else return null;
     }
 
     private static List<String> list1(String InfoRow) {
-        return Arrays.asList(InfoRow.split(" "));
+        if(InfoRow != null) {
+            return Arrays.asList(InfoRow.split(" "));
+        } else return null;
     }
 }

@@ -1,13 +1,14 @@
 package me.meloni.SolarLogAPI.FileInteraction.Tools;
 
-import me.meloni.SolarLogAPI.FileInteraction.GetFile;
-import me.meloni.SolarLogAPI.FileInteraction.ReadFiles.GetFileContent;
 import me.meloni.SolarLogAPI.DataConversion.FileInformation;
 import me.meloni.SolarLogAPI.DataConversion.GetDataSection;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * This Class includes functions to determine whether a file is usable and currently supported.
@@ -33,7 +34,7 @@ public class FileVersion {
     }
 
     public static String getFileVersion(File file) throws IOException {
-        return FileInformation.buildVersion(GetDataSection.InfoRow(GetFileContent.FileContentAsList(GetFile.Path(file))));
+        return FileInformation.buildVersion(GetDataSection.InfoRow(file));
     }
 
     public static Map<String, List<Integer>> matrix() {
