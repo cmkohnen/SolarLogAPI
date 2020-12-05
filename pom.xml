@@ -52,7 +52,7 @@
                     <archive>
                         <index>true</index>
                         <manifest>
-                            <mainClass>Handling.APIInitializer</mainClass>
+                            <mainClass>me.meloni.SolarLogAPI.Handling.APIInitializer</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -72,7 +72,7 @@
                             <archive>
                                 <manifest>
                                     <mainClass>
-                                        Handling.APIInitializer
+                                        me.meloni.SolarLogAPI.Handling.APIInitializer
                                     </mainClass>
                                 </manifest>
                             </archive>
