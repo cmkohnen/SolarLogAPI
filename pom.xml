@@ -7,7 +7,7 @@
     <groupId>me.meloni</groupId>
     <artifactId>SolarLogAPI</artifactId>
     <packaging>jar</packaging>
-    <version>3.0.3</version>
+    <version>3.0.4</version>
     <name>SolarLogAPI</name>
 
     <dependencies>

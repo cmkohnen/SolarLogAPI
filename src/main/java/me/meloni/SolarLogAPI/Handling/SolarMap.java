@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * This Class provides a universal way to handle the data and implements useful functions to convert data
+ * This Class provides a universal way to handle the data and implements usefull functions to convert data
  * @author ChaosMelone9
  * @since 2.0.0
  */
@@ -31,9 +31,7 @@ public class SolarMap implements Serializable {
         data = Map;
     }
 
-    public SolarMap() {
-
-    }
+    public SolarMap() { }
 
     public Map<Date, List<Integer>> getAsMap() {
         return data;
@@ -58,7 +56,11 @@ public class SolarMap implements Serializable {
     }
 
     public void addImportFromFiles(List<File> files) throws IOException, ParseException {
+        int i1 = files.size();
+        int i2 = 0;
         for (File file : files) {
+            i2++;
+            Logger.log("Importing from file " + file.getName() + "  (" + i2 + " of " + i1 + ").");
             addImportFromFile(file);
         }
     }
