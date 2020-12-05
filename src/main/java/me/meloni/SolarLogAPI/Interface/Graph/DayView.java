@@ -88,7 +88,7 @@ public class DayView extends JPanel {
         g2.fillRect(0,0,getWidth(),getHeight());
 
         g2.setColor(GraphBackgroundColor);
-        g2.fillRect(padding + labelPadding, padding, getWidth() - (padding * 2) - (labelPadding * 2), getHeight() - (padding * 2));
+        g2.fillRect(padding + labelPadding, padding, getWidth() - (padding * 2) - (labelPadding * 2), getHeight() - (padding * 2) - labelPadding);
 
         g2.setColor(AxisColor);
 
@@ -195,7 +195,7 @@ public class DayView extends JPanel {
 
         if(mouseX >= labelPadding + padding & mouseX <= getWidth() - labelPadding - padding & mouseY >= padding & mouseY <= getHeight() - padding - labelPadding & mouseGUI & visibleRows() > 0){
             g2.setStroke(stroke);
-            g2.setColor(BackgroundColor);
+            g2.setColor(GraphBackgroundColor);
             g2.fillRect(padding + labelPadding, padding, 200, ((valuePadding + 12) * visibleRows()) + 20);
             g2.setColor(GridColor);
             g2.drawRect(padding + labelPadding, padding, 200, ((valuePadding + 12) * visibleRows()) + 20);

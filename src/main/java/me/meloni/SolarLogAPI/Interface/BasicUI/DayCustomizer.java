@@ -1,9 +1,9 @@
 package me.meloni.SolarLogAPI.Interface.BasicUI;
 
-import me.meloni.SolarLogAPI.Handling.SolarMap;
 import me.meloni.SolarLogAPI.Interface.DatePicker;
-import me.meloni.SolarLogAPI.Interface.Graph.DayView;
 import me.meloni.SolarLogAPI.DataConversion.GetStartOf;
+import me.meloni.SolarLogAPI.Handling.SolarMap;
+import me.meloni.SolarLogAPI.Interface.Graph.DayView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,6 +19,7 @@ public class DayCustomizer extends JPanel{
 
     public DayCustomizer(SolarMap data) {
         setLayout(new BorderLayout());
+
 
         DatePicker picker = new DatePicker();
         picker.addVetoPolicy(data);
@@ -39,6 +40,8 @@ public class DayCustomizer extends JPanel{
         });
 
         add(picker, BorderLayout.PAGE_START);
+
+
 
         JPanel p = new JPanel();
         p.setLayout(new BoxLayout(p,BoxLayout.Y_AXIS));
