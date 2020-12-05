@@ -82,7 +82,11 @@ public class SolarMap implements Serializable {
     }
 
     public void addFromDataFiles(List<File> files) throws IOException, ClassNotFoundException {
+        int i1 = files.size();
+        int i2 = 0;
         for (File file : files) {
+            i2++;
+            Logger.log("Importing from file " + file.getName() + "  (" + i2 + " of " + i1 + ").");
             addFromDataFile(file);
         }
     }
