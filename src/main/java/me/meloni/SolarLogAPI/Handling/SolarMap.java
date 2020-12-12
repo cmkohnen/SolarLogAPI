@@ -1,5 +1,6 @@
 package me.meloni.SolarLogAPI.Handling;
 
+import me.meloni.SolarLogAPI.DatabaseInteraction.InfluxDbInteraction;
 import me.meloni.SolarLogAPI.FileInteraction.ReadFiles.GetFromTar;
 import me.meloni.SolarLogAPI.FileInteraction.ReadFiles.ReadFileObject;
 import me.meloni.SolarLogAPI.FileInteraction.Tools.FileObject;
@@ -7,6 +8,8 @@ import me.meloni.SolarLogAPI.DataConversion.Entries;
 import me.meloni.SolarLogAPI.DataConversion.GetData;
 import me.meloni.SolarLogAPI.DataConversion.GetGraphData;
 import me.meloni.SolarLogAPI.DataConversion.GetStartOf;
+import me.meloni.SolarLogAPI.FileInteraction.WriteFiles.WriteFileObject;
+import org.influxdb.InfluxDB;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,7 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * This Class provides a universal way to handle the data and implements usefull functions to convert data
+ * This Class provides a universal way to handle the data and implements useful functions to convert data. THIS SHOULD NOT BE USED TO STORE DATA PERMANENTLY. For that use please refer to {@link FileObject}.
  * @author ChaosMelone9
  * @since 2.0.0
  */
@@ -30,6 +33,8 @@ public class SolarMap implements Serializable {
     public SolarMap(Map<Date, List<Integer>> Map) {
         data = Map;
     }
+
+    public SolarMap(FileObject fileObject) { data = fileObject.getData();}
 
     public SolarMap() { }
 
@@ -91,6 +96,30 @@ public class SolarMap implements Serializable {
             Logger.log("Importing from file " + file.getName() + "  (" + i2 + " of " + i1 + ").");
             addFromDataFile(file);
         }
+    }
+
+    public void addFromDataBase(String server, String username, String password) throws ParseException {
+        InfluxDbInteraction influxDbInteraction = new InfluxDbInteraction(server,username,password);
+        addFromMap(influxDbInteraction.read());
+    }
+
+
+
+
+    public void writeToDataFile(File file) throws IOException {
+        WriteFileObject.write(file, this.getFileObject());
+    }
+
+    public void writeToInfluxDBDataBase(String server, String username, String password) {
+        InfluxDbInteraction influxDbInteraction = new InfluxDbInteraction(server, username, password);
+        influxDbInteraction.write(this);
+        influxDbInteraction.close();
+    }
+
+    public void writeToInfluxDBDataBase(InfluxDB influxDB) {
+        InfluxDbInteraction influxDbInteraction = new InfluxDbInteraction(influxDB);
+        influxDbInteraction.write(this);
+        influxDbInteraction.close();
     }
 
 

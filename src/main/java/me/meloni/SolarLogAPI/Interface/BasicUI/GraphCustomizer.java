@@ -17,19 +17,20 @@ public class GraphCustomizer extends JTabbedPane {
     static List<JComponent> components = new ArrayList<>();
 
     public GraphCustomizer(SolarMap data) {
-        addTab("Day View",new DayCustomizer(data));
-        addTab("Month View",new MonthCustomizer(data));
-    }
-
-    public static void run() {
-        SolarMap solarMap = BasicSolarMapCustomizer.solarMap();
-        JFrame f = new SimpleFrame(new GraphCustomizer(solarMap));
+        JFrame f = new SimpleFrame(this);
         f.setSize(200,300);
         f.setResizable(false);
         f.setTitle("Visualization");
 
         graphFrame.setSize(1000, 600);
         graphFrame.setLocationRelativeTo(f);
+        addTab("Day View",new DayCustomizer(data));
+        addTab("Month View",new MonthCustomizer(data));
+    }
+
+    public static void run() {
+        SolarMap solarMap = BasicSolarMapCustomizer.solarMap();
+        new GraphCustomizer(solarMap);
     }
 
     public static void setCmp(JComponent c) {
