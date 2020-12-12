@@ -34,6 +34,7 @@ public class InfluxDbInteraction {
         db.setDatabase(database);
     }
 
+    //TODO Needs support for huge amounts of data (Splitting into parts should be enough)
     public void write(SolarMap solarMap) {
         BatchPoints batchPoints = BatchPoints
                 .database("solar")
@@ -53,10 +54,9 @@ public class InfluxDbInteraction {
                });
         Logger.log("Writing ...");
         db.write(batchPoints);
-
-
     }
 
+    //TODO Needs proper remake
     public Map<Date, List<Integer>> read() throws ParseException {
         QueryResult queryResult = db.query(new Query("SELECT value1,value2,value3,value4,value5 FROM data"));
         List<List<Object>> values = queryResult.getResults().get(0).getSeries().get(0).getValues();
@@ -76,7 +76,6 @@ public class InfluxDbInteraction {
             String part1 = actualValues.get(0).toString().substring(0,10);
             String part2 = actualValues.get(0).toString().substring(11,19);
 
-
             DateFormat formatter = new SimpleDateFormat(dateformat);
             Date d = formatter.parse(part1 + part2);
 
@@ -84,12 +83,6 @@ public class InfluxDbInteraction {
         }
         return data;
     }
-
-
-
-
-
-
 
     public void close() {
         db.close();

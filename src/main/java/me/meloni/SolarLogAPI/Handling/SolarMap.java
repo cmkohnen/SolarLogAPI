@@ -38,12 +38,12 @@ public class SolarMap implements Serializable {
 
     public SolarMap() { }
 
-    public Map<Date, List<Integer>> getAsMap() {
-        return data;
-    }
-
     public void setFromMap(Map<Date, List<Integer>> map) {
         data = map;
+    }
+
+    public void setOnDate(Date date, List<Integer> values) {
+        data.put(date, values);
     }
 
     public void addFromMap(Map<Date, List<Integer>> map) {
@@ -126,6 +126,9 @@ public class SolarMap implements Serializable {
 
 
 
+    public Map<Date, List<Integer>> getAsMap() {
+        return data;
+    }
 
     public List<Integer> getValuesFromDate(Date date) {
         return data.get(date);
@@ -133,10 +136,6 @@ public class SolarMap implements Serializable {
 
     public Integer getValueFromDate(Date date, Integer value) {
         return getValuesFromDate(date).get(value);
-    }
-
-    public void setOnDate(Date date, List<Integer> values) {
-        data.put(date, values);
     }
 
     public List<List<Double>> getDayGraphData(Date date) throws ParseException {
