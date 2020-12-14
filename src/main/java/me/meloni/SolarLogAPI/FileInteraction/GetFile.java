@@ -18,45 +18,45 @@ import java.util.List;
  * @since 0.0.1
  */
 public class GetFile {
-    public static File File(String path) {
+    public static File file(String path) {
         return new File(path);
     }
 
-    public static Path Path(File file) {
+    public static Path path(File file) {
         return Paths.get(file.getPath());
     }
 
-    public static File ValidChosenDataFile() {
+    public static File validChosenDataFile() {
         JFileChooser j = JFileChooserPreset.importer();
         j.showOpenDialog(null);
         return j.getSelectedFile();
     }
 
-    public static File ChosenTarArchive() {
+    public static File chosenTarArchive() {
         JFileChooser j = JFileChooserPreset.importFromTar();
         j.showOpenDialog(null);
         return j.getSelectedFile();
     }
 
-    public static File ChosenSafeLocation(){
-        JFileChooser j = JFileChooserPreset.SafeToFile();
+    public static File chosenSaveLocation(){
+        JFileChooser j = JFileChooserPreset.safeToFile();
         j.showOpenDialog(null);
         File f = j.getSelectedFile();
         if(!f.getName().contains(".solarlog")) {
-            return File(f.getAbsolutePath() + ".solarlog");
+            return file(f.getAbsolutePath() + ".solarlog");
         } else {
             return f;
         }
     }
 
-    public static File ChosenReadLocation(){
-        JFileChooser j = JFileChooserPreset.ReadFromFile();
+    public static File chosenReadLocation(){
+        JFileChooser j = JFileChooserPreset.readFromFile();
         j.showOpenDialog(null);
         return j.getSelectedFile();
     }
 
-    public static List<File> ChosenValidFilesInDirectory() throws IOException {
-        File dir = GetDirectory.ChosenDirectory();
+    public static List<File> chosenValidFilesInDirectory() throws IOException {
+        File dir = GetDirectory.chosenDirectory();
         if(!(dir == null) && dir.exists()) {
             return Validate.validFiles(GetDirectory.files(dir));
         } else {
@@ -64,8 +64,8 @@ public class GetFile {
         }
     }
 
-    public static List<File> ChosenTarsInDirectory() {
-        File dir = GetDirectory.ChosenDirectory();
+    public static List<File> chosenTarsInDirectory() {
+        File dir = GetDirectory.chosenDirectory();
         if(!(dir == null) && dir.exists()) {
             return Arrays.asList(dir.listFiles((dir1, name) -> name.toLowerCase().endsWith(".tar.gz")));
         } else {

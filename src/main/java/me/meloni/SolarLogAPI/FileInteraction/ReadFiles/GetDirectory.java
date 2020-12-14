@@ -19,7 +19,7 @@ public class GetDirectory {
         return Arrays.asList(Objects.requireNonNull(directory.listFiles()));
     }
 
-    public static File ChosenDirectory(){
+    public static File chosenDirectory(){
         JFileChooser j = JFileChooserPreset.importFromDirectory();
         j.showOpenDialog(null);
         return j.getSelectedFile();

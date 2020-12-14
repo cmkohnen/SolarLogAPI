@@ -8,6 +8,8 @@ package me.meloni.SolarLogAPI.Handling;
  */
 public class Logger {
 
+    private static boolean enabled = false;
+
     private static boolean booleanMissing = false;
 
     public Logger() {
@@ -28,7 +30,13 @@ public class Logger {
         }
     }
 
+    public static void setEnabled(boolean enabled) {
+        Logger.enabled = enabled;
+    }
+
     public static void log(Object o){
-        System.out.println(o);
+        if(enabled) {
+            System.out.println(o);
+        }
     }
 }

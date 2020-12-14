@@ -36,6 +36,8 @@ public class SolarMap implements Serializable {
 
     public SolarMap(FileObject fileObject) { data = fileObject.getData();}
 
+    public SolarMap(File DataFile) throws IOException, ClassNotFoundException { addFromDataFile(DataFile);}
+
     public SolarMap() { }
 
     public void setFromMap(Map<Date, List<Integer>> map) {
@@ -56,7 +58,7 @@ public class SolarMap implements Serializable {
 
     public void addImportFromFile(File file) throws IOException, ParseException {
         if(file.exists()) {
-            addFromMap(GetData.MinuteDataMap(file));
+            addFromMap(GetData.getMinuetDataMap(file));
         }
     }
 
@@ -110,15 +112,16 @@ public class SolarMap implements Serializable {
         WriteFileObject.write(file, this.getFileObject());
     }
 
-    public void writeToInfluxDBDataBase(String server, String username, String password) {
+    public void writeToInfluxDBDataBase(String server, String username, String password, String database, String field) {
         InfluxDbInteraction influxDbInteraction = new InfluxDbInteraction(server, username, password);
-        influxDbInteraction.write(this);
+        influxDbInteraction.setDatabase(database);
+        influxDbInteraction.write(this, field);
         influxDbInteraction.close();
     }
 
-    public void writeToInfluxDBDataBase(InfluxDB influxDB) {
+    public void writeToInfluxDBDataBase(InfluxDB influxDB, String field) {
         InfluxDbInteraction influxDbInteraction = new InfluxDbInteraction(influxDB);
-        influxDbInteraction.write(this);
+        influxDbInteraction.write(this, field);
         influxDbInteraction.close();
     }
 

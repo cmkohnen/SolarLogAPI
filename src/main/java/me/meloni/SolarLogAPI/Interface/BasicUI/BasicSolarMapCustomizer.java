@@ -54,7 +54,7 @@ public class BasicSolarMapCustomizer {
 
         JButton addFile = new JButton("Add File");
         addFile.addActionListener(e -> {
-            File f = GetFile.ValidChosenDataFile();
+            File f = GetFile.validChosenDataFile();
             if(!(f == null) && f.exists()) {
                 importFiles.add(f);
                 repaintList();
@@ -64,7 +64,7 @@ public class BasicSolarMapCustomizer {
         JButton addDirectory = new JButton("Add from Folder");
         addDirectory.addActionListener(e -> {
             try {
-                List<File> files = GetFile.ChosenValidFilesInDirectory();
+                List<File> files = GetFile.chosenValidFilesInDirectory();
                 if(!(files == null)) {
                     importFiles.addAll(files);
                     repaintList();
@@ -76,9 +76,9 @@ public class BasicSolarMapCustomizer {
 
         JButton addTar = new JButton("Add from tar");
         addTar.addActionListener(e -> {
-            File f = GetFile.ChosenTarArchive();
+            File f = GetFile.chosenTarArchive();
             if(!(f == null) && f.exists()) {
-                importTars.add(GetFile.ChosenTarArchive());
+                importTars.add(GetFile.chosenTarArchive());
                 repaintList();
             }
         });
@@ -86,7 +86,7 @@ public class BasicSolarMapCustomizer {
         JButton addTars = new JButton("Add from tars");
         addTars.addActionListener(e -> {
             try {
-                List<File> files = GetFile.ChosenTarsInDirectory();
+                List<File> files = GetFile.chosenTarsInDirectory();
                 if(!(files == null)) {
                     importTars.addAll(files);
                     repaintList();
@@ -98,7 +98,7 @@ public class BasicSolarMapCustomizer {
 
         JButton addDataFile = new JButton("Add from Data File");
         addDataFile.addActionListener(e -> {
-            File f = GetFile.ChosenReadLocation();
+            File f = GetFile.chosenReadLocation();
             if(!(f == null) && f.exists()) {
                 dataFiles.add(f);
                 repaintList();

@@ -21,6 +21,8 @@ import java.util.concurrent.TimeUnit;
  * @since 3.0.1
  */
 public class InfluxDbInteraction {
+    String database;
+    BatchPoints batchPoints;
     InfluxDB db;
     public InfluxDbInteraction(String server, String username, String password) {
         this.db = InfluxDBFactory.connect(server, username, password);
@@ -31,18 +33,14 @@ public class InfluxDbInteraction {
     }
 
     public void setDatabase(String database) {
+        this.database = database;
         db.setDatabase(database);
     }
 
-    //TODO Needs support for huge amounts of data (Splitting into parts should be enough)
-    public void write(SolarMap solarMap) {
-        BatchPoints batchPoints = BatchPoints
-                .database("solar")
-                .tag("async","true")
-                .consistency(InfluxDB.ConsistencyLevel.ALL)
-                .build();
+    public void write(SolarMap solarMap, String field) {
+        this.batchPoints = batchPoints();
         solarMap.getAsMap().forEach((date, values) -> {
-               Point point = Point.measurement("solar")
+               Point point = Point.measurement(field)
                        .time(date.getTime(), TimeUnit.MILLISECONDS)
                        .addField("value1",values.get(0))
                        .addField("value2",values.get(1))
@@ -50,9 +48,14 @@ public class InfluxDbInteraction {
                        .addField("value4",values.get(3))
                        .addField("value5",values.get(4))
                        .build();
-               batchPoints.point(point);
+               this.batchPoints.point(point);
+               if(batchPoints.getPoints().size() >= 125000) {
+                   Logger.log("Writing ...");
+                   db.write(batchPoints);
+                   this.batchPoints = batchPoints();
+               }
                });
-        Logger.log("Writing ...");
+        Logger.log("Writing ..." + batchPoints.getPoints().size());
         db.write(batchPoints);
     }
 
@@ -82,6 +85,14 @@ public class InfluxDbInteraction {
             data.put(d,valuesFor);
         }
         return data;
+    }
+
+    private BatchPoints batchPoints() {
+        return BatchPoints
+                .database(this.database)
+                .tag("async","true")
+                .consistency(InfluxDB.ConsistencyLevel.ALL)
+                .build();
     }
 
     public void close() {

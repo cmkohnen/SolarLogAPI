@@ -83,7 +83,7 @@ public class GetFromTar {
 
     public static List<File> getValidFilesFromTarArchive(File tar) throws Exception {
         String tarDirectory = FilenameUtils.removeExtension(FilenameUtils.removeExtension(String.valueOf(tar)));
-        File outputDirectory = GetFile.File(tarDirectory);
+        File outputDirectory = GetFile.file(tarDirectory);
         if(!outputDirectory.exists()){
             boolean b = outputDirectory.mkdir();
             if(!b) {

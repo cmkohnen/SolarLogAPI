@@ -28,12 +28,12 @@ public class GetData  {
      */
      static final String DATEFORMAT = "dd.MM.yy HH:mm:ss";
 
-    public static Map<Date, List<Integer>> MinuteDataMap(File file) throws ParseException, IOException {
+    public static Map<Date, List<Integer>> getMinuetDataMap(File file) throws ParseException, IOException {
         Logger.log("Importing from " + file);
         String fileVersion = FileVersion.getFileVersion(file);
         List<Integer> positions = FileVersion.matrix().get(fileVersion);
 
-        List<String> MinuteData = GetDataSection.MinuteData(GetFileContent.FileContentAsList(GetFile.Path(file)));
+        List<String> MinuteData = GetDataSection.MinuteData(GetFileContent.fileContentAsList(GetFile.path(file)));
         Map<Date, List<Integer>> Data = new HashMap<>();
 
         for (String item : MinuteData) {

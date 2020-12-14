@@ -24,7 +24,7 @@ public class JFileChooserPreset {
                 if(f.isDirectory()) {return true;}
                 if(f.getName().contains(".dat")){
                     try {
-                        return Validate.IsValidDataFile(f);
+                        return Validate.isValidDataFile(f);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -39,7 +39,7 @@ public class JFileChooserPreset {
         return j;
     }
 
-    public static JFileChooser SafeToFile() {
+    public static JFileChooser safeToFile() {
         JFileChooser j = new JFileChooser();
         j.setDialogTitle("Safe");
         j.setAcceptAllFileFilterUsed(false);
@@ -57,7 +57,7 @@ public class JFileChooserPreset {
         return j;
     }
 
-    public static JFileChooser ReadFromFile() {
+    public static JFileChooser readFromFile() {
         JFileChooser j = new JFileChooser();
 
         // invoke the showsSaveDialog function to show the save dialog
