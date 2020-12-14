@@ -1,5 +1,6 @@
 package me.meloni.SolarLogAPI.Interface.BasicUI;
 
+import me.meloni.SolarLogAPI.DatabaseInteraction.GetDataBase;
 import me.meloni.SolarLogAPI.FileInteraction.GetFile;
 import me.meloni.SolarLogAPI.Handling.SolarMap;
 
@@ -30,7 +31,11 @@ public class BasicSaveOptions {
             }
         });
 
+        JButton writeToInfluxDB = new JButton("Write to InfluxDB");
+        writeToInfluxDB.addActionListener(actionEvent -> solarMap.writeToInfluxDBDataBase(GetDataBase.influxDB(),JOptionPane.showInputDialog("field")));
+
         panel.add(writeToFile);
+        panel.add(writeToInfluxDB);
 
         return panel;
     }

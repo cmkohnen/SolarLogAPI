@@ -21,6 +21,7 @@ import java.util.concurrent.TimeUnit;
  * @since 3.0.1
  */
 public class InfluxDbInteraction {
+    int limit = 125000;
     String database;
     BatchPoints batchPoints;
     InfluxDB db;
@@ -49,14 +50,15 @@ public class InfluxDbInteraction {
                        .addField("value5",values.get(4))
                        .build();
                this.batchPoints.point(point);
-               if(batchPoints.getPoints().size() >= 125000) {
-                   Logger.log("Writing ...");
+               if(batchPoints.getPoints().size() >= limit) {
+                   Logger.log("Writing set of BatchPoints (" + limit + ").");
                    db.write(batchPoints);
                    this.batchPoints = batchPoints();
                }
                });
-        Logger.log("Writing ..." + batchPoints.getPoints().size());
+        Logger.log("Writing set of BatchPoints (" + batchPoints.getPoints().size() + ").");
         db.write(batchPoints);
+        Logger.log("done.");
     }
 
     //TODO Needs proper remake
@@ -93,6 +95,10 @@ public class InfluxDbInteraction {
                 .tag("async","true")
                 .consistency(InfluxDB.ConsistencyLevel.ALL)
                 .build();
+    }
+
+    public void setBatchPointLimit(int limit) {
+        this.limit = limit;
     }
 
     public void close() {
