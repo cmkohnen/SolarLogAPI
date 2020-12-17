@@ -2,7 +2,7 @@ package me.meloni.SolarLogAPI.Interface.BasicUI;
 
 import me.meloni.SolarLogAPI.FileInteraction.GetFile;
 import me.meloni.SolarLogAPI.Handling.Logger;
-import me.meloni.SolarLogAPI.Handling.SolarMap;
+import me.meloni.SolarLogAPI.SolarMap;
 
 import javax.swing.*;
 import java.awt.*;
@@ -25,6 +25,7 @@ public class BasicSolarMapCustomizer {
     private final List<File> importFiles = new ArrayList<>();
     private final List<File> importTars = new ArrayList<>();
     private final List<File> dataFiles = new ArrayList<>();
+    private final List<File> emlFiles = new ArrayList<>();
 
     public BasicSolarMapCustomizer() {
         initPanel();
@@ -78,7 +79,7 @@ public class BasicSolarMapCustomizer {
         addTar.addActionListener(e -> {
             File f = GetFile.chosenTarArchive();
             if(!(f == null) && f.exists()) {
-                importTars.add(GetFile.chosenTarArchive());
+                importTars.add(f);
                 repaintList();
             }
         });
@@ -105,11 +106,35 @@ public class BasicSolarMapCustomizer {
             }
         });
 
+        JButton addEML = new JButton("Add from EML");
+        addEML.addActionListener(e -> {
+            File f = GetFile.chosenEMLFile();
+            if(!(f == null) && f.exists()) {
+                emlFiles.add(f);
+                repaintList();
+            }
+        });
+
+        JButton addEMLs = new JButton("Add from EMLs");
+        addEMLs.addActionListener(e -> {
+            try {
+                List<File> files = GetFile.chosenEMLsInDirectory();
+                if(!(files == null)) {
+                    emlFiles.addAll(files);
+                    repaintList();
+                }
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+        });
+
         buttons.add(addFile);
         buttons.add(addDirectory);
         buttons.add(addTar);
         buttons.add(addTars);
         buttons.add(addDataFile);
+        buttons.add(addEML);
+        buttons.add(addEMLs);
 
         filePanel.setLayout(new BorderLayout());
 
@@ -134,6 +159,10 @@ public class BasicSolarMapCustomizer {
                 if(dataFiles.size() > 0) {
                     Logger.log("Importing from " + dataFiles);
                     map.addFromDataFiles(dataFiles);
+                }
+                if(emlFiles.size() > 0) {
+                    Logger.log("Importing from " + emlFiles);
+                    map.addFromEMLFiles(emlFiles);
                 }
                 done = true;
             } catch (Exception ioException) {
@@ -163,6 +192,12 @@ public class BasicSolarMapCustomizer {
             files.add(new JLabel("Data Files:"));
             for (File dataFile : dataFiles) {
                 files.add(new JLabel(dataFile.getName()));
+            }
+        }
+        if(emlFiles.size() > 0) {
+            files.add(new JLabel("EML Files:"));
+            for (File emlFile : emlFiles) {
+                files.add(new JLabel(emlFile.getName()));
             }
         }
         files.setVisible(false);

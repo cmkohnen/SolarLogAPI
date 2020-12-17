@@ -49,6 +49,12 @@ public class GetFile {
         }
     }
 
+    public static File chosenEMLFile() {
+        JFileChooser j = JFileChooserPreset.importFromEML();
+        j.showOpenDialog(null);
+        return j.getSelectedFile();
+    }
+
     public static File chosenReadLocation(){
         JFileChooser j = JFileChooserPreset.readFromFile();
         j.showOpenDialog(null);
@@ -68,6 +74,15 @@ public class GetFile {
         File dir = GetDirectory.chosenDirectory();
         if(!(dir == null) && dir.exists()) {
             return Arrays.asList(dir.listFiles((dir1, name) -> name.toLowerCase().endsWith(".tar.gz")));
+        } else {
+            return null;
+        }
+    }
+
+    public static List<File> chosenEMLsInDirectory() {
+        File dir = GetDirectory.chosenDirectory();
+        if(!(dir == null) && dir.exists()) {
+            return Arrays.asList(dir.listFiles((dir1, name) -> name.toLowerCase().endsWith(".eml")));
         } else {
             return null;
         }

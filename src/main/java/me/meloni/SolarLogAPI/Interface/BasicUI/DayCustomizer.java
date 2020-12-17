@@ -2,7 +2,7 @@ package me.meloni.SolarLogAPI.Interface.BasicUI;
 
 import me.meloni.SolarLogAPI.Interface.DatePicker;
 import me.meloni.SolarLogAPI.DataConversion.GetStartOf;
-import me.meloni.SolarLogAPI.Handling.SolarMap;
+import me.meloni.SolarLogAPI.SolarMap;
 import me.meloni.SolarLogAPI.Interface.Graph.DayView;
 
 import javax.swing.*;

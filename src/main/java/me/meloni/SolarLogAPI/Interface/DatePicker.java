@@ -1,6 +1,6 @@
 package me.meloni.SolarLogAPI.Interface;
 
-import me.meloni.SolarLogAPI.Handling.SolarMap;
+import me.meloni.SolarLogAPI.SolarMap;
 import me.meloni.SolarLogAPI.DataConversion.Entries;
 import me.meloni.SolarLogAPI.DataConversion.GetStartOf;
 import com.github.lgooddatepicker.components.DatePickerSettings;

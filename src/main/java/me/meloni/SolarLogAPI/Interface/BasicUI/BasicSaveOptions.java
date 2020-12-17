@@ -2,7 +2,7 @@ package me.meloni.SolarLogAPI.Interface.BasicUI;
 
 import me.meloni.SolarLogAPI.DatabaseInteraction.GetDataBase;
 import me.meloni.SolarLogAPI.FileInteraction.GetFile;
-import me.meloni.SolarLogAPI.Handling.SolarMap;
+import me.meloni.SolarLogAPI.SolarMap;
 
 import javax.swing.*;
 import java.io.IOException;

@@ -1,14 +1,16 @@
-package me.meloni.SolarLogAPI.Handling;
+package me.meloni.SolarLogAPI;
 
-import me.meloni.SolarLogAPI.DatabaseInteraction.InfluxDbInteraction;
-import me.meloni.SolarLogAPI.FileInteraction.ReadFiles.GetFromTar;
-import me.meloni.SolarLogAPI.FileInteraction.ReadFiles.ReadFileObject;
-import me.meloni.SolarLogAPI.FileInteraction.Tools.FileObject;
 import me.meloni.SolarLogAPI.DataConversion.Entries;
 import me.meloni.SolarLogAPI.DataConversion.GetData;
 import me.meloni.SolarLogAPI.DataConversion.GetGraphData;
 import me.meloni.SolarLogAPI.DataConversion.GetStartOf;
+import me.meloni.SolarLogAPI.DatabaseInteraction.InfluxDbInteraction;
+import me.meloni.SolarLogAPI.FileInteraction.ReadFiles.GetFromEML;
+import me.meloni.SolarLogAPI.FileInteraction.ReadFiles.GetFromTar;
+import me.meloni.SolarLogAPI.FileInteraction.ReadFiles.ReadFileObject;
+import me.meloni.SolarLogAPI.FileInteraction.Tools.FileObject;
 import me.meloni.SolarLogAPI.FileInteraction.WriteFiles.WriteFileObject;
+import me.meloni.SolarLogAPI.Handling.Logger;
 import org.influxdb.InfluxDB;
 
 import java.io.File;
@@ -17,10 +19,7 @@ import java.io.Serializable;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.YearMonth;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * This Class provides a universal way to handle the data and implements useful functions to convert data. THIS SHOULD NOT BE USED TO STORE DATA PERMANENTLY. For that use please refer to {@link FileObject}.
@@ -58,6 +57,9 @@ public class SolarMap implements Serializable {
      */
     public SolarMap() { }
 
+
+
+    
     /**
      * Set all data from a {@link Map}
      * @author ChaosMelone9
@@ -183,6 +185,15 @@ public class SolarMap implements Serializable {
         addFromMap(influxDbInteraction.read());
     }
 
+    public void addFromEMLFile(File emlFile) throws Exception {
+        addFromTar(Objects.requireNonNull(GetFromEML.getTarFromEML(emlFile)));
+    }
+
+    public void addFromEMLFiles(List<File> emlFiles) throws Exception {
+        addFromTars(GetFromEML.getTarsFromEMLS(emlFiles));
+    }
+
+
 
 
     /**
@@ -272,8 +283,6 @@ public class SolarMap implements Serializable {
 
 
 
-
-
     /**
      * Get on specific timestamp
      * @author ChaosMelone9
@@ -350,5 +359,4 @@ public class SolarMap implements Serializable {
     public void clear() {
         data.clear();
     }
-
 }

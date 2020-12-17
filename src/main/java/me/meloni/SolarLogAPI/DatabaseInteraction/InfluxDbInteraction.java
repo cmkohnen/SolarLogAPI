@@ -1,7 +1,7 @@
 package me.meloni.SolarLogAPI.DatabaseInteraction;
 
 import me.meloni.SolarLogAPI.Handling.Logger;
-import me.meloni.SolarLogAPI.Handling.SolarMap;
+import me.meloni.SolarLogAPI.SolarMap;
 import org.influxdb.InfluxDB;
 import org.influxdb.InfluxDBFactory;
 import org.influxdb.dto.BatchPoints;

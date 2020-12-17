@@ -1,6 +1,6 @@
 package me.meloni.SolarLogAPI.DataConversion;
 
-import me.meloni.SolarLogAPI.Handling.SolarMap;
+import me.meloni.SolarLogAPI.SolarMap;
 
 import java.io.File;
 import java.io.IOException;

@@ -96,6 +96,24 @@ public class JFileChooserPreset {
         return j;
     }
 
+    public static JFileChooser importFromEML(){
+        JFileChooser j = new JFileChooser();
+        j.setDialogTitle("Import from EML");
+        j.setAcceptAllFileFilterUsed(false);
+        j.setFileFilter(new FileFilter() {
+            @Override
+            public boolean accept(File f) {
+                return f.isDirectory() || f.getName().contains(".eml");
+            }
+
+            @Override
+            public String getDescription() {
+                return "EML files (*.eml)";
+            }
+        });
+        return j;
+    }
+
     public static JFileChooser importFromDirectory() {
         JFileChooser j = new JFileChooser();
         j.setDialogTitle("Import");
