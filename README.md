@@ -16,10 +16,11 @@ Greetings, Chaosmelone9
 
 - Read from .dat-files
 - Direct tar support
+- InfluxDB support
+- EML file support
 - Persistent storage support
 - Very Basic UI elements
 - Moderate conversion
-- InfluxDB support (development only)
 
 ## How to use
 
