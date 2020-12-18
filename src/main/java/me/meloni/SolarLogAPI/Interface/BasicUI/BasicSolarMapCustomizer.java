@@ -219,7 +219,7 @@ public class BasicSolarMapCustomizer {
         if(databases.size() > 0) {
             files.add(new JLabel("Databases:"));
             for (InfluxDB database : databases) {
-                files.add(new JLabel(database.toString()));
+                files.add(new JLabel(database.version()));
             }
         }
         files.setVisible(false);
