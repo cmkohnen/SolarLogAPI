@@ -29,20 +29,25 @@ import java.util.*;
 public class SolarMap implements Serializable {
     private String defaultDataBase = "solar";
     private Map<Date, List<Integer>> data = new HashMap<>();
+    private Date createdOn = Calendar.getInstance().getTime();
 
     /**
      * Instantiates using the {@link Map}<{@link Date}, {@link List}<{@link Integer}>> format
      * @author ChaosMelone9
      */
-    public SolarMap(Map<Date, List<Integer>> Map) {
-        data = Map;
-    }
+    public SolarMap(Map<Date, List<Integer>> Map) { data = Map; }
 
     /**
      * Instantiates using a {@link FileObject}
      * @author ChaosMelone9
      */
-    public SolarMap(FileObject fileObject) { data = fileObject.getData();}
+    public SolarMap(FileObject fileObject) {
+        data = fileObject.getData();
+        Date created = (Date) fileObject.getInformation("creation");
+        if(created != null) {
+            this.createdOn = created;
+        }
+    }
 
     /**
      * Instantiates using a SolarLog Data file
@@ -298,7 +303,9 @@ public class SolarMap implements Serializable {
      * @author ChaosMelone9
      */
     public FileObject getFileObject() {
-        return new FileObject(this.getAsMap());
+        FileObject fileObject = new FileObject(this.getAsMap());
+        fileObject.putInformation("created", createdOn);
+        return fileObject;
     }
 
 
@@ -379,6 +386,14 @@ public class SolarMap implements Serializable {
      */
     public void setDefaultDataBase(String defaultDataBase) {
         this.defaultDataBase = defaultDataBase;
+    }
+
+    /**
+     * returns the time this {@link SolarMap} was created
+     * @author ChaosMelone9
+     */
+    public Date getCreationTime() {
+        return createdOn;
     }
 
     /**
