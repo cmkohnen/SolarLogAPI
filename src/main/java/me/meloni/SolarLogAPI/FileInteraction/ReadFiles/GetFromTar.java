@@ -1,6 +1,6 @@
 package me.meloni.SolarLogAPI.FileInteraction.ReadFiles;
 
-import me.meloni.SolarLogAPI.FileInteraction.GetFile;
+import me.meloni.SolarLogAPI.FileInteraction.WorkingDirectory;
 import me.meloni.SolarLogAPI.Handling.Logger;
 import org.apache.commons.compress.archivers.ArchiveException;
 import org.apache.commons.compress.archivers.ArchiveStreamFactory;
@@ -82,8 +82,8 @@ public class GetFromTar {
     }
 
     public static List<File> getValidFilesFromTarArchive(File tar) throws Exception {
-        String tarDirectory = FilenameUtils.removeExtension(FilenameUtils.removeExtension(String.valueOf(tar)));
-        File outputDirectory = GetFile.file(tarDirectory);
+        String tarDirectory = FilenameUtils.removeExtension(FilenameUtils.removeExtension(tar.getName()));
+        File outputDirectory = new File(WorkingDirectory.getDirectory(), tarDirectory);
         if(!outputDirectory.exists()){
             boolean b = outputDirectory.mkdir();
             if(!b) {
