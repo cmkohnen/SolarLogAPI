@@ -36,7 +36,7 @@ public class InfluxDbInteraction {
         db.setDatabase(database);
     }
 
-    public void write(SolarMap solarMap) {
+    public void write(SolarMap solarMap) throws NullPointerException {
         this.batchPoints = batchPoints();
         solarMap.getAsMap().forEach((date, values) -> {
                Point point = Point.measurement("solar")

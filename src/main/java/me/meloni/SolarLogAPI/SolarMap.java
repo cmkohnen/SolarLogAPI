@@ -233,7 +233,7 @@ public class SolarMap implements Serializable {
      * Write to an {@link InfluxDB}
      * @author ChaosMelone9
      */
-    public void writeToInfluxDBDataBase(String server, String username, String password, String database, int batchPointLimit) {
+    public void writeToInfluxDBDataBase(String server, String username, String password, String database, int batchPointLimit) throws NullPointerException{
         InfluxDbInteraction influxDbInteraction = new InfluxDbInteraction(server, username, password);
         influxDbInteraction.setBatchPointLimit(batchPointLimit);
         influxDbInteraction.setDatabase(database);
@@ -246,7 +246,7 @@ public class SolarMap implements Serializable {
      * @author ChaosMelone9
      * @param influxDB assumes a set database
      **/
-    public void writeToInfluxDBDataBase(InfluxDB influxDB, int batchPointLimit) {
+    public void writeToInfluxDBDataBase(InfluxDB influxDB, int batchPointLimit) throws NullPointerException{
         InfluxDbInteraction influxDbInteraction = new InfluxDbInteraction(influxDB);
         influxDbInteraction.setBatchPointLimit(batchPointLimit);
         influxDbInteraction.write(this);

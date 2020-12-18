@@ -42,6 +42,9 @@ public class GetFile {
         JFileChooser j = JFileChooserPreset.safeToFile();
         j.showOpenDialog(null);
         File f = j.getSelectedFile();
+        if(f == null) {
+            return null;
+        }
         if(!f.getName().contains(".solarlog")) {
             return file(f.getAbsolutePath() + ".solarlog");
         } else {

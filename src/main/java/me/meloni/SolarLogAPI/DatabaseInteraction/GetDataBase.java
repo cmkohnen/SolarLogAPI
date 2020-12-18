@@ -11,7 +11,7 @@ import javax.swing.*;
  * @since 3.0.5
  */
 public class GetDataBase {
-    public static InfluxDB influxDB() {
+    public static InfluxDB influxDB() throws NullPointerException{
         String server = JOptionPane.showInputDialog("Server");
         String username = JOptionPane.showInputDialog("User");
         String password = JOptionPane.showInputDialog("Passwd");
@@ -22,7 +22,7 @@ public class GetDataBase {
             return db;
         } catch (IllegalArgumentException e) {
             JOptionPane.showMessageDialog(null,"Did not work");
-            return null;
+            throw new NullPointerException("No such database");
         }
     }
 }
