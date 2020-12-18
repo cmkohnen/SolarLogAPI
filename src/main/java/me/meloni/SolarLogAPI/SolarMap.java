@@ -27,6 +27,7 @@ import java.util.*;
  * @since 2.0.0
  */
 public class SolarMap implements Serializable {
+    private String defaultDataBase = "solar";
     private Map<Date, List<Integer>> data = new HashMap<>();
 
     /**
@@ -177,12 +178,30 @@ public class SolarMap implements Serializable {
     /**
      * Add from an {@link InfluxDB}
      * @author ChaosMelone9
-     * @throws ParseException Bad date
-     * @implNote IN DEVELOPMENT
      */
-    public void addFromDataBase(String server, String username, String password) throws ParseException {
+    public void addFromInfluxDB(String server, String username, String password, String database) {
         InfluxDbInteraction influxDbInteraction = new InfluxDbInteraction(server,username,password);
+        influxDbInteraction.setDatabase(database);
         addFromMap(influxDbInteraction.read());
+        influxDbInteraction.close();
+    }
+
+    /**
+     * Add from an {@link InfluxDB}
+     * @author ChaosMelone9
+     */
+    public void addFromInfluxDB(InfluxDB influxDB) {
+        InfluxDbInteraction influxDbInteraction = new InfluxDbInteraction(influxDB);
+        influxDbInteraction.setDatabase(defaultDataBase);
+        addFromMap(influxDbInteraction.read());
+        influxDbInteraction.close();
+    }
+
+    public void addFromInfluxDB(InfluxDB influxDB, String database) {
+        InfluxDbInteraction influxDbInteraction = new InfluxDbInteraction(influxDB);
+        influxDbInteraction.setDatabase(database);
+        addFromMap(influxDbInteraction.read());
+        influxDbInteraction.close();
     }
 
     public void addFromEMLFile(File emlFile) throws Exception {
@@ -209,10 +228,11 @@ public class SolarMap implements Serializable {
      * Write to an {@link InfluxDB}
      * @author ChaosMelone9
      */
-    public void writeToInfluxDBDataBase(String server, String username, String password, String database, String field) {
+    public void writeToInfluxDBDataBase(String server, String username, String password, String database, int batchPointLimit) {
         InfluxDbInteraction influxDbInteraction = new InfluxDbInteraction(server, username, password);
+        influxDbInteraction.setBatchPointLimit(batchPointLimit);
         influxDbInteraction.setDatabase(database);
-        influxDbInteraction.write(this, field);
+        influxDbInteraction.write(this);
         influxDbInteraction.close();
     }
 
@@ -221,9 +241,10 @@ public class SolarMap implements Serializable {
      * @author ChaosMelone9
      * @param influxDB assumes a set database
      **/
-    public void writeToInfluxDBDataBase(InfluxDB influxDB, String field) {
+    public void writeToInfluxDBDataBase(InfluxDB influxDB, int batchPointLimit) {
         InfluxDbInteraction influxDbInteraction = new InfluxDbInteraction(influxDB);
-        influxDbInteraction.write(this, field);
+        influxDbInteraction.setBatchPointLimit(batchPointLimit);
+        influxDbInteraction.write(this);
         influxDbInteraction.close();
     }
 
@@ -350,6 +371,14 @@ public class SolarMap implements Serializable {
      */
     public int size() {
         return data.size();
+    }
+
+    /**
+     * Sets the default database name
+     * @author ChaosMelone9
+     */
+    public void setDefaultDataBase(String defaultDataBase) {
+        this.defaultDataBase = defaultDataBase;
     }
 
     /**

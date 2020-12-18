@@ -1,8 +1,10 @@
 package me.meloni.SolarLogAPI.Interface.BasicUI;
 
+import me.meloni.SolarLogAPI.DatabaseInteraction.GetDataBase;
 import me.meloni.SolarLogAPI.FileInteraction.GetFile;
 import me.meloni.SolarLogAPI.Handling.Logger;
 import me.meloni.SolarLogAPI.SolarMap;
+import org.influxdb.InfluxDB;
 
 import javax.swing.*;
 import java.awt.*;
@@ -26,6 +28,7 @@ public class BasicSolarMapCustomizer {
     private final List<File> importTars = new ArrayList<>();
     private final List<File> dataFiles = new ArrayList<>();
     private final List<File> emlFiles = new ArrayList<>();
+    private final List<InfluxDB> databases = new ArrayList<>();
 
     public BasicSolarMapCustomizer() {
         initPanel();
@@ -128,6 +131,12 @@ public class BasicSolarMapCustomizer {
             }
         });
 
+        JButton addDatabase = new JButton("Add from Database");
+        addDatabase.addActionListener(e -> {
+            databases.add(GetDataBase.influxDB());
+            repaintList();
+        });
+
         buttons.add(addFile);
         buttons.add(addDirectory);
         buttons.add(addTar);
@@ -135,6 +144,7 @@ public class BasicSolarMapCustomizer {
         buttons.add(addDataFile);
         buttons.add(addEML);
         buttons.add(addEMLs);
+        buttons.add(addDatabase);
 
         filePanel.setLayout(new BorderLayout());
 
@@ -163,6 +173,12 @@ public class BasicSolarMapCustomizer {
                 if(emlFiles.size() > 0) {
                     Logger.log("Importing from " + emlFiles);
                     map.addFromEMLFiles(emlFiles);
+                }
+                if(databases.size() > 0) {
+                    Logger.log("Importing from " + databases);
+                    for (InfluxDB database : databases) {
+                        map.addFromInfluxDB(database);
+                    }
                 }
                 done = true;
             } catch (Exception ioException) {
@@ -198,6 +214,12 @@ public class BasicSolarMapCustomizer {
             files.add(new JLabel("EML Files:"));
             for (File emlFile : emlFiles) {
                 files.add(new JLabel(emlFile.getName()));
+            }
+        }
+        if(databases.size() > 0) {
+            files.add(new JLabel("Databases:"));
+            for (InfluxDB database : databases) {
+                files.add(new JLabel(database.toString()));
             }
         }
         files.setVisible(false);

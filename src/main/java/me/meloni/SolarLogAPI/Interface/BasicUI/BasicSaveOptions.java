@@ -32,7 +32,7 @@ public class BasicSaveOptions {
         });
 
         JButton writeToInfluxDB = new JButton("Write to InfluxDB");
-        writeToInfluxDB.addActionListener(actionEvent -> solarMap.writeToInfluxDBDataBase(GetDataBase.influxDB(),JOptionPane.showInputDialog("field")));
+        writeToInfluxDB.addActionListener(actionEvent -> solarMap.writeToInfluxDBDataBase(GetDataBase.influxDB(), 125000));
 
         panel.add(writeToFile);
         panel.add(writeToInfluxDB);
