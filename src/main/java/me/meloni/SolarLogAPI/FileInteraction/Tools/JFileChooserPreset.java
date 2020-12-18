@@ -121,5 +121,4 @@ public class JFileChooserPreset {
         j.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         return j;
     }
-
 }

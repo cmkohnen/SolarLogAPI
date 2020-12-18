@@ -83,7 +83,6 @@ public class InfluxDbInteraction {
 
             data.putIfAbsent(date, values);
         }
-
         return data;
     }
 

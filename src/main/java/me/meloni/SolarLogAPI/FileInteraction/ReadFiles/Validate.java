@@ -23,10 +23,7 @@ public class Validate {
                         valid = true;
                 }
         }
-
-
         return valid;
-
     }
 
     public static List<File> validFiles(List<File> files) throws IOException {

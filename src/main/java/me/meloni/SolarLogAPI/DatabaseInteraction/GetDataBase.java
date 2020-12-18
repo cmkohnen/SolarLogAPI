@@ -4,6 +4,7 @@ import org.influxdb.InfluxDB;
 import org.influxdb.InfluxDBFactory;
 
 import javax.swing.*;
+
 /**
  * This Class provides an interactive way to get an {@link InfluxDB} database.
  * @author ChaosMelone9

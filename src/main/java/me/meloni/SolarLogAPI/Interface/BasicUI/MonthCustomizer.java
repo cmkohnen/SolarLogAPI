@@ -83,5 +83,4 @@ public class MonthCustomizer extends JPanel{
     public void paintComponent() {
         GraphCustomizer.setCmp(cmp);
     }
-
 }

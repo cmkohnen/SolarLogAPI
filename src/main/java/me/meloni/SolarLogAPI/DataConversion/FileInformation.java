@@ -28,7 +28,6 @@ public class FileInformation {
         information.put("date", date(infoRow));
         information.put("build",build(infoRow));
 
-
         return information;
     }
 

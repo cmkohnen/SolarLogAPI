@@ -20,7 +20,6 @@ public class DayCustomizer extends JPanel{
     public DayCustomizer(SolarMap data) {
         setLayout(new BorderLayout());
 
-
         DatePicker picker = new DatePicker();
         picker.addVetoPolicy(data);
         picker.setMaximumSize(new Dimension(200,40));
@@ -40,8 +39,6 @@ public class DayCustomizer extends JPanel{
         });
 
         add(picker, BorderLayout.PAGE_START);
-
-
 
         JPanel p = new JPanel();
         p.setLayout(new BoxLayout(p,BoxLayout.Y_AXIS));
@@ -102,5 +99,4 @@ public class DayCustomizer extends JPanel{
     public void paintComponent() {
         GraphCustomizer.setCmp(cmp);
     }
-
 }

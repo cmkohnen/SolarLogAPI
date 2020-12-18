@@ -14,7 +14,11 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
-
+/**
+ * This Class provides functions to get tar archives from EML files.
+ * @author ChaosMelone9
+ * @since 3.0.5
+ */
 public class GetFromEML {
     public static File getTarFromEML(File emlFile) throws IOException, MessagingException, URISyntaxException {
         Properties props = System.getProperties();

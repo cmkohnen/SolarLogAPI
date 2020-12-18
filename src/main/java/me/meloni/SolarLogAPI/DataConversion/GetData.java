@@ -17,16 +17,7 @@ import java.util.*;
  * @since 0.0.1
  */
 public class GetData  {
-    /*
-    Positions of values in List<String> format
-        Verbrauch W: 6
-        Verbrauch kWh: 10
-        Leistung W: 17
-        Ertrag KWh: 23
-        Eigenverbrauch W: 44
-
-     */
-     static final String DATEFORMAT = "dd.MM.yy HH:mm:ss";
+    static final String DATEFORMAT = "dd.MM.yy HH:mm:ss";
 
     public static Map<Date, List<Integer>> getMinuetDataMap(File file) throws ParseException, IOException {
         Logger.log("Importing from " + file);
@@ -41,7 +32,7 @@ public class GetData  {
             String[] str = item.split(";");
             List<String> values = Arrays.asList(str);
 
-            //intitialize variables
+            //initialize variables
             int verbrauchw;
             int verbrauchkwh;
             int leistungw;
@@ -60,14 +51,12 @@ public class GetData  {
             ertragkwh = Integer.parseInt(values.get(positions.get(3)));
             energieverbrauchw = Integer.parseInt(values.get(positions.get(4)));
 
-
             //writing values to List
             valuesEach.add(verbrauchw);
             valuesEach.add(verbrauchkwh);
             valuesEach.add(leistungw);
             valuesEach.add(ertragkwh);
             valuesEach.add(energieverbrauchw);
-
 
             //Writing List to Map
             Data.put(d, valuesEach);

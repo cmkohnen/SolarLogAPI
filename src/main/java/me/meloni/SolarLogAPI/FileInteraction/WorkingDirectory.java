@@ -11,7 +11,11 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-
+/**
+ * This Class provides a way to get a directory intended for short time data storage on the file system.
+ * @author ChaosMelone9
+ * @since 3.1.2
+ */
 public class WorkingDirectory {
     private static File workingDirectory = null;
 

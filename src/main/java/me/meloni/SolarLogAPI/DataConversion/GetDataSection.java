@@ -11,7 +11,6 @@ import java.util.Scanner;
  * @since 0.0.1
  */
 public class GetDataSection {
-
     static int StartMinuteSection = 0;
     static int EndMinuteSection = 0;
 
@@ -36,9 +35,7 @@ public class GetDataSection {
         return data.get(FileVersionPosition);
     }
 
-
     public static List<String> MinuteData(List<String> data) {
-
         for (String s : data) {
             if(s.startsWith("#MIN")) {
                 StartMinuteSection = data.indexOf(s) + 1;

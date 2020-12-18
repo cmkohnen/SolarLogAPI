@@ -43,5 +43,4 @@ public class GraphCustomizer extends JTabbedPane {
         graphFrame.repaint();
         graphFrame.setVisible(true);
     }
-
 }

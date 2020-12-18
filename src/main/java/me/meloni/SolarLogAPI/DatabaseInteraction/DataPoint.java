@@ -5,6 +5,11 @@ import org.influxdb.annotation.Measurement;
 
 import java.time.Instant;
 
+/**
+ * This Class is used to query data from an InfluxDB.
+ * @author ChaosMelone9
+ * @since 3.2.0
+ */
 @Measurement(name ="solar")
 public class DataPoint {
 

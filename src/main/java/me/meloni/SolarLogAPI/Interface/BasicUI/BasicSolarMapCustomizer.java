@@ -225,5 +225,4 @@ public class BasicSolarMapCustomizer {
         files.setVisible(false);
         files.setVisible(true);
     }
-
 }

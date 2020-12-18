@@ -39,7 +39,6 @@ public class GetGraphData {
         return values;
     }
 
-
     public static List<List<Double>> monthView(YearMonth month, Map<Date, List<Integer>> data) throws ParseException {
         List<Date> timestamps = Entries.entriesPerMonth(month);
 
@@ -64,7 +63,6 @@ public class GetGraphData {
                         Eigenverbrauchkwh = Eigenverbrauchkwh + energieverbrauchw;
                     }
                 }
-
                 currentData.add((double) Erzeugungkwh);
                 currentData.add((double) Verbrauchkwh);
                 currentData.add((double) Eigenverbrauchkwh);
@@ -73,7 +71,4 @@ public class GetGraphData {
         }
         return values;
     }
-
-
-
 }

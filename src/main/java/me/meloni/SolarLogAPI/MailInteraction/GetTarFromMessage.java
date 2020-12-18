@@ -13,7 +13,11 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.FileAlreadyExistsException;
-
+/**
+ * This Class provides a way to extract an tar archive from a {@link Message}
+ * @author ChaosMelone9
+ * @since 3.0.5
+ */
 public class GetTarFromMessage {
     public static File getFromMessage(Message message) throws MessagingException, IOException, URISyntaxException {
         Multipart multiPart = (Multipart) message.getContent();

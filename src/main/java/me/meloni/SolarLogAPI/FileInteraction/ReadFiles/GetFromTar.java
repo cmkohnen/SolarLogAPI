@@ -24,7 +24,6 @@ import java.util.zip.GZIPInputStream;
 public class GetFromTar {
 
     private static List<File> unTar(final File inputFile, final File outputDir) throws Exception {
-
         Logger.log(String.format("UnTaring %s to dir %s.", inputFile.getAbsolutePath(), outputDir.getAbsolutePath()));
 
         final List<File> unTaredFiles = new LinkedList<>();
@@ -42,7 +41,6 @@ public class GetFromTar {
                     }
                 }
             } else {
-                //Logger.log(String.format("Creating output file %s.", outputFile.getAbsolutePath()));
                 if(!outputFile.toPath().normalize().startsWith(outputDir.toPath())) {
                     throw new Exception("Bad Zip Entry!");
                 }
@@ -60,7 +58,6 @@ public class GetFromTar {
     }
 
     private static File unGzip(final File inputFile, final File outputDir) throws Exception {
-
         Logger.log(String.format("UnGZipping %s to dir %s.", inputFile.getAbsolutePath(), outputDir.getAbsolutePath()));
 
         final File outputFile = new File(outputDir, inputFile.getName().substring(0, inputFile.getName().length() - 3));
@@ -77,7 +74,6 @@ public class GetFromTar {
             in.close();
             out.close();
         }
-
         return outputFile;
     }
 
