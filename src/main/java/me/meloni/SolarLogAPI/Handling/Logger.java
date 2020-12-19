@@ -39,4 +39,8 @@ public class Logger {
             System.out.println(o);
         }
     }
+
+    public static void info(Object o) {
+        System.out.println(o);
+    }
 }
