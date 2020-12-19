@@ -55,7 +55,7 @@ public class SolarMap implements Serializable {
      * @throws  IOException Unusable file
      * @throws ClassNotFoundException Unusable file
      */
-    public SolarMap(File DataFile) throws IOException, ClassNotFoundException { addFromDataFile(DataFile);}
+    public SolarMap(File dataFile) throws IOException, ClassNotFoundException { addFromDataFile(dataFile);}
 
     /**
      * Instantiates blank

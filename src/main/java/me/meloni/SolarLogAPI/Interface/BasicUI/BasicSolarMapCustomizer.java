@@ -1,7 +1,7 @@
 package me.meloni.SolarLogAPI.Interface.BasicUI;
 
-import me.meloni.SolarLogAPI.DatabaseInteraction.GetDataBase;
-import me.meloni.SolarLogAPI.FileInteraction.GetFile;
+import me.meloni.SolarLogAPI.Interface.GetDataBase;
+import me.meloni.SolarLogAPI.Interface.FileChoosing.GetChosenFile;
 import me.meloni.SolarLogAPI.Handling.Logger;
 import me.meloni.SolarLogAPI.SolarMap;
 import org.influxdb.InfluxDB;
@@ -58,7 +58,7 @@ public class BasicSolarMapCustomizer {
 
         JButton addFile = new JButton("Add File");
         addFile.addActionListener(e -> {
-            File f = GetFile.validChosenDataFile();
+            File f = GetChosenFile.validChosenDataFile();
             if(!(f == null) && f.exists()) {
                 importFiles.add(f);
                 repaintList();
@@ -68,7 +68,7 @@ public class BasicSolarMapCustomizer {
         JButton addDirectory = new JButton("Add from Folder");
         addDirectory.addActionListener(e -> {
             try {
-                List<File> files = GetFile.chosenValidFilesInDirectory();
+                List<File> files = GetChosenFile.chosenValidFilesInDirectory();
                 if(!(files == null)) {
                     importFiles.addAll(files);
                     repaintList();
@@ -80,7 +80,7 @@ public class BasicSolarMapCustomizer {
 
         JButton addTar = new JButton("Add from tar");
         addTar.addActionListener(e -> {
-            File f = GetFile.chosenTarArchive();
+            File f = GetChosenFile.chosenTarArchive();
             if(!(f == null) && f.exists()) {
                 importTars.add(f);
                 repaintList();
@@ -90,7 +90,7 @@ public class BasicSolarMapCustomizer {
         JButton addTars = new JButton("Add from tars");
         addTars.addActionListener(e -> {
             try {
-                List<File> files = GetFile.chosenTarsInDirectory();
+                List<File> files = GetChosenFile.chosenTarsInDirectory();
                 if(!(files == null)) {
                     importTars.addAll(files);
                     repaintList();
@@ -102,7 +102,7 @@ public class BasicSolarMapCustomizer {
 
         JButton addDataFile = new JButton("Add from Data File");
         addDataFile.addActionListener(e -> {
-            File f = GetFile.chosenReadLocation();
+            File f = GetChosenFile.chosenReadLocation();
             if(!(f == null) && f.exists()) {
                 dataFiles.add(f);
                 repaintList();
@@ -111,7 +111,7 @@ public class BasicSolarMapCustomizer {
 
         JButton addEML = new JButton("Add from EML");
         addEML.addActionListener(e -> {
-            File f = GetFile.chosenEMLFile();
+            File f = GetChosenFile.chosenEMLFile();
             if(!(f == null) && f.exists()) {
                 emlFiles.add(f);
                 repaintList();
@@ -121,7 +121,7 @@ public class BasicSolarMapCustomizer {
         JButton addEMLs = new JButton("Add from EMLs");
         addEMLs.addActionListener(e -> {
             try {
-                List<File> files = GetFile.chosenEMLsInDirectory();
+                List<File> files = GetChosenFile.chosenEMLsInDirectory();
                 if(!(files == null)) {
                     emlFiles.addAll(files);
                     repaintList();

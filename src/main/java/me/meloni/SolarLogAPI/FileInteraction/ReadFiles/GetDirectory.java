@@ -1,8 +1,5 @@
 package me.meloni.SolarLogAPI.FileInteraction.ReadFiles;
 
-import me.meloni.SolarLogAPI.FileInteraction.Tools.JFileChooserPreset;
-
-import javax.swing.*;
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
@@ -17,11 +14,5 @@ public class GetDirectory {
     public static List<File> files(File directory) {
         assert directory.isDirectory();
         return Arrays.asList(Objects.requireNonNull(directory.listFiles()));
-    }
-
-    public static File chosenDirectory(){
-        JFileChooser j = JFileChooserPreset.importFromDirectory();
-        j.showOpenDialog(null);
-        return j.getSelectedFile();
     }
 }

@@ -1,6 +1,5 @@
 package me.meloni.SolarLogAPI.FileInteraction.ReadFiles;
 
-import me.meloni.SolarLogAPI.FileInteraction.GetFile;
 import me.meloni.SolarLogAPI.FileInteraction.Tools.FileObject;
 import me.meloni.SolarLogAPI.FileInteraction.Tools.FileVersion;
 import me.meloni.SolarLogAPI.Handling.Logger;
@@ -47,7 +46,7 @@ public class Validate {
 
     public static boolean isValidSolarLogFile(File f) throws IOException, ClassNotFoundException {
         if(f.getName().contains(".solarlog")) {
-            FileObject fileObject = ReadFileObject.fileObject(GetFile.chosenReadLocation());
+            FileObject fileObject = ReadFileObject.fileObject(f);
             return (boolean) fileObject.getInformation("valid");
         }
         return false;

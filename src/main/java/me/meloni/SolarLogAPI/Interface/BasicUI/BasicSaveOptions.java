@@ -1,7 +1,7 @@
 package me.meloni.SolarLogAPI.Interface.BasicUI;
 
-import me.meloni.SolarLogAPI.DatabaseInteraction.GetDataBase;
-import me.meloni.SolarLogAPI.FileInteraction.GetFile;
+import me.meloni.SolarLogAPI.Interface.GetDataBase;
+import me.meloni.SolarLogAPI.Interface.FileChoosing.GetChosenFile;
 import me.meloni.SolarLogAPI.Handling.Logger;
 import me.meloni.SolarLogAPI.SolarMap;
 
@@ -28,7 +28,7 @@ public class BasicSaveOptions {
         writeToFile.addActionListener(actionEvent -> {
 
             try {
-                File f = GetFile.chosenSaveLocation();
+                File f = GetChosenFile.chosenSaveLocation();
                 if(f != null) {
                     solarMap.writeToDataFile(f);
                 }

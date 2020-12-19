@@ -1,4 +1,4 @@
-package me.meloni.SolarLogAPI.DatabaseInteraction;
+package me.meloni.SolarLogAPI.Interface;
 
 import org.influxdb.InfluxDB;
 import org.influxdb.InfluxDBFactory;
