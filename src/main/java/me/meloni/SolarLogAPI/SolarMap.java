@@ -106,7 +106,7 @@ public class SolarMap implements Serializable {
      */
     public void addImportFromFile(File file) throws IOException, ParseException {
         if(file.exists()) {
-            addFromMap(GetData.getMinuetDataMap(file));
+            addFromMap(GetData.getDataMap(file));
         }
     }
 

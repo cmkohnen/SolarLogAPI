@@ -22,7 +22,7 @@ public class FileInformation {
     public static Map<String,Object> information(File file) throws IOException, ParseException {
         Map<String,Object> information = new HashMap<>();
 
-        String infoRow = GetDataSection.InfoRow(GetFileContent.fileContentAsList(GetFile.path(file)));
+        String infoRow = GetDataSection.infoRow(GetFileContent.fileContentAsList(GetFile.path(file)));
 
         information.put("model", model(infoRow));
         information.put("date", date(infoRow));

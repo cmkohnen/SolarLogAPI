@@ -51,7 +51,7 @@ public class WorkingDirectory {
             if(!directory.exists()) {
                 throw new FileNotFoundException();
             }
-        } else throw new NotDirectoryException(directory.getName() + "is no direcory.");
+        } else throw new NotDirectoryException(directory.getName() + "is no directory.");
     }
 
     private static void deleteFolder(File file) throws IOException {

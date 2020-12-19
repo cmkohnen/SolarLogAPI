@@ -34,7 +34,7 @@ public class FileVersion {
     }
 
     public static String getFileVersion(File file) throws IOException {
-        return FileInformation.buildVersion(GetDataSection.InfoRow(file));
+        return FileInformation.buildVersion(GetDataSection.infoRow(file));
     }
 
     public static Map<String, List<Integer>> matrix() {

@@ -22,7 +22,7 @@ public class InfluxDbInteraction {
     int limit = 125000;
     String database;
     BatchPoints batchPoints;
-    InfluxDB db;
+    final InfluxDB db;
     public InfluxDbInteraction(String server, String username, String password) {
         this.db = InfluxDBFactory.connect(server, username, password);
     }

@@ -13,8 +13,8 @@ import java.util.List;
  * @since 1.0.0
  */
 public class GraphCustomizer extends JTabbedPane {
-    static JFrame graphFrame = new JFrame();
-    static List<JComponent> components = new ArrayList<>();
+    static final JFrame graphFrame = new JFrame();
+    static final List<JComponent> components = new ArrayList<>();
 
     public GraphCustomizer(SolarMap data) {
         JFrame f = new SimpleFrame(this);
