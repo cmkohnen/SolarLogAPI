@@ -15,6 +15,9 @@ import java.util.Map;
  * @deprecated
  */
 public class GetDataMap {
+    /**
+     * @deprecated
+     */
     public static Map<Date, List<Integer>> getDataFromFiles(List<File> paths) throws IOException, ClassNotFoundException {
         SolarMap solarMap = new SolarMap();
         solarMap.addFromDataFiles(paths);
