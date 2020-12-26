@@ -31,16 +31,16 @@ public class Validate {
         int i2 = 0;
         for (File file : files) {
             i++;
-            Logger.logWithIncomingBoolean("Validating file " + file + " (" + i + " of " + files.size() + ")");
+            Logger.logWithoutBreakup(Logger.INFO_LEVEL_3 + "Validating file " + file + " (" + i + " of " + files.size() + ")");
             if(isValidDataFile(file)) {
                 ValidFiles.add(file);
                 i2++;
-                Logger.logTheBoolean(true);
+                Logger.logWithoutBreakup("    yes\n");
             } else {
-                Logger.logTheBoolean(false);
+                Logger.logWithoutBreakup("    no\n");
             }
         }
-        Logger.log("Done. Checked " + i + ", found " + i2);
+        Logger.log(Logger.INFO_LEVEL_3 + "Done. Checked " + i + ", found " + i2);
         return ValidFiles;
     }
 

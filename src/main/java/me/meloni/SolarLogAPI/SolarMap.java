@@ -30,22 +30,28 @@ public class SolarMap implements Serializable {
     private String defaultDataBase = "solar";
     private Map<Date, List<Integer>> data = new HashMap<>();
     private Date createdOn = Calendar.getInstance().getTime();
+    private UUID id = UUID.randomUUID();
 
     /**
      * Instantiates using the {@link Map}<{@link Date}, {@link List}<{@link Integer}>> format
      * @author ChaosMelone9
      */
-    public SolarMap(Map<Date, List<Integer>> Map) { data = Map; }
+    public SolarMap(Map<Date, List<Integer>> Map) { init();this.data = Map;}
 
     /**
      * Instantiates using a {@link FileObject}
      * @author ChaosMelone9
      */
     public SolarMap(FileObject fileObject) {
-        data = fileObject.getData();
+        init();
+        this.data = fileObject.getData();
         Date created = (Date) fileObject.getInformation("creation");
         if(created != null) {
             this.createdOn = created;
+        }
+        UUID id = (UUID) fileObject.getInformation("id");
+        if(id != null) {
+            this.id = id;
         }
     }
 
@@ -55,13 +61,17 @@ public class SolarMap implements Serializable {
      * @throws  IOException Unusable file
      * @throws ClassNotFoundException Unusable file
      */
-    public SolarMap(File dataFile) throws IOException, ClassNotFoundException { addFromDataFile(dataFile);}
+    public SolarMap(File dataFile) throws IOException, ClassNotFoundException { init();addFromDataFile(dataFile);}
 
     /**
      * Instantiates blank
      * @author ChaosMelone9
      */
-    public SolarMap() { }
+    public SolarMap() {init(); }
+
+    private void init() {
+        Logger.log(Logger.INFO_LEVEL_1 + "Created new SolarMap with ID " + id.toString());
+    }
 
 
 
@@ -95,6 +105,7 @@ public class SolarMap implements Serializable {
      * @author ChaosMelone9
      */
     public void addFromSolarMap(SolarMap map) {
+        Logger.log(Logger.INFO_LEVEL_2 + "Adding to " + id.toString() + " from SolarMap with ID " + map.getId().toString());
         addFromMap(map.getAsMap());
     }
 
@@ -106,6 +117,7 @@ public class SolarMap implements Serializable {
      */
     public void addImportFromFile(File file) throws IOException, ParseException {
         if(file.exists()) {
+            Logger.log(Logger.INFO_LEVEL_2 + "Adding to " + id.toString() + " from file " + file.getName());
             addFromMap(GetData.getDataMap(file));
         }
     }
@@ -117,11 +129,12 @@ public class SolarMap implements Serializable {
      * @throws ParseException Bad date
      */
     public void addImportFromFiles(List<File> files) throws IOException, ParseException {
+        Logger.log(Logger.INFO_LEVEL_2 + "Adding to " + id.toString() + " from multiple files");
         int i1 = files.size();
         int i2 = 0;
         for (File file : files) {
             i2++;
-            Logger.log("Importing from file " + file.getName() + "  (" + i2 + " of " + i1 + ").");
+            Logger.log(Logger.INFO_LEVEL_3 + "Importing from file " + file.getName() + "  (" + i2 + " of " + i1 + ").");
             addImportFromFile(file);
         }
     }
@@ -133,6 +146,7 @@ public class SolarMap implements Serializable {
      */
     public void addFromTar(File file) throws Exception {
         if(file.exists()) {
+            Logger.log(Logger.INFO_LEVEL_2 + "Adding to " + id.toString() + " from Tar archive " + file.getName());
             addImportFromFiles(GetFromTar.getValidFilesFromTarArchive(file));
         }
     }
@@ -151,6 +165,7 @@ public class SolarMap implements Serializable {
      * @author ChaosMelone9
      */
     public void addFromFileObject(FileObject fileObject) {
+        Logger.log(Logger.INFO_LEVEL_2 + "Adding to " + id.toString() + " from FileObject with ID " + fileObject.getInformation("id").toString());
         addFromMap(fileObject.getData());
     }
 
@@ -161,6 +176,7 @@ public class SolarMap implements Serializable {
      * @throws ClassNotFoundException Bad file
      */
     public void addFromDataFile(File file) throws IOException, ClassNotFoundException {
+        Logger.log(Logger.INFO_LEVEL_2 + "Adding to " + id.toString() + " from data file " + file.getName());
         addFromFileObject(ReadFileObject.fileObject(file));
     }
 
@@ -210,6 +226,7 @@ public class SolarMap implements Serializable {
     }
 
     public void addFromEMLFile(File emlFile) throws Exception {
+        Logger.log(Logger.INFO_LEVEL_2 + "Adding to " + id.toString() + " from EML File " + emlFile.getName());
         addFromTar(Objects.requireNonNull(GetFromEML.getTarFromEML(emlFile)));
     }
 
@@ -305,6 +322,7 @@ public class SolarMap implements Serializable {
     public FileObject getFileObject() {
         FileObject fileObject = new FileObject(this.getAsMap());
         fileObject.putInformation("created", createdOn);
+        fileObject.putInformation("id", id);
         return fileObject;
     }
 
@@ -394,6 +412,10 @@ public class SolarMap implements Serializable {
      */
     public Date getCreationTime() {
         return createdOn;
+    }
+
+    public UUID getId() {
+        return id;
     }
 
     /**

@@ -157,23 +157,18 @@ public class BasicSolarMapCustomizer {
         retrain.addActionListener(e -> {
             try {
                 if(importFiles.size() > 0) {
-                    Logger.log("Importing from " + importFiles);
                     map.addImportFromFiles(importFiles);
                 }
                 if(importTars.size() > 0) {
-                    Logger.log("Importing from " + importTars);
                     map.addFromTars(importTars);
                 }
                 if(dataFiles.size() > 0) {
-                    Logger.log("Importing from " + dataFiles);
                     map.addFromDataFiles(dataFiles);
                 }
                 if(emlFiles.size() > 0) {
-                    Logger.log("Importing from " + emlFiles);
                     map.addFromEMLFiles(emlFiles);
                 }
                 if(databases.size() > 0) {
-                    Logger.log("Importing from " + databases);
                     for (InfluxDB database : databases) {
                         map.addFromInfluxDB(database);
                     }

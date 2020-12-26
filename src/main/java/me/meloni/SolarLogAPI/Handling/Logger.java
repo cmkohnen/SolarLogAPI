@@ -7,27 +7,27 @@ package me.meloni.SolarLogAPI.Handling;
  * @since 0.0.1
  */
 public class Logger {
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_BLACK = "\u001B[30m";
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_YELLOW = "\u001B[33m";
+    public static final String ANSI_BLUE = "\u001B[34m";
+    public static final String ANSI_PURPLE = "\u001B[35m";
+    public static final String ANSI_CYAN = "\u001B[36m";
+    public static final String ANSI_WHITE = "\u001B[37m";
+
+    public static final String INFO_LEVEL_1 = ANSI_PURPLE + "   ===> ";
+    public static final String INFO_LEVEL_2 = ANSI_GREEN + " >>> ";
+    public static final String INFO_LEVEL_3 = ANSI_WHITE + "> ";
 
     private static boolean enabled = false;
-
-    private static boolean booleanMissing = false;
 
     public Logger() {
     }
 
-    public static void logWithIncomingBoolean(Object o) {
-        booleanMissing = true;
+    public static void logWithoutBreakup(Object o) {
         System.out.print(o);
-    }
-    public static void logTheBoolean(Boolean b) {
-        if(booleanMissing) {
-            booleanMissing = false;
-            if(b) {
-                System.out.print("    yes\n");
-            } else {
-                System.out.print("    no\n");
-            }
-        }
     }
 
     public static void setEnabled(boolean enabled) {

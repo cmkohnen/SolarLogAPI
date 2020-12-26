@@ -34,7 +34,7 @@ public class GetFromEML {
         int i = 0;
         for (File emlFile : emlFiles) {
             i++;
-            Logger.log("Extracting tars from " + emlFile + "(" + i + " from " + emlFiles.size() + ").");
+            Logger.log(Logger.INFO_LEVEL_3 + "Extracting tars from " + emlFile + "(" + i + " from " + emlFiles.size() + ").");
             tars.add(getTarFromEML(emlFile));
         }
         return tars;

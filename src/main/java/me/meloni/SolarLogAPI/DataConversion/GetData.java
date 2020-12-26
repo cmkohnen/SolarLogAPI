@@ -25,9 +25,9 @@ public class GetData  {
      * @deprecated
      */
     public static Map<Date, List<Integer>> getMinuteDataMap(File file) throws ParseException, IOException {
-        Logger.log("Importing from " + file);
         String fileVersion = FileVersion.getFileVersion(file);
         List<Integer> positions = FileVersion.matrix().get(fileVersion);
+        Logger.log(Logger.INFO_LEVEL_3 + "Importing data from \"" + file.getAbsolutePath() + "\" using file version v" + fileVersion);
 
         List<String> MinuteData = GetDataSection.minuteData(GetFileContent.fileContentAsList(GetFile.path(file)));
         Map<Date, List<Integer>> data = new HashMap<>();
@@ -40,9 +40,9 @@ public class GetData  {
     }
 
     public static Map<Date, List<Integer>> getDataMap(File file) throws IOException, ParseException {
-        Logger.log("Importing from " + file);
         String fileVersion = FileVersion.getFileVersion(file);
         List<Integer> positions = FileVersion.matrix().get(fileVersion);
+        Logger.log(Logger.INFO_LEVEL_3 + "Importing data from \"" + file.getAbsolutePath() + "\" using file version v" + fileVersion);
 
         Map<Date, List<Integer>> data = new HashMap<>();
         try (LineIterator it = FileUtils.lineIterator(file, "UTF-8")) {
