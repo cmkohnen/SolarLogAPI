@@ -165,7 +165,7 @@ public class SolarMap implements Serializable {
      * @author ChaosMelone9
      */
     public void addFromFileObject(FileObject fileObject) {
-        Logger.log(Logger.INFO_LEVEL_2 + "Adding to " + id.toString() + " from FileObject with ID " + fileObject.getInformation("id").toString());
+        Logger.log(Logger.INFO_LEVEL_2 + "Adding to " + id.toString() + " from FileObject");
         addFromMap(fileObject.getData());
     }
 

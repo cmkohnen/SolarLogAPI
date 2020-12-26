@@ -17,7 +17,7 @@ public class Logger {
     public static final String ANSI_CYAN = "\u001B[36m";
     public static final String ANSI_WHITE = "\u001B[37m";
 
-    public static final String INFO_LEVEL_1 = ANSI_PURPLE + "   ===> ";
+    public static final String INFO_LEVEL_1 = ANSI_PURPLE + " ===> ";
     public static final String INFO_LEVEL_2 = ANSI_GREEN + " >>> ";
     public static final String INFO_LEVEL_3 = ANSI_WHITE + "> ";
 
