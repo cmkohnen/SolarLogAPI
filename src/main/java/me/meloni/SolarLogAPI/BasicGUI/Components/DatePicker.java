@@ -1,4 +1,4 @@
-package me.meloni.SolarLogAPI.Interface.Components;
+package me.meloni.SolarLogAPI.BasicGUI.Components;
 
 import me.meloni.SolarLogAPI.SolarMap;
 import me.meloni.SolarLogAPI.DataConversion.Entries;

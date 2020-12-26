@@ -1,7 +1,5 @@
-package me.meloni.SolarLogAPI.Interface.BasicUI;
+package me.meloni.SolarLogAPI.BasicGUI;
 
-import me.meloni.SolarLogAPI.Interface.GetDataBase;
-import me.meloni.SolarLogAPI.Interface.FileChoosing.GetChosenFile;
 import me.meloni.SolarLogAPI.Handling.Logger;
 import me.meloni.SolarLogAPI.SolarMap;
 import org.influxdb.InfluxDB;

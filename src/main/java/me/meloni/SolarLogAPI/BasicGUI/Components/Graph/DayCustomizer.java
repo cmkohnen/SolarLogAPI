@@ -1,32 +1,32 @@
-package me.meloni.SolarLogAPI.Interface.BasicUI;
+package me.meloni.SolarLogAPI.BasicGUI.Components.Graph;
 
-import me.meloni.SolarLogAPI.SolarMap;
-import me.meloni.SolarLogAPI.Interface.Components.DatePicker;
-import me.meloni.SolarLogAPI.Interface.Components.Graph.MonthView;
+import me.meloni.SolarLogAPI.BasicGUI.Components.DatePicker;
 import me.meloni.SolarLogAPI.DataConversion.GetStartOf;
+import me.meloni.SolarLogAPI.BasicGUI.GraphCustomizer;
+import me.meloni.SolarLogAPI.SolarMap;
 
 import javax.swing.*;
 import java.awt.*;
 import java.text.ParseException;
 
 /**
- * This Class includes a function to display monthly graph data.
+ * This Class includes a function to display daily graph data.
  * @author ChaosMelone9
  * @since 1.0.0
  */
-public class MonthCustomizer extends JPanel{
-    static MonthView cmp = null;
+public class DayCustomizer extends JPanel{
+    static DayView cmp = null;
 
-    public MonthCustomizer(SolarMap data) {
+    public DayCustomizer(SolarMap data) {
         setLayout(new BorderLayout());
 
         DatePicker picker = new DatePicker();
         picker.addVetoPolicy(data);
         picker.setMaximumSize(new Dimension(200,40));
         picker.addDateChangeListener(event -> {
-            if(data.includesMonth(GetStartOf.yearMonth(event.getNewDate()))){
+            if(data.includesDay(event.getNewDate())){
                 try {
-                    cmp = new MonthView(data.getMonthGraphData(GetStartOf.yearMonth(event.getNewDate())));
+                    cmp = new DayView(data.getDayGraphData(GetStartOf.day(event.getNewDate())));
                     paintComponent();
                 } catch (ParseException e) {
                     e.printStackTrace();
@@ -46,12 +46,18 @@ public class MonthCustomizer extends JPanel{
         JCheckBox b1 = new JCheckBox();
         JCheckBox b2 = new JCheckBox();
         JCheckBox b3 = new JCheckBox();
+        JCheckBox b4 = new JCheckBox();
+        JCheckBox b5 = new JCheckBox();
         b1.setText("Row 1");
         b2.setText("Row 2");
         b3.setText("Row 3");
+        b4.setText("Row 4");
+        b5.setText("Row 5");
         b1.setSelected(true);
         b2.setSelected(true);
         b3.setSelected(true);
+        b4.setSelected(true);
+        b5.setSelected(true);
         b1.addActionListener(actionEvent -> {
             cmp.setRow1Visible(b1.isSelected());
             paintComponent();
@@ -64,9 +70,19 @@ public class MonthCustomizer extends JPanel{
             cmp.setRow3Visible(b3.isSelected());
             paintComponent();
         });
+        b4.addActionListener(actionEvent -> {
+            cmp.setRow4Visible(b4.isSelected());
+            paintComponent();
+        });
+        b5.addActionListener(actionEvent -> {
+            cmp.setRow5Visible(b5.isSelected());
+            paintComponent();
+        });
         p.add(b1);
         p.add(b2);
         p.add(b3);
+        p.add(b4);
+        p.add(b5);
 
         JCheckBox mouseGUI = new JCheckBox();
         mouseGUI.setText("MouseGUI");
