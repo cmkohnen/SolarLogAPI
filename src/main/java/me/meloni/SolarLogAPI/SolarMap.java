@@ -217,6 +217,10 @@ public class SolarMap implements Serializable {
         influxDbInteraction.close();
     }
 
+    /**
+     * Add from an {@link InfluxDB}
+     * @author ChaosMelone9
+     */
     public void addFromInfluxDB(InfluxDB influxDB, String database) {
         InfluxDbInteraction influxDbInteraction = new InfluxDbInteraction(influxDB);
         influxDbInteraction.setDatabase(database);
@@ -224,15 +228,27 @@ public class SolarMap implements Serializable {
         influxDbInteraction.close();
     }
 
+    /**
+     * Add from an EML file
+     * @author ChaosMelone9
+     */
     public void addFromEMLFile(File emlFile) throws Exception {
         Logger.log(Logger.INFO_LEVEL_2 + "Adding to " + id.toString() + " from EML File " + emlFile.getName());
         addFromTar(Objects.requireNonNull(GetFromEML.getTarFromEML(emlFile)));
     }
 
+    /**
+     * Add from EML files
+     * @author ChaosMelone9
+     */
     public void addFromEMLFiles(List<File> emlFiles) throws Exception {
         addFromTars(GetFromEML.getTarsFromEMLS(emlFiles));
     }
 
+    /**
+     * Add from a SolarLog JSON interface
+     * @author ChaosMelone9
+     */
     public void addFromSolarLog(URL SolarLog) throws IOException, org.json.simple.parser.ParseException, ParseException {
         Logger.log(Logger.INFO_LEVEL_2 + "Adding to " + id.toString() + " from SolarLog at " + SolarLog.toString());
         addFromMap(GetValuesFromJson.getAsMap(GetJsonFromSolarLog.getFromSolarLogInterface(SolarLog)));
@@ -247,6 +263,7 @@ public class SolarMap implements Serializable {
      * @throws IOException Bad file
      */
     public void writeToDataFile(File file) throws IOException {
+        Logger.log(Logger.INFO_LEVEL_2 + "Writing " + id.toString() + " to data file " + file.getName());
         WriteFileObject.write(file, this.getFileObject());
     }
 
@@ -255,6 +272,7 @@ public class SolarMap implements Serializable {
      * @author ChaosMelone9
      */
     public void writeToInfluxDBDataBase(String server, String username, String password, String database, int batchPointLimit) throws NullPointerException{
+        Logger.log(Logger.INFO_LEVEL_2 + "Writing " + id.toString() + " to InfluxDB at " + server);
         InfluxDbInteraction influxDbInteraction = new InfluxDbInteraction(server, username, password);
         influxDbInteraction.setBatchPointLimit(batchPointLimit);
         influxDbInteraction.setDatabase(database);
@@ -268,6 +286,7 @@ public class SolarMap implements Serializable {
      * @param influxDB assumes a set database
      **/
     public void writeToInfluxDBDataBase(InfluxDB influxDB, int batchPointLimit) throws NullPointerException{
+        Logger.log(Logger.INFO_LEVEL_2 + "Writing " + id.toString() + " to InfluxDB");
         InfluxDbInteraction influxDbInteraction = new InfluxDbInteraction(influxDB);
         influxDbInteraction.setBatchPointLimit(batchPointLimit);
         influxDbInteraction.write(this);
@@ -428,5 +447,6 @@ public class SolarMap implements Serializable {
      */
     public void clear() {
         data.clear();
+        Logger.log(Logger.INFO_LEVEL_1 + "Cleared " + id.toString());
     }
 }

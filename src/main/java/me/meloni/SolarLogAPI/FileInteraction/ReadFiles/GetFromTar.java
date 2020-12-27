@@ -58,7 +58,7 @@ public class GetFromTar {
     }
 
     private static File unGzip(final File inputFile, final File outputDir) throws Exception {
-        Logger.log(String.format("UnGZipping %s to dir %s.", inputFile.getAbsolutePath(), outputDir.getAbsolutePath()));
+        Logger.log(Logger.INFO_LEVEL_3 + String.format("UnGZipping %s to dir %s.", inputFile.getAbsolutePath(), outputDir.getAbsolutePath()));
 
         final File outputFile = new File(outputDir, inputFile.getName().substring(0, inputFile.getName().length() - 3));
         if(!outputFile.toPath().normalize().startsWith(outputDir.toPath())) {

@@ -45,7 +45,7 @@ public class GetGraphData {
         List<List<Double>> values = new ArrayList<>();
 
         for (Date timestamp : timestamps) {
-                Logger.log("Importing from " + timestamp);
+                Logger.log(Logger.INFO_LEVEL_3 + "Importing from " + timestamp);
                 List<Double> currentData = new ArrayList<>();
                 int Erzeugungkwh = 0;
                 int Verbrauchkwh = 0;

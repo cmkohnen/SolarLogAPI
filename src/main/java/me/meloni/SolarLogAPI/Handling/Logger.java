@@ -17,11 +17,12 @@ public class Logger {
     public static final String ANSI_CYAN = "\u001B[36m";
     public static final String ANSI_WHITE = "\u001B[37m";
 
-    public static final String INFO_LEVEL_1 = ANSI_PURPLE + " ===> ";
-    public static final String INFO_LEVEL_2 = ANSI_GREEN + " >>> ";
-    public static final String INFO_LEVEL_3 = ANSI_WHITE + "> ";
+    public static String INFO_LEVEL_1 = ANSI_PURPLE + " ===> ";
+    public static String INFO_LEVEL_2 = ANSI_GREEN + " >>> ";
+    public static String INFO_LEVEL_3 = ANSI_WHITE + "> ";
 
     private static boolean enabled = false;
+    private static boolean colored = true;
 
     public Logger() {
     }
@@ -32,6 +33,19 @@ public class Logger {
 
     public static void setEnabled(boolean enabled) {
         Logger.enabled = enabled;
+    }
+
+    public static void setColored(boolean colored) {
+        Logger.colored = colored;
+        if(colored) {
+            Logger.INFO_LEVEL_1 = ANSI_PURPLE + " ===> ";
+            Logger.INFO_LEVEL_2 = ANSI_GREEN + " >>> ";
+            Logger.INFO_LEVEL_3 = ANSI_WHITE + "> ";
+        } else {
+            Logger.INFO_LEVEL_1 = " ===> ";
+            Logger.INFO_LEVEL_2 = " >>> ";
+            Logger.INFO_LEVEL_3 = "> ";
+        }
     }
 
     public static void log(Object o){

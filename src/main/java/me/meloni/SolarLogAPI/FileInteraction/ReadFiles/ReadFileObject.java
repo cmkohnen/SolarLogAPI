@@ -21,7 +21,7 @@ public class ReadFileObject {
             ObjectInputStream s = new ObjectInputStream(f);
             FileObject o = (FileObject) s.readObject();
             s.close();
-            Logger.log("done.");
+            Logger.log(Logger.INFO_LEVEL_2 + "done.");
             return o;
         } else {
          return null;

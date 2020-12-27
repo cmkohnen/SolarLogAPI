@@ -40,7 +40,7 @@ public class BasicSaveOptions {
             try {
                 solarMap.writeToInfluxDBDataBase(GetDataBase.influxDB(), 125000);
             } catch (NullPointerException e) {
-                Logger.log("Database incorrect.");
+                Logger.log(Logger.INFO_LEVEL_3 + "Database incorrect.");
             }
         });
 
