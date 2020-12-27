@@ -38,7 +38,7 @@ public class BasicSaveOptions {
         JButton writeToInfluxDB = new JButton("Write to InfluxDB");
         writeToInfluxDB.addActionListener(actionEvent -> {
             try {
-                solarMap.writeToInfluxDBDataBase(GetDataBase.influxDB(), 125000);
+                solarMap.writeToInfluxDBDataBase(GetDataBase.database().getInfluxDB(), 125000);
             } catch (NullPointerException e) {
                 Logger.log(Logger.INFO_LEVEL_3 + "Database incorrect.");
             }

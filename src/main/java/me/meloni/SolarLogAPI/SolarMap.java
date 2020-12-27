@@ -26,7 +26,6 @@ import java.util.*;
  * @since 2.0.0
  */
 public class SolarMap implements Serializable {
-    private String defaultDataBase = "solar";
     private Map<Date, List<Integer>> data = new HashMap<>();
     private Date createdOn = Calendar.getInstance().getTime();
     private UUID id = UUID.randomUUID();
@@ -202,17 +201,6 @@ public class SolarMap implements Serializable {
     public void addFromInfluxDB(String server, String username, String password, String database) {
         InfluxDbInteraction influxDbInteraction = new InfluxDbInteraction(server,username,password);
         influxDbInteraction.setDatabase(database);
-        addFromMap(influxDbInteraction.read());
-        influxDbInteraction.close();
-    }
-
-    /**
-     * Add from an {@link InfluxDB}
-     * @author ChaosMelone9
-     */
-    public void addFromInfluxDB(InfluxDB influxDB) {
-        InfluxDbInteraction influxDbInteraction = new InfluxDbInteraction(influxDB);
-        influxDbInteraction.setDatabase(defaultDataBase);
         addFromMap(influxDbInteraction.read());
         influxDbInteraction.close();
     }
@@ -419,14 +407,6 @@ public class SolarMap implements Serializable {
      */
     public int size() {
         return data.size();
-    }
-
-    /**
-     * Sets the default database name
-     * @author ChaosMelone9
-     */
-    public void setDefaultDataBase(String defaultDataBase) {
-        this.defaultDataBase = defaultDataBase;
     }
 
     /**

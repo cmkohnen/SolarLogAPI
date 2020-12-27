@@ -1,8 +1,7 @@
 package me.meloni.SolarLogAPI.BasicGUI;
 
-import me.meloni.SolarLogAPI.Handling.Logger;
+import me.meloni.SolarLogAPI.DatabaseInteraction.Database;
 import me.meloni.SolarLogAPI.SolarMap;
-import org.influxdb.InfluxDB;
 
 import javax.swing.*;
 import java.awt.*;
@@ -26,7 +25,7 @@ public class BasicSolarMapCustomizer {
     private final List<File> importTars = new ArrayList<>();
     private final List<File> dataFiles = new ArrayList<>();
     private final List<File> emlFiles = new ArrayList<>();
-    private final List<InfluxDB> databases = new ArrayList<>();
+    private final List<Database> databases = new ArrayList<>();
 
     public BasicSolarMapCustomizer() {
         initPanel();
@@ -131,7 +130,7 @@ public class BasicSolarMapCustomizer {
 
         JButton addDatabase = new JButton("Add from Database");
         addDatabase.addActionListener(e -> {
-            databases.add(GetDataBase.influxDB());
+            databases.add(GetDataBase.database());
             repaintList();
         });
 
@@ -169,8 +168,8 @@ public class BasicSolarMapCustomizer {
                     map.addFromEMLFiles(emlFiles);
                 }
                 if(databases.size() > 0) {
-                    for (InfluxDB database : databases) {
-                        map.addFromInfluxDB(database);
+                    for (Database database : databases) {
+                        map.addFromInfluxDB(database.getInfluxDB(), database.getDatabase());
                     }
                 }
                 done = true;
@@ -211,8 +210,8 @@ public class BasicSolarMapCustomizer {
         }
         if(databases.size() > 0) {
             files.add(new JLabel("Databases:"));
-            for (InfluxDB database : databases) {
-                files.add(new JLabel(database.version()));
+            for (Database database : databases) {
+                files.add(new JLabel(database.getInfluxDB().version()));
             }
         }
         files.setVisible(false);
