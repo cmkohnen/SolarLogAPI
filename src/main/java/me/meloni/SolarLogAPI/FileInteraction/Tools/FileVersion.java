@@ -44,7 +44,6 @@ public class FileVersion {
         version300.add(8);
         version300.add(15);
         version300.add(21);
-        version300.add(36);
         matrix.put("3.0.0",version300);
         matrix.put("3.4.2",version300);
         List<Integer> version427 = new ArrayList<>();
@@ -52,18 +51,11 @@ public class FileVersion {
         version427.add(10);
         version427.add(17);
         version427.add(23);
-        version427.add(44);
         matrix.put("4.2.7",version427);
         matrix.put("4.2.0",version427);
         matrix.put("4.2.5",version427);
-        List<Integer> version351 = new ArrayList<>();
-        version351.add(6);
-        version351.add(10);
-        version351.add(17);
-        version351.add(23);
-        version351.add(44);
-        matrix.put("3.5.1",version351);
-        matrix.put("3.6.0",version351);
+        matrix.put("3.5.1",version427);
+        matrix.put("3.6.0",version427);
         return matrix;
     }
 }

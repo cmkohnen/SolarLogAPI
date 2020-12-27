@@ -81,7 +81,7 @@ public class GetData  {
         verbrauchkwh = Integer.parseInt(strings.get(positions.get(1)));
         leistungw = Integer.parseInt(strings.get(positions.get(2)));
         ertragkwh = Integer.parseInt(strings.get(positions.get(3)));
-        energieverbrauchw = Integer.parseInt(strings.get(positions.get(4)));
+        energieverbrauchw = Math.min(verbrauchw, leistungw);
 
         //writing values to List
         valuesEach.add(verbrauchw);
