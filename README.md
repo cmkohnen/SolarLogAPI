@@ -19,8 +19,8 @@ Greetings, Chaosmelone9
 - InfluxDB support
 - EML file support
 - Persistent storage support
+- SolarLog JSON Interface support
 - Very Basic UI elements
-- Moderate conversion
 
 ## How to use
 
