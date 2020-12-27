@@ -1,9 +1,6 @@
 package me.meloni.SolarLogAPI;
 
-import me.meloni.SolarLogAPI.DataConversion.Entries;
-import me.meloni.SolarLogAPI.DataConversion.GetData;
-import me.meloni.SolarLogAPI.DataConversion.GetGraphData;
-import me.meloni.SolarLogAPI.DataConversion.GetStartOf;
+import me.meloni.SolarLogAPI.DataConversion.*;
 import me.meloni.SolarLogAPI.DatabaseInteraction.InfluxDbInteraction;
 import me.meloni.SolarLogAPI.FileInteraction.ReadFiles.GetFromEML;
 import me.meloni.SolarLogAPI.FileInteraction.ReadFiles.GetFromTar;
@@ -11,11 +8,13 @@ import me.meloni.SolarLogAPI.FileInteraction.ReadFiles.ReadFileObject;
 import me.meloni.SolarLogAPI.FileInteraction.Tools.FileObject;
 import me.meloni.SolarLogAPI.FileInteraction.WriteFiles.WriteFileObject;
 import me.meloni.SolarLogAPI.Handling.Logger;
+import me.meloni.SolarLogAPI.SolarLogInteraction.GetJsonFromSolarLog;
 import org.influxdb.InfluxDB;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
+import java.net.URL;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.YearMonth;
@@ -232,6 +231,11 @@ public class SolarMap implements Serializable {
 
     public void addFromEMLFiles(List<File> emlFiles) throws Exception {
         addFromTars(GetFromEML.getTarsFromEMLS(emlFiles));
+    }
+
+    public void addFromSolarLog(URL SolarLog) throws IOException, org.json.simple.parser.ParseException, ParseException {
+        Logger.log(Logger.INFO_LEVEL_2 + "Adding to " + id.toString() + " from SolarLog at " + SolarLog.toString());
+        addFromMap(GetValuesFromJson.getAsMap(GetJsonFromSolarLog.getFromSolarLogInterface(SolarLog)));
     }
 
 
