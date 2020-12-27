@@ -16,8 +16,10 @@ import java.text.ParseException;
  */
 public class MonthCustomizer extends JPanel{
     static MonthView cmp = null;
+    GraphCustomizer instance;
 
-    public MonthCustomizer(SolarMap data) {
+    public MonthCustomizer(SolarMap data, GraphCustomizer instance) {
+        this.instance = instance;
         setLayout(new BorderLayout());
 
         DatePicker picker = new DatePicker();
@@ -81,6 +83,6 @@ public class MonthCustomizer extends JPanel{
     }
 
     public void paintComponent() {
-        GraphCustomizer.setCmp(cmp);
+        instance.setCmp(cmp);
     }
 }

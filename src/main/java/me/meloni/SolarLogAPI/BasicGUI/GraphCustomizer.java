@@ -18,6 +18,10 @@ public class GraphCustomizer extends JTabbedPane {
     static final JFrame graphFrame = new JFrame();
     static final List<JComponent> components = new ArrayList<>();
 
+    public static void visualize(SolarMap data) {
+        new GraphCustomizer(data);
+    }
+
     public GraphCustomizer(SolarMap data) {
         JFrame f = new SimpleFrame(this);
         f.setSize(200,300);
@@ -26,11 +30,11 @@ public class GraphCustomizer extends JTabbedPane {
 
         graphFrame.setSize(1000, 600);
         graphFrame.setLocationRelativeTo(f);
-        addTab("Day View",new DayCustomizer(data));
-        addTab("Month View",new MonthCustomizer(data));
+        addTab("Day View",new DayCustomizer(data, this));
+        addTab("Month View",new MonthCustomizer(data, this));
     }
 
-    public static void setCmp(JComponent c) {
+    public void setCmp(JComponent c) {
         for (JComponent cmp : components) {
             graphFrame.remove(cmp);
         }

@@ -16,8 +16,10 @@ import java.text.ParseException;
  */
 public class DayCustomizer extends JPanel{
     static DayView cmp = null;
+    GraphCustomizer instance;
 
-    public DayCustomizer(SolarMap data) {
+    public DayCustomizer(SolarMap data, GraphCustomizer instance) {
+        this.instance = instance;
         setLayout(new BorderLayout());
 
         DatePicker picker = new DatePicker();
@@ -97,6 +99,6 @@ public class DayCustomizer extends JPanel{
     }
 
     public void paintComponent() {
-        GraphCustomizer.setCmp(cmp);
+        instance.setCmp(cmp);
     }
 }
