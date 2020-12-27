@@ -1,7 +1,5 @@
-package me.meloni.SolarLogAPI.Interface.BasicUI;
+package me.meloni.SolarLogAPI.BasicGUI;
 
-import me.meloni.SolarLogAPI.DatabaseInteraction.GetDataBase;
-import me.meloni.SolarLogAPI.FileInteraction.GetFile;
 import me.meloni.SolarLogAPI.Handling.Logger;
 import me.meloni.SolarLogAPI.SolarMap;
 
@@ -28,7 +26,7 @@ public class BasicSaveOptions {
         writeToFile.addActionListener(actionEvent -> {
 
             try {
-                File f = GetFile.chosenSaveLocation();
+                File f = GetChosenFile.chosenSaveLocation();
                 if(f != null) {
                     solarMap.writeToDataFile(f);
                 }
@@ -40,9 +38,9 @@ public class BasicSaveOptions {
         JButton writeToInfluxDB = new JButton("Write to InfluxDB");
         writeToInfluxDB.addActionListener(actionEvent -> {
             try {
-                solarMap.writeToInfluxDBDataBase(GetDataBase.influxDB(), 125000);
+                solarMap.writeToInfluxDBDataBase(GetDataBase.database().getInfluxDB(), 125000);
             } catch (NullPointerException e) {
-                Logger.log("Database incorrect.");
+                Logger.log(Logger.INFO_LEVEL_3 + "Database incorrect.");
             }
         });
 

@@ -13,12 +13,12 @@ import java.io.ObjectOutputStream;
  */
 public class WriteFileObject {
     public static void write(File file, Object object) throws IOException {
-        Logger.log("Writing to " + file + ". This may take a while.");
+        Logger.log(Logger.INFO_LEVEL_2 + "Writing to \"" + file + "\". This may take a while.");
         FileOutputStream f = new FileOutputStream(file);
         ObjectOutputStream s = new ObjectOutputStream(f);
         s.writeObject(object);
         s.flush();
         s.close();
-        Logger.log("done.");
+        Logger.log(Logger.INFO_LEVEL_2 + "done.");
     }
 }

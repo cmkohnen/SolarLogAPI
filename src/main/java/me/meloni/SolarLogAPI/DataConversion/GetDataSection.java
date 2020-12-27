@@ -1,6 +1,9 @@
 package me.meloni.SolarLogAPI.DataConversion;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -11,15 +14,15 @@ import java.util.Scanner;
  * @since 0.0.1
  */
 public class GetDataSection {
-    static int StartMinuteSection = 0;
-    static int EndMinuteSection = 0;
+    private static int StartMinuteSection = 0;
+    private static int EndMinuteSection = 0;
 
-    static int InfoRowPosition = 0;
-    static int FileVersionPosition = 1;
+    static final int InfoRowPosition = 0;
+    static final int FileVersionPosition = 1;
 
-    public static String InfoRow(List<String> data) { return data.get(InfoRowPosition); }
+    public static String infoRow(List<String> data) { return data.get(InfoRowPosition); }
 
-    public static String InfoRow(File fromFile) throws IOException {
+    public static String infoRow(File fromFile) throws IOException {
         InputStream inputStream = new FileInputStream(fromFile);
         Scanner scanner = new Scanner(inputStream, "UTF-8");
         String info = null;
@@ -31,11 +34,14 @@ public class GetDataSection {
         return info;
     }
 
-    public static String FileVersion(List<String> data) {
+    /**
+     * @deprecated
+     */
+    public static String fileVersion(List<String> data) {
         return data.get(FileVersionPosition);
     }
 
-    public static List<String> MinuteData(List<String> data) {
+    public static List<String> minuteData(List<String> data) {
         for (String s : data) {
             if(s.startsWith("#MIN")) {
                 StartMinuteSection = data.indexOf(s) + 1;

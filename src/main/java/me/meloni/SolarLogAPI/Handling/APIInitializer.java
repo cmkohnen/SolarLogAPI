@@ -1,12 +1,5 @@
 package me.meloni.SolarLogAPI.Handling;
 
-import me.meloni.SolarLogAPI.Interface.BasicUI.BasicConversion;
-import me.meloni.SolarLogAPI.Interface.BasicUI.GraphCustomizer;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 /**
  * This Class is called when the jar package is executed via runtime.
  * @author ChaosMelone9
@@ -18,17 +11,7 @@ public class APIInitializer {
      * @param args arguments passed by runtime
      */
     public static void main(String[] args) {
-        List<String> argsAsList = new ArrayList<>(Arrays.asList(args));
-        Logger.setEnabled(true);
-
-        Logger.log("API starts via Runtime Environment. Used Arguments: " + argsAsList);
-
-        if (argsAsList.contains("simplegui")) {
-            GraphCustomizer.run();
-        }
-
-        if (argsAsList.contains("convert")) {
-            BasicConversion.run();
-        }
+        String message = "Oh no, looks like you tried to run this package inside the commandline. \n However this is not supposed to run but be used only as a dependency. \n See https://github.com/ChaosMelone9/SolarLogAPI for more info.";
+        Logger.info(message);
     }
 }

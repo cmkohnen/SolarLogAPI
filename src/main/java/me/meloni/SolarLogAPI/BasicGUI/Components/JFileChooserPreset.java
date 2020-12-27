@@ -1,4 +1,4 @@
-package me.meloni.SolarLogAPI.FileInteraction.Tools;
+package me.meloni.SolarLogAPI.BasicGUI.Components;
 
 import me.meloni.SolarLogAPI.FileInteraction.ReadFiles.Validate;
 

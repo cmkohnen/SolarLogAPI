@@ -7,7 +7,7 @@
     <groupId>me.meloni</groupId>
     <artifactId>SolarLogAPI</artifactId>
     <packaging>jar</packaging>
-    <version>3.2.1</version>
+    <version>3.4.3</version>
     <name>SolarLogAPI</name>
 
     <dependencies>
@@ -39,6 +39,12 @@
             <groupId>com.sun.mail</groupId>
             <artifactId>javax.mail</artifactId>
             <version>1.6.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.googlecode.json-simple</groupId>
+            <artifactId>json-simple</artifactId>
+            <version>1.1.1</version>
         </dependency>
 
         <dependency>

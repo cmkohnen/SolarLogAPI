@@ -16,12 +16,12 @@ import java.io.ObjectInputStream;
 public class ReadFileObject {
     public static FileObject fileObject(File file) throws IOException, ClassNotFoundException {
         if(!(file == null) && file.exists()) {
-            Logger.log("Reading file " + file + ". This may take a while.");
+            Logger.log(Logger.INFO_LEVEL_2 + "Reading file " + file + ". This may take a while.");
             FileInputStream f = new FileInputStream(file);
             ObjectInputStream s = new ObjectInputStream(f);
             FileObject o = (FileObject) s.readObject();
             s.close();
-            Logger.log("done.");
+            Logger.log(Logger.INFO_LEVEL_2 + "done.");
             return o;
         } else {
          return null;

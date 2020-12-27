@@ -1,4 +1,4 @@
-package me.meloni.SolarLogAPI.Interface.Graph;
+package me.meloni.SolarLogAPI.BasicGUI.Components.Graph;
 
 import javax.swing.*;
 import java.awt.*;

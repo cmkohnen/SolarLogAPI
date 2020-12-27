@@ -1,5 +1,6 @@
-package me.meloni.SolarLogAPI.DatabaseInteraction;
+package me.meloni.SolarLogAPI.BasicGUI;
 
+import me.meloni.SolarLogAPI.DatabaseInteraction.Database;
 import org.influxdb.InfluxDB;
 import org.influxdb.InfluxDBFactory;
 
@@ -11,7 +12,7 @@ import javax.swing.*;
  * @since 3.0.5
  */
 public class GetDataBase {
-    public static InfluxDB influxDB() throws NullPointerException{
+    public static Database database() {
         String server = JOptionPane.showInputDialog("Server");
         String username = JOptionPane.showInputDialog("User");
         String password = JOptionPane.showInputDialog("Passwd");
@@ -19,7 +20,7 @@ public class GetDataBase {
             InfluxDB db = InfluxDBFactory.connect(server, username, password);
             String database = JOptionPane.showInputDialog("Database");
             db.setDatabase(database);
-            return db;
+            return new Database(db, database);
         } catch (IllegalArgumentException e) {
             JOptionPane.showMessageDialog(null,"Did not work");
             throw new NullPointerException("No such database");

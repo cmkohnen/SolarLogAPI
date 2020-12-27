@@ -1,7 +1,9 @@
-package me.meloni.SolarLogAPI.Interface.BasicUI;
+package me.meloni.SolarLogAPI.BasicGUI;
 
+import me.meloni.SolarLogAPI.BasicGUI.Components.Graph.DayCustomizer;
+import me.meloni.SolarLogAPI.BasicGUI.Components.Graph.MonthCustomizer;
 import me.meloni.SolarLogAPI.SolarMap;
-import me.meloni.SolarLogAPI.Interface.SimpleFrame;
+import me.meloni.SolarLogAPI.BasicGUI.Components.SimpleFrame;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -13,8 +15,12 @@ import java.util.List;
  * @since 1.0.0
  */
 public class GraphCustomizer extends JTabbedPane {
-    static JFrame graphFrame = new JFrame();
-    static List<JComponent> components = new ArrayList<>();
+    static final JFrame graphFrame = new JFrame();
+    static final List<JComponent> components = new ArrayList<>();
+
+    public static void visualize(SolarMap data) {
+        new GraphCustomizer(data);
+    }
 
     public GraphCustomizer(SolarMap data) {
         JFrame f = new SimpleFrame(this);
@@ -24,16 +30,11 @@ public class GraphCustomizer extends JTabbedPane {
 
         graphFrame.setSize(1000, 600);
         graphFrame.setLocationRelativeTo(f);
-        addTab("Day View",new DayCustomizer(data));
-        addTab("Month View",new MonthCustomizer(data));
+        addTab("Day View",new DayCustomizer(data, this));
+        addTab("Month View",new MonthCustomizer(data, this));
     }
 
-    public static void run() {
-        SolarMap solarMap = BasicSolarMapCustomizer.solarMap();
-        new GraphCustomizer(solarMap);
-    }
-
-    public static void setCmp(JComponent c) {
+    public void setCmp(JComponent c) {
         for (JComponent cmp : components) {
             graphFrame.remove(cmp);
         }

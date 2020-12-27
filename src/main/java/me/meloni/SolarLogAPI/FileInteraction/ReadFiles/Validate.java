@@ -1,6 +1,5 @@
 package me.meloni.SolarLogAPI.FileInteraction.ReadFiles;
 
-import me.meloni.SolarLogAPI.FileInteraction.GetFile;
 import me.meloni.SolarLogAPI.FileInteraction.Tools.FileObject;
 import me.meloni.SolarLogAPI.FileInteraction.Tools.FileVersion;
 import me.meloni.SolarLogAPI.Handling.Logger;
@@ -32,22 +31,22 @@ public class Validate {
         int i2 = 0;
         for (File file : files) {
             i++;
-            Logger.logWithIncomingBoolean("Validating file " + file + " (" + i + " of " + files.size() + ")");
+            Logger.logWithoutBreakup(Logger.INFO_LEVEL_3 + "Validating file " + file + " (" + i + " of " + files.size() + ")");
             if(isValidDataFile(file)) {
                 ValidFiles.add(file);
                 i2++;
-                Logger.logTheBoolean(true);
+                Logger.logWithoutBreakup("    yes\n");
             } else {
-                Logger.logTheBoolean(false);
+                Logger.logWithoutBreakup("    no\n");
             }
         }
-        Logger.log("Done. Checked " + i + ", found " + i2);
+        Logger.log(Logger.INFO_LEVEL_3 + "Done. Checked " + i + ", found " + i2);
         return ValidFiles;
     }
 
     public static boolean isValidSolarLogFile(File f) throws IOException, ClassNotFoundException {
         if(f.getName().contains(".solarlog")) {
-            FileObject fileObject = ReadFileObject.fileObject(GetFile.chosenReadLocation());
+            FileObject fileObject = ReadFileObject.fileObject(f);
             return (boolean) fileObject.getInformation("valid");
         }
         return false;

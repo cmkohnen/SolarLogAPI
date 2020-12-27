@@ -24,7 +24,7 @@ import java.util.zip.GZIPInputStream;
 public class GetFromTar {
 
     private static List<File> unTar(final File inputFile, final File outputDir) throws Exception {
-        Logger.log(String.format("UnTaring %s to dir %s.", inputFile.getAbsolutePath(), outputDir.getAbsolutePath()));
+        Logger.log(Logger.INFO_LEVEL_3 + String.format("UnTaring %s to dir %s.", inputFile.getAbsolutePath(), outputDir.getAbsolutePath()));
 
         final List<File> unTaredFiles = new LinkedList<>();
         final InputStream is = new FileInputStream(inputFile);
@@ -33,9 +33,9 @@ public class GetFromTar {
         while ((entry = (TarArchiveEntry)debInputStream.getNextEntry()) != null) {
             final File outputFile = new File(outputDir, entry.getName());
             if (entry.isDirectory()) {
-                Logger.log(String.format("Attempting to write output directory %s.", outputFile.getAbsolutePath()));
+                Logger.log(Logger.INFO_LEVEL_3 + String.format("Attempting to write output directory %s.", outputFile.getAbsolutePath()));
                 if (!outputFile.exists()) {
-                    Logger.log(String.format("Attempting to create output directory %s.", outputFile.getAbsolutePath()));
+                    Logger.log(Logger.INFO_LEVEL_3 + String.format("Attempting to create output directory %s.", outputFile.getAbsolutePath()));
                     if (!outputFile.mkdirs()) {
                         throw new IllegalStateException(String.format("Couldn't create directory %s.", outputFile.getAbsolutePath()));
                     }
@@ -58,7 +58,7 @@ public class GetFromTar {
     }
 
     private static File unGzip(final File inputFile, final File outputDir) throws Exception {
-        Logger.log(String.format("UnGZipping %s to dir %s.", inputFile.getAbsolutePath(), outputDir.getAbsolutePath()));
+        Logger.log(Logger.INFO_LEVEL_3 + String.format("UnGZipping %s to dir %s.", inputFile.getAbsolutePath(), outputDir.getAbsolutePath()));
 
         final File outputFile = new File(outputDir, inputFile.getName().substring(0, inputFile.getName().length() - 3));
         if(!outputFile.toPath().normalize().startsWith(outputDir.toPath())) {
@@ -83,7 +83,7 @@ public class GetFromTar {
         if(!outputDirectory.exists()){
             boolean b = outputDirectory.mkdir();
             if(!b) {
-                Logger.log("Cant create the directory " + outputDirectory.getAbsolutePath());
+                Logger.log(Logger.INFO_LEVEL_3 + "Cant create the directory " + outputDirectory.getAbsolutePath());
                 throw new ArchiveException("cant create directory");
             }
         }
@@ -93,7 +93,7 @@ public class GetFromTar {
     public static List<File> getValidFilesFromTarArchives(List<File> tars) throws Exception {
         List<File> validFiles = new ArrayList<>();
         for (File tar : tars) {
-            Logger.log("Extracting data from " + tar.getAbsolutePath());
+            Logger.log(Logger.INFO_LEVEL_3 + "Extracting data from " + tar.getAbsolutePath());
             validFiles.addAll(getValidFilesFromTarArchive(tar));
         }
         return validFiles;

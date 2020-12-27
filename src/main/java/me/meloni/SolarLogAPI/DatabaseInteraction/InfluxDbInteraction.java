@@ -22,7 +22,7 @@ public class InfluxDbInteraction {
     int limit = 125000;
     String database;
     BatchPoints batchPoints;
-    InfluxDB db;
+    final InfluxDB db;
     public InfluxDbInteraction(String server, String username, String password) {
         this.db = InfluxDBFactory.connect(server, username, password);
     }
@@ -49,25 +49,25 @@ public class InfluxDbInteraction {
                        .build();
                this.batchPoints.point(point);
                if(batchPoints.getPoints().size() >= limit) {
-                   Logger.log("Writing set of BatchPoints (" + limit + ").");
+                   Logger.log(Logger.INFO_LEVEL_3 + "Writing set of BatchPoints (" + limit + ").");
                    db.write(batchPoints);
                    this.batchPoints = batchPoints();
                }
                });
-        Logger.log("Writing set of BatchPoints (" + batchPoints.getPoints().size() + ").");
+        Logger.log(Logger.INFO_LEVEL_3 + "Writing set of BatchPoints (" + batchPoints.getPoints().size() + ").");
         db.write(batchPoints);
-        Logger.log("done.");
+        Logger.log(Logger.INFO_LEVEL_3 + "done.");
     }
 
     public Map<Date, List<Integer>> read() {
-        Logger.log("Querying data from database " + database + "...");
+        Logger.log(Logger.INFO_LEVEL_2 + "Querying data from database " + database + "...");
         QueryResult queryResult = db.query(new Query("SELECT value1,value2,value3,value4,value5 FROM " + database));
-        Logger.log("Retrieved.");
+        Logger.log(Logger.INFO_LEVEL_3 + "Retrieved.");
 
-        Logger.log("Mapping results...");
+        Logger.log(Logger.INFO_LEVEL_3 + "Mapping results...");
         InfluxDBResultMapper resultMapper = new InfluxDBResultMapper();
         List<DataPoint> dataPointList = resultMapper.toPOJO(queryResult, DataPoint.class);
-        Logger.log("Mapped.");
+        Logger.log(Logger.INFO_LEVEL_3 + "Mapped.");
 
         Map<Date, List<Integer>> data = new HashMap<>();
 
