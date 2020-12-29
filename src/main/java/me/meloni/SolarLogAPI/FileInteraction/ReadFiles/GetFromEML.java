@@ -26,7 +26,7 @@ public class GetFromEML {
         InputStream source = new FileInputStream(emlFile);
         MimeMessage message = new MimeMessage(mailSession, source);
 
-        return GetTarFromMessage.getFromMessage(message);
+        return GetTarFromMessage.getTarArchiveFromMessage(message);
     }
 
     public static List<File> getTarsFromEMLS(List<File> emlFiles) throws IOException, MessagingException, URISyntaxException {

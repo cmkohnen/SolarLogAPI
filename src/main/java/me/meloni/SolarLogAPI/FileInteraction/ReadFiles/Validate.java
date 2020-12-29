@@ -25,7 +25,7 @@ public class Validate {
         return valid;
     }
 
-    public static List<File> validFiles(List<File> files) throws IOException {
+    public static List<File> getValidFiles(List<File> files) throws IOException {
         List<File> ValidFiles = new ArrayList<>();
         int i = 0;
         int i2 = 0;
@@ -46,7 +46,7 @@ public class Validate {
 
     public static boolean isValidSolarLogFile(File f) throws IOException, ClassNotFoundException {
         if(f.getName().contains(".solarlog")) {
-            FileObject fileObject = ReadFileObject.fileObject(f);
+            FileObject fileObject = ReadFileObject.getObjectFromFile(f);
             return (boolean) fileObject.getInformation("valid");
         }
         return false;

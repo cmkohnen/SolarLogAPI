@@ -36,7 +36,7 @@ public class GraphCustomizer extends JTabbedPane {
         addTab("Year View", new YearCustomizer(data, this));
     }
 
-    public void setCmp(JComponent c) {
+    public void setGraph(JComponent c) {
         for (JComponent cmp : components) {
             graphFrame.remove(cmp);
         }

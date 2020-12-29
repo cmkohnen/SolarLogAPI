@@ -14,8 +14,8 @@ import java.util.Map;
  * @since 0.1.0
  */
 public class GetGraphData {
-    public static List<List<Double>> dayView(Date day, Map<Date, List<Integer>> data) throws ParseException {
-        List<Date> timestamps = Entries.entriesPerDay(day);
+    public static List<List<Double>> getDayGraphData(Date day, Map<Date, List<Integer>> data) throws ParseException {
+        List<Date> timestamps = Entries.getEntriesPerDay(day);
 
         List<List<Double>> values = new ArrayList<>();
 
@@ -38,8 +38,8 @@ public class GetGraphData {
         return values;
     }
 
-    public static List<List<Double>> monthView(YearMonth month, Map<Date, List<Integer>> data) throws ParseException {
-        List<Date> timestamps = Entries.entriesPerMonth(month);
+    public static List<List<Double>> getMonthGraphData(YearMonth month, Map<Date, List<Integer>> data) throws ParseException {
+        List<Date> timestamps = Entries.getEntriesPerMonth(month);
 
         List<List<Double>> values = new ArrayList<>();
 
@@ -49,7 +49,7 @@ public class GetGraphData {
                 int Verbrauchkwh = 0;
                 int Eigenverbrauchkwh = 0;
 
-                List<Date> days = Entries.entriesPerDay(timestamp);
+                List<Date> days = Entries.getEntriesPerDay(timestamp);
                 for (Date date : days) {
                     if (data.containsKey(date)) {
                         int verbrauchw = data.get(date).get(0);
@@ -70,12 +70,12 @@ public class GetGraphData {
         return values;
     }
 
-    public static List<List<Double>> yearView(Year year, Map<Date, List<Integer>> data) throws ParseException {
+    public static List<List<Double>> getYearGraphData(Year year, Map<Date, List<Integer>> data) throws ParseException {
         List<List<Double>> values = new ArrayList<>();
 
-        List<YearMonth> yearMonths = Entries.entriesPerYear(year);
+        List<YearMonth> yearMonths = Entries.getEntriesPerYear(year);
         for (YearMonth yearMonth : yearMonths) {
-            List<List<Double>> monthData = monthView(yearMonth, data);
+            List<List<Double>> monthData = getMonthGraphData(yearMonth, data);
             double Erzeugungkwh = 0;
             double Verbrauchkwh = 0;
             double Eigenverbrauchkwh = 0;

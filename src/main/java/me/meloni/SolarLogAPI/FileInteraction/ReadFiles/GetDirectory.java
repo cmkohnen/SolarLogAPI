@@ -11,7 +11,7 @@ import java.util.Objects;
  * @since 1.0.0
  */
 public class GetDirectory {
-    public static List<File> files(File directory) {
+    public static List<File> getFiles(File directory) {
         assert directory.isDirectory();
         return Arrays.asList(Objects.requireNonNull(directory.listFiles()));
     }

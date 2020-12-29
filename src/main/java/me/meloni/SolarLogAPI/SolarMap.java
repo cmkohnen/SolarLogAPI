@@ -60,7 +60,8 @@ public class SolarMap implements Serializable {
      * @throws  IOException Unusable file
      * @throws ClassNotFoundException Unusable file
      */
-    public SolarMap(File dataFile) throws IOException, ClassNotFoundException { init();addFromDataFile(dataFile);}
+    public SolarMap(File dataFile) throws IOException, ClassNotFoundException { init();
+        addFromSolarLogFile(dataFile);}
 
     /**
      * Instantiates blank
@@ -114,7 +115,7 @@ public class SolarMap implements Serializable {
      * @throws IOException Bad file
      * @throws ParseException Bad date
      */
-    public void addImportFromFile(File file) throws IOException, ParseException {
+    public void addFromDatFile(File file) throws IOException, ParseException {
         if(file.exists()) {
             Logger.log(Logger.INFO_LEVEL_2 + "Adding to " + id.toString() + " from file " + file.getName());
             addFromMap(GetData.getDataMap(file));
@@ -127,14 +128,14 @@ public class SolarMap implements Serializable {
      * @throws IOException Bad file
      * @throws ParseException Bad date
      */
-    public void addImportFromFiles(List<File> files) throws IOException, ParseException {
+    public void addFromDatFiles(List<File> files) throws IOException, ParseException {
         Logger.log(Logger.INFO_LEVEL_2 + "Adding to " + id.toString() + " from multiple files");
         int i1 = files.size();
         int i2 = 0;
         for (File file : files) {
             i2++;
             Logger.log(Logger.INFO_LEVEL_3 + "Importing from file " + file.getName() + "  (" + i2 + " of " + i1 + ").");
-            addImportFromFile(file);
+            addFromDatFile(file);
         }
     }
 
@@ -143,10 +144,10 @@ public class SolarMap implements Serializable {
      * @author ChaosMelone9
      * @throws Exception ZipSlip attempt
      */
-    public void addFromTar(File file) throws Exception {
+    public void addFromTarArchive(File file) throws Exception {
         if(file.exists()) {
             Logger.log(Logger.INFO_LEVEL_2 + "Adding to " + id.toString() + " from Tar archive " + file.getName());
-            addImportFromFiles(GetFromTar.getValidFilesFromTarArchive(file));
+            addFromDatFiles(GetFromTar.getValidDatFilesFromTarArchive(file));
         }
     }
 
@@ -155,8 +156,8 @@ public class SolarMap implements Serializable {
      * @author ChaosMelone9
      * @throws Exception ZipSlip attempt
      */
-    public void addFromTars(List<File> files) throws Exception {
-        addImportFromFiles(GetFromTar.getValidFilesFromTarArchives(files));
+    public void addFromTarArchives(List<File> files) throws Exception {
+        addFromDatFiles(GetFromTar.getValidDatFilesFromTarArchives(files));
     }
 
     /**
@@ -174,9 +175,9 @@ public class SolarMap implements Serializable {
      * @throws IOException Bad file
      * @throws ClassNotFoundException Bad file
      */
-    public void addFromDataFile(File file) throws IOException, ClassNotFoundException {
+    public void addFromSolarLogFile(File file) throws IOException, ClassNotFoundException {
         Logger.log(Logger.INFO_LEVEL_2 + "Adding to " + id.toString() + " from data file " + file.getName());
-        addFromFileObject(ReadFileObject.fileObject(file));
+        addFromFileObject(ReadFileObject.getObjectFromFile(file));
     }
 
     /**
@@ -185,13 +186,13 @@ public class SolarMap implements Serializable {
      * @throws IOException Bad file
      * @throws ClassNotFoundException Bad file
      */
-    public void addFromDataFiles(List<File> files) throws IOException, ClassNotFoundException {
+    public void addFromSolarLogFiles(List<File> files) throws IOException, ClassNotFoundException {
         int i1 = files.size();
         int i2 = 0;
         for (File file : files) {
             i2++;
             Logger.log("Importing from file " + file.getName() + "  (" + i2 + " of " + i1 + ").");
-            addFromDataFile(file);
+            addFromSolarLogFile(file);
         }
     }
 
@@ -223,7 +224,7 @@ public class SolarMap implements Serializable {
      */
     public void addFromEMLFile(File emlFile) throws Exception {
         Logger.log(Logger.INFO_LEVEL_2 + "Adding to " + id.toString() + " from EML File " + emlFile.getName());
-        addFromTar(Objects.requireNonNull(GetFromEML.getTarFromEML(emlFile)));
+        addFromTarArchive(Objects.requireNonNull(GetFromEML.getTarFromEML(emlFile)));
     }
 
     /**
@@ -231,7 +232,7 @@ public class SolarMap implements Serializable {
      * @author ChaosMelone9
      */
     public void addFromEMLFiles(List<File> emlFiles) throws Exception {
-        addFromTars(GetFromEML.getTarsFromEMLS(emlFiles));
+        addFromTarArchives(GetFromEML.getTarsFromEMLS(emlFiles));
     }
 
     /**
@@ -253,7 +254,7 @@ public class SolarMap implements Serializable {
      */
     public void writeToDataFile(File file) throws IOException {
         Logger.log(Logger.INFO_LEVEL_2 + "Writing " + id.toString() + " to data file " + file.getName());
-        WriteFileObject.write(file, this.getFileObject());
+        WriteFileObject.write(file, this.getAsFileObject());
     }
 
     /**
@@ -297,7 +298,7 @@ public class SolarMap implements Serializable {
      * Get values from a specific timestamp
      * @author ChaosMelone9
      */
-    public List<Integer> getValuesFromDate(Date date) {
+    public List<Integer> getValuesOnDate(Date date) {
         return data.get(date);
     }
 
@@ -305,8 +306,8 @@ public class SolarMap implements Serializable {
      * Get values from a specific timestamp
      * @author ChaosMelone9
      */
-    public Integer getValueFromDate(Date date, Integer value) {
-        return getValuesFromDate(date).get(value);
+    public Integer getValueOnDate(Date date, Integer value) {
+        return getValuesOnDate(date).get(value);
     }
 
     /**
@@ -315,7 +316,7 @@ public class SolarMap implements Serializable {
      * @throws ParseException Bad date
      */
     public List<List<Double>> getDayGraphData(Date date) throws ParseException {
-        return GetGraphData.dayView(date, data);
+        return GetGraphData.getDayGraphData(date, data);
     }
 
     /**
@@ -324,7 +325,7 @@ public class SolarMap implements Serializable {
      * @throws ParseException Bad date
      */
     public List<List<Double>> getMonthGraphData(YearMonth yearMonth) throws ParseException {
-        return GetGraphData.monthView(yearMonth, data);
+        return GetGraphData.getMonthGraphData(yearMonth, data);
     }
 
     /**
@@ -333,14 +334,14 @@ public class SolarMap implements Serializable {
      * @throws ParseException Bad date
      */
     public List<List<Double>> getYearGraphData(Year year) throws ParseException {
-        return GetGraphData.yearView(year, data);
+        return GetGraphData.getYearGraphData(year, data);
     }
 
     /**
      * Return a {@link FileObject} for storage use
      * @author ChaosMelone9
      */
-    public FileObject getFileObject() {
+    public FileObject getAsFileObject() {
         FileObject fileObject = new FileObject(this.getAsMap());
         fileObject.putInformation("created", createdOn);
         fileObject.putInformation("id", id);
@@ -403,7 +404,7 @@ public class SolarMap implements Serializable {
      * @author ChaosMelone9
      */
     public boolean includesMonth(YearMonth yearMonth) {
-        for (Date date : Entries.entriesPerMonth(yearMonth)) {
+        for (Date date : Entries.getEntriesPerMonth(yearMonth)) {
             if(includesDay(date)) {
                 return true;
             }

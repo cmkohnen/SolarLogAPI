@@ -5,7 +5,7 @@ package me.meloni.SolarLogAPI.Handling;
  * @author ChaosMelone9
  * @since 0.0.0
  */
-public class APIInitializer {
+public class Runtime {
     /**
      * This function is called, when the jar package is executed via runtime.
      * @param args arguments passed by runtime

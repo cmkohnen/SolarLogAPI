@@ -1,6 +1,6 @@
 package me.meloni.SolarLogAPI.FileInteraction;
 
-import me.meloni.SolarLogAPI.Handling.APIInitializer;
+import me.meloni.SolarLogAPI.Handling.Runtime;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -21,7 +21,7 @@ public class WorkingDirectory {
 
     public static File getDirectory() throws URISyntaxException, IOException {
         if(workingDirectory == null) {
-            File jar = new File(APIInitializer.class.getProtectionDomain().getCodeSource().getLocation().toURI());
+            File jar = new File(Runtime.class.getProtectionDomain().getCodeSource().getLocation().toURI());
             Date time = Calendar.getInstance().getTime();
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_hh-mm-ss");
             String run = dateFormat.format(time);

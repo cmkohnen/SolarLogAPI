@@ -14,7 +14,7 @@ import java.io.IOException;
  */
 public class JFileChooserPreset {
 
-    public static JFileChooser importer(){
+    public static JFileChooser importFromDat(){
         JFileChooser j = new JFileChooser();
         j.setDialogTitle("Import");
         j.setAcceptAllFileFilterUsed(false);
@@ -39,7 +39,7 @@ public class JFileChooserPreset {
         return j;
     }
 
-    public static JFileChooser safeToFile() {
+    public static JFileChooser saveToSolarLogFile() {
         JFileChooser j = new JFileChooser();
         j.setDialogTitle("Safe");
         j.setAcceptAllFileFilterUsed(false);
@@ -57,7 +57,7 @@ public class JFileChooserPreset {
         return j;
     }
 
-    public static JFileChooser readFromFile() {
+    public static JFileChooser importFromSolarLogFile() {
         JFileChooser j = new JFileChooser();
 
         // invoke the showsSaveDialog function to show the save dialog
@@ -114,7 +114,7 @@ public class JFileChooserPreset {
         return j;
     }
 
-    public static JFileChooser importFromDirectory() {
+    public static JFileChooser getChosenDirectory() {
         JFileChooser j = new JFileChooser();
         j.setDialogTitle("Import");
         j.setAcceptAllFileFilterUsed(false);

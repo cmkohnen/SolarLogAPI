@@ -10,11 +10,11 @@ import java.nio.file.Paths;
  * @since 0.0.1
  */
 public class GetFile {
-    public static File file(String path) {
+    public static File getFileFromPath(String path) {
         return new File(path);
     }
 
-    public static Path path(File file) {
+    public static Path getPathFromFile(File file) {
         return Paths.get(file.getPath());
     }
 }

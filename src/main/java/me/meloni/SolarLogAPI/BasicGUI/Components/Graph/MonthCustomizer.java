@@ -82,7 +82,7 @@ public class MonthCustomizer extends JPanel{
         add(p,BorderLayout.WEST);
     }
 
-    public void paintComponent() {
-        instance.setCmp(cmp);
+    private void paintComponent() {
+        instance.setGraph(cmp);
     }
 }

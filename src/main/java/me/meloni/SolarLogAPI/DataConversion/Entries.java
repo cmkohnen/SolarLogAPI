@@ -16,7 +16,7 @@ import java.util.List;
  * @since 0.0.1
  */
 public class Entries {
-    public static List<Date> entriesPerDay(Date day) throws ParseException {
+    public static List<Date> getEntriesPerDay(Date day) throws ParseException {
         List<Date> entries = new ArrayList<>();
 
         int min = 0;
@@ -78,7 +78,7 @@ public class Entries {
         return entries;
       }
 
-      public static List<Date> entriesPerMonth(YearMonth yearMonth) {
+      public static List<Date> getEntriesPerMonth(YearMonth yearMonth) {
           List<Date> dateList = new ArrayList<>();
 
           Calendar cal = Calendar.getInstance();
@@ -94,7 +94,7 @@ public class Entries {
           return dateList;
       }
 
-      public static List<YearMonth> entriesPerYear(Year year) {
+      public static List<YearMonth> getEntriesPerYear(Year year) {
         List<YearMonth> yearMonths = new ArrayList<>();
         for(int i = 1; i < 13; i++) {
             yearMonths.add(year.atMonth(i));

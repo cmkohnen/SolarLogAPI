@@ -26,10 +26,10 @@ public class GetData  {
      */
     public static Map<Date, List<Integer>> getMinuteDataMap(File file) throws ParseException, IOException {
         String fileVersion = FileVersion.getFileVersion(file);
-        List<Integer> positions = FileVersion.matrix().get(fileVersion);
+        List<Integer> positions = FileVersion.getPositionMatrix().get(fileVersion);
         Logger.log(Logger.INFO_LEVEL_3 + "Importing data from \"" + file.getAbsolutePath() + "\" using file version v" + fileVersion);
 
-        List<String> MinuteData = GetDataSection.minuteData(GetFileContent.fileContentAsList(GetFile.path(file)));
+        List<String> MinuteData = GetDataSection.getMinuteDataRows(GetFileContent.getFileContentAsList(GetFile.getPathFromFile(file)));
         Map<Date, List<Integer>> data = new HashMap<>();
 
         for (String item : MinuteData) {
@@ -41,7 +41,7 @@ public class GetData  {
 
     public static Map<Date, List<Integer>> getDataMap(File file) throws IOException, ParseException {
         String fileVersion = FileVersion.getFileVersion(file);
-        List<Integer> positions = FileVersion.matrix().get(fileVersion);
+        List<Integer> positions = FileVersion.getPositionMatrix().get(fileVersion);
         Logger.log(Logger.INFO_LEVEL_3 + "Importing data from \"" + file.getAbsolutePath() + "\" using file version v" + fileVersion);
 
         Map<Date, List<Integer>> data = new HashMap<>();
