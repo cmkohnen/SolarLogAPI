@@ -3,6 +3,7 @@ package me.meloni.SolarLogAPI.DataConversion;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Year;
 import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -91,5 +92,13 @@ public class Entries {
               dateList.add(cal.getTime());
           }
           return dateList;
+      }
+
+      public static List<YearMonth> entriesPerYear(Year year) {
+        List<YearMonth> yearMonths = new ArrayList<>();
+        for(int i = 1; i < 13; i++) {
+            yearMonths.add(year.atMonth(i));
+        }
+        return yearMonths;
       }
   }

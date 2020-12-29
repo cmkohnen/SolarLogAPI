@@ -17,6 +17,7 @@ import java.io.Serializable;
 import java.net.URL;
 import java.text.ParseException;
 import java.time.LocalDate;
+import java.time.Year;
 import java.time.YearMonth;
 import java.util.*;
 
@@ -324,6 +325,15 @@ public class SolarMap implements Serializable {
      */
     public List<List<Double>> getMonthGraphData(YearMonth yearMonth) throws ParseException {
         return GetGraphData.monthView(yearMonth, data);
+    }
+
+    /**
+     * Get graph data for yearly visualization
+     * @author ChaosMelone9
+     * @throws ParseException Bad date
+     */
+    public List<List<Double>> getYearGraphData(Year year) throws ParseException {
+        return GetGraphData.yearView(year, data);
     }
 
     /**

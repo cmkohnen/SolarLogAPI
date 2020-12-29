@@ -1,8 +1,7 @@
 package me.meloni.SolarLogAPI.DataConversion;
 
-import me.meloni.SolarLogAPI.Handling.Logger;
-
 import java.text.ParseException;
+import java.time.Year;
 import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.Date;
@@ -45,7 +44,6 @@ public class GetGraphData {
         List<List<Double>> values = new ArrayList<>();
 
         for (Date timestamp : timestamps) {
-                Logger.log(Logger.INFO_LEVEL_3 + "Importing from " + timestamp);
                 List<Double> currentData = new ArrayList<>();
                 int Erzeugungkwh = 0;
                 int Verbrauchkwh = 0;
@@ -68,6 +66,30 @@ public class GetGraphData {
                 currentData.add((double) Eigenverbrauchkwh);
 
                 values.add(currentData);
+        }
+        return values;
+    }
+
+    public static List<List<Double>> yearView(Year year, Map<Date, List<Integer>> data) throws ParseException {
+        List<List<Double>> values = new ArrayList<>();
+
+        List<YearMonth> yearMonths = Entries.entriesPerYear(year);
+        for (YearMonth yearMonth : yearMonths) {
+            List<List<Double>> monthData = monthView(yearMonth, data);
+            double Erzeugungkwh = 0;
+            double Verbrauchkwh = 0;
+            double Eigenverbrauchkwh = 0;
+            for (List<Double> monthDatum : monthData) {
+                Erzeugungkwh = Erzeugungkwh + monthDatum.get(0);
+                Verbrauchkwh = Verbrauchkwh + monthDatum.get(1);
+                Eigenverbrauchkwh = Eigenverbrauchkwh + monthDatum.get(2);
+            }
+            List<Double> currentData = new ArrayList<>();
+            currentData.add(Erzeugungkwh);
+            currentData.add(Verbrauchkwh);
+            currentData.add(Eigenverbrauchkwh);
+
+            values.add(currentData);
         }
         return values;
     }

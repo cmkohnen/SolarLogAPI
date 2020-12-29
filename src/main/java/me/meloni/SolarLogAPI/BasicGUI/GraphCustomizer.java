@@ -2,6 +2,7 @@ package me.meloni.SolarLogAPI.BasicGUI;
 
 import me.meloni.SolarLogAPI.BasicGUI.Components.Graph.DayCustomizer;
 import me.meloni.SolarLogAPI.BasicGUI.Components.Graph.MonthCustomizer;
+import me.meloni.SolarLogAPI.BasicGUI.Components.Graph.YearCustomizer;
 import me.meloni.SolarLogAPI.SolarMap;
 import me.meloni.SolarLogAPI.BasicGUI.Components.SimpleFrame;
 
@@ -32,6 +33,7 @@ public class GraphCustomizer extends JTabbedPane {
         graphFrame.setLocationRelativeTo(f);
         addTab("Day View",new DayCustomizer(data, this));
         addTab("Month View",new MonthCustomizer(data, this));
+        addTab("Year View", new YearCustomizer(data, this));
     }
 
     public void setCmp(JComponent c) {
