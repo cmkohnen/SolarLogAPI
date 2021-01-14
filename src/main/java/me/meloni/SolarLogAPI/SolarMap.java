@@ -10,6 +10,7 @@ import me.meloni.SolarLogAPI.FileInteraction.WriteFiles.WriteFileObject;
 import me.meloni.SolarLogAPI.Handling.Logger;
 import me.meloni.SolarLogAPI.SolarLogInteraction.GetJsonFromSolarLog;
 import org.influxdb.InfluxDB;
+import org.json.simple.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
@@ -346,6 +347,14 @@ public class SolarMap implements Serializable {
         fileObject.putInformation("created", createdOn);
         fileObject.putInformation("id", id);
         return fileObject;
+    }
+
+    /**
+     * Return a {@link JSONObject} for external use
+     * @author ChaosMelone9
+     */
+    public JSONObject getAsJSON() {
+        return ConvertJson.convertMapToJson(getAsMap());
     }
 
 
