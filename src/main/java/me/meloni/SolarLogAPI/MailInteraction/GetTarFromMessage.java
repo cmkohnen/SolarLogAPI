@@ -19,7 +19,7 @@ import java.nio.file.FileAlreadyExistsException;
  * @since 3.0.5
  */
 public class GetTarFromMessage {
-    public static File getFromMessage(Message message) throws MessagingException, IOException, URISyntaxException {
+    public static File getTarArchiveFromMessage(Message message) throws MessagingException, IOException, URISyntaxException {
         Multipart multiPart = (Multipart) message.getContent();
 
         for (int i = 0; i < multiPart.getCount(); i++) {

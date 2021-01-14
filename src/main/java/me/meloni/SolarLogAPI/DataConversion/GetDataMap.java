@@ -20,7 +20,7 @@ public class GetDataMap {
      */
     public static Map<Date, List<Integer>> getDataFromFiles(List<File> paths) throws IOException, ClassNotFoundException {
         SolarMap solarMap = new SolarMap();
-        solarMap.addFromDataFiles(paths);
+        solarMap.addFromSolarLogFiles(paths);
         return solarMap.getAsMap();
     }
 }

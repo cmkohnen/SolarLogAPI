@@ -77,7 +77,7 @@ public class GetFromTar {
         return outputFile;
     }
 
-    public static List<File> getValidFilesFromTarArchive(File tar) throws Exception {
+    public static List<File> getValidDatFilesFromTarArchive(File tar) throws Exception {
         String tarDirectory = FilenameUtils.removeExtension(FilenameUtils.removeExtension(tar.getName()));
         File outputDirectory = new File(WorkingDirectory.getDirectory(), tarDirectory);
         if(!outputDirectory.exists()){
@@ -87,14 +87,14 @@ public class GetFromTar {
                 throw new ArchiveException("cant create directory");
             }
         }
-        return Validate.validFiles(unTar(unGzip(tar,outputDirectory),outputDirectory));
+        return Validate.getValidFiles(unTar(unGzip(tar,outputDirectory),outputDirectory));
     }
 
-    public static List<File> getValidFilesFromTarArchives(List<File> tars) throws Exception {
+    public static List<File> getValidDatFilesFromTarArchives(List<File> tars) throws Exception {
         List<File> validFiles = new ArrayList<>();
         for (File tar : tars) {
             Logger.log(Logger.INFO_LEVEL_3 + "Extracting data from " + tar.getAbsolutePath());
-            validFiles.addAll(getValidFilesFromTarArchive(tar));
+            validFiles.addAll(getValidDatFilesFromTarArchive(tar));
         }
         return validFiles;
     }

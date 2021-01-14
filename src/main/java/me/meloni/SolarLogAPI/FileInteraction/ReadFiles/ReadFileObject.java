@@ -14,7 +14,7 @@ import java.io.ObjectInputStream;
  * @since 0.0.2
  */
 public class ReadFileObject {
-    public static FileObject fileObject(File file) throws IOException, ClassNotFoundException {
+    public static FileObject getObjectFromFile(File file) throws IOException, ClassNotFoundException {
         if(!(file == null) && file.exists()) {
             Logger.log(Logger.INFO_LEVEL_2 + "Reading file " + file + ". This may take a while.");
             FileInputStream f = new FileInputStream(file);

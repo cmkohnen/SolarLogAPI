@@ -12,11 +12,11 @@ import java.util.List;
  */
 public class GetFileContent {
 
-    public static String fileContent(Path path) throws IOException {
+    public static String getFileContentAsString(Path path) throws IOException {
         return new String(Files.readAllBytes(path));
     }
 
-    public static List<String> fileContentAsList(Path path) throws IOException {
-        return Arrays.asList(fileContent(path).split("\n"));
+    public static List<String> getFileContentAsList(Path path) throws IOException {
+        return Arrays.asList(getFileContentAsString(path).split("\n"));
     }
 }

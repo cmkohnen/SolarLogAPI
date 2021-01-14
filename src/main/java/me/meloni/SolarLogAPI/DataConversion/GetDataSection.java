@@ -20,10 +20,10 @@ public class GetDataSection {
     static final int InfoRowPosition = 0;
     static final int FileVersionPosition = 1;
 
-    public static String infoRow(List<String> data) { return data.get(InfoRowPosition); }
+    public static String getInfoRow(List<String> data) { return data.get(InfoRowPosition); }
 
-    public static String infoRow(File fromFile) throws IOException {
-        InputStream inputStream = new FileInputStream(fromFile);
+    public static String getInfoRow(File file) throws IOException {
+        InputStream inputStream = new FileInputStream(file);
         Scanner scanner = new Scanner(inputStream, "UTF-8");
         String info = null;
         if(scanner.hasNextLine()) {
@@ -37,11 +37,11 @@ public class GetDataSection {
     /**
      * @deprecated
      */
-    public static String fileVersion(List<String> data) {
+    public static String getFileVersion(List<String> data) {
         return data.get(FileVersionPosition);
     }
 
-    public static List<String> minuteData(List<String> data) {
+    public static List<String> getMinuteDataRows(List<String> data) {
         for (String s : data) {
             if(s.startsWith("#MIN")) {
                 StartMinuteSection = data.indexOf(s) + 1;

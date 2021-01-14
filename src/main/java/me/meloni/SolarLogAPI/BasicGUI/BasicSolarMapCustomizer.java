@@ -55,7 +55,7 @@ public class BasicSolarMapCustomizer {
 
         JButton addFile = new JButton("Add File");
         addFile.addActionListener(e -> {
-            File f = GetChosenFile.validChosenDataFile();
+            File f = GetChosenFile.chosenDatFile();
             if(!(f == null) && f.exists()) {
                 importFiles.add(f);
                 repaintList();
@@ -65,7 +65,7 @@ public class BasicSolarMapCustomizer {
         JButton addDirectory = new JButton("Add from Folder");
         addDirectory.addActionListener(e -> {
             try {
-                List<File> files = GetChosenFile.chosenValidFilesInDirectory();
+                List<File> files = GetChosenFile.chosenDatFilesInDirectory();
                 if(!(files == null)) {
                     importFiles.addAll(files);
                     repaintList();
@@ -87,7 +87,7 @@ public class BasicSolarMapCustomizer {
         JButton addTars = new JButton("Add from tars");
         addTars.addActionListener(e -> {
             try {
-                List<File> files = GetChosenFile.chosenTarsInDirectory();
+                List<File> files = GetChosenFile.chosenTarArchivesInDirectory();
                 if(!(files == null)) {
                     importTars.addAll(files);
                     repaintList();
@@ -99,7 +99,7 @@ public class BasicSolarMapCustomizer {
 
         JButton addDataFile = new JButton("Add from Data File");
         addDataFile.addActionListener(e -> {
-            File f = GetChosenFile.chosenReadLocation();
+            File f = GetChosenFile.chosenSolarLogFile();
             if(!(f == null) && f.exists()) {
                 dataFiles.add(f);
                 repaintList();
@@ -118,7 +118,7 @@ public class BasicSolarMapCustomizer {
         JButton addEMLs = new JButton("Add from EMLs");
         addEMLs.addActionListener(e -> {
             try {
-                List<File> files = GetChosenFile.chosenEMLsInDirectory();
+                List<File> files = GetChosenFile.chosenEMLFilesInDirectory();
                 if(!(files == null)) {
                     emlFiles.addAll(files);
                     repaintList();
@@ -156,13 +156,13 @@ public class BasicSolarMapCustomizer {
         retrain.addActionListener(e -> {
             try {
                 if(importFiles.size() > 0) {
-                    map.addImportFromFiles(importFiles);
+                    map.addFromDatFiles(importFiles);
                 }
                 if(importTars.size() > 0) {
-                    map.addFromTars(importTars);
+                    map.addFromTarArchives(importTars);
                 }
                 if(dataFiles.size() > 0) {
-                    map.addFromDataFiles(dataFiles);
+                    map.addFromSolarLogFiles(dataFiles);
                 }
                 if(emlFiles.size() > 0) {
                     map.addFromEMLFiles(emlFiles);

@@ -18,8 +18,8 @@ import java.util.List;
  */
 public class GetChosenFile {
 
-    public static File validChosenDataFile() {
-        JFileChooser j = JFileChooserPreset.importer();
+    public static File chosenDatFile() {
+        JFileChooser j = JFileChooserPreset.importFromDat();
         j.showOpenDialog(null);
         return j.getSelectedFile();
     }
@@ -31,14 +31,14 @@ public class GetChosenFile {
     }
 
     public static File chosenSaveLocation(){
-        JFileChooser j = JFileChooserPreset.safeToFile();
+        JFileChooser j = JFileChooserPreset.saveToSolarLogFile();
         j.showOpenDialog(null);
         File f = j.getSelectedFile();
         if(f == null) {
             return null;
         }
         if(!f.getName().contains(".solarlog")) {
-            return GetFile.file(f.getAbsolutePath() + ".solarlog");
+            return GetFile.getFileFromPath(f.getAbsolutePath() + ".solarlog");
         } else {
             return f;
         }
@@ -50,22 +50,22 @@ public class GetChosenFile {
         return j.getSelectedFile();
     }
 
-    public static File chosenReadLocation(){
-        JFileChooser j = JFileChooserPreset.readFromFile();
+    public static File chosenSolarLogFile(){
+        JFileChooser j = JFileChooserPreset.importFromSolarLogFile();
         j.showOpenDialog(null);
         return j.getSelectedFile();
     }
 
-    public static List<File> chosenValidFilesInDirectory() throws IOException {
+    public static List<File> chosenDatFilesInDirectory() throws IOException {
         File dir = chosenDirectory();
         if(!(dir == null) && dir.exists()) {
-            return Validate.validFiles(GetDirectory.files(dir));
+            return Validate.getValidFiles(GetDirectory.getFiles(dir));
         } else {
             return null;
         }
     }
 
-    public static List<File> chosenTarsInDirectory() {
+    public static List<File> chosenTarArchivesInDirectory() {
         File dir = chosenDirectory();
         if(!(dir == null) && dir.exists()) {
             return Arrays.asList(dir.listFiles((dir1, name) -> name.toLowerCase().endsWith(".tar.gz")));
@@ -74,7 +74,7 @@ public class GetChosenFile {
         }
     }
 
-    public static List<File> chosenEMLsInDirectory() {
+    public static List<File> chosenEMLFilesInDirectory() {
         File dir = chosenDirectory();
         if(!(dir == null) && dir.exists()) {
             return Arrays.asList(dir.listFiles((dir1, name) -> name.toLowerCase().endsWith(".eml")));
@@ -84,7 +84,7 @@ public class GetChosenFile {
     }
 
     public static File chosenDirectory(){
-        JFileChooser j = JFileChooserPreset.importFromDirectory();
+        JFileChooser j = JFileChooserPreset.getChosenDirectory();
         j.showOpenDialog(null);
         return j.getSelectedFile();
     }

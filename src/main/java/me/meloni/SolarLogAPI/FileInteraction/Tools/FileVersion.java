@@ -18,10 +18,10 @@ import java.util.Map;
 public class FileVersion {
 
     public static boolean isSupported(File file) throws IOException {
-        return fileVersion().contains(getFileVersion(file));
+        return getSupportedFileVersions().contains(getFileVersion(file));
     }
 
-    public static List<String> fileVersion(){
+    public static List<String> getSupportedFileVersions(){
         List<String> fileVersion = new ArrayList<>();
         fileVersion.add("4.2.7");
         fileVersion.add("3.0.0");
@@ -34,10 +34,10 @@ public class FileVersion {
     }
 
     public static String getFileVersion(File file) throws IOException {
-        return FileInformation.buildVersion(GetDataSection.infoRow(file));
+        return FileInformation.getBuildVersion(GetDataSection.getInfoRow(file));
     }
 
-    public static Map<String, List<Integer>> matrix() {
+    public static Map<String, List<Integer>> getPositionMatrix() {
         Map<String, List<Integer>> matrix = new HashMap<>();
         List<Integer> version300 = new ArrayList<>();
         version300.add(6);

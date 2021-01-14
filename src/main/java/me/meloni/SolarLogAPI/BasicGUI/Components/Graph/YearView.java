@@ -8,11 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This Class represents the implementation of a simple graph for monthly scale.
+ * This Class represents the implementation of a simple graph for yearly scale.
  * @author ChaosMelone9
- * @since 0.1.1
+ * @since 3.4.5
  */
-public class MonthView extends JPanel {
+public class YearView extends JPanel {
 
     private final List<List<Double>> data;
 
@@ -40,7 +40,7 @@ public class MonthView extends JPanel {
 
     private static final Stroke GRAPH_STROKE = new BasicStroke(2f);
 
-    public MonthView(List<List<Double>> data) {
+    public YearView(List<List<Double>> data) {
         this.data = data;
     }
 

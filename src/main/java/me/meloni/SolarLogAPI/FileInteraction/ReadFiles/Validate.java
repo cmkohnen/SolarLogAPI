@@ -1,11 +1,16 @@
 package me.meloni.SolarLogAPI.FileInteraction.ReadFiles;
 
-import me.meloni.SolarLogAPI.FileInteraction.Tools.FileObject;
+import me.meloni.SolarLogAPI.FileInteraction.GetFile;
+import me.meloni.SolarLogAPI.FileInteraction.Tools.FileAttributes;
 import me.meloni.SolarLogAPI.FileInteraction.Tools.FileVersion;
 import me.meloni.SolarLogAPI.Handling.Logger;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.attribute.UserDefinedFileAttributeView;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +30,7 @@ public class Validate {
         return valid;
     }
 
-    public static List<File> validFiles(List<File> files) throws IOException {
+    public static List<File> getValidFiles(List<File> files) throws IOException {
         List<File> ValidFiles = new ArrayList<>();
         int i = 0;
         int i2 = 0;
@@ -44,11 +49,20 @@ public class Validate {
         return ValidFiles;
     }
 
-    public static boolean isValidSolarLogFile(File f) throws IOException, ClassNotFoundException {
-        if(f.getName().contains(".solarlog")) {
-            FileObject fileObject = ReadFileObject.fileObject(f);
-            return (boolean) fileObject.getInformation("valid");
+    public static boolean isValidSolarLogFile(File file) throws IOException {
+        if(file.getName().contains(".solarlog")) {
+            UserDefinedFileAttributeView view = Files.getFileAttributeView(GetFile.getPathFromFile(file), UserDefinedFileAttributeView.class);
+            ByteBuffer readBuffer = ByteBuffer.allocate(view.size(FileAttributes.fileType));
+            view.read(FileAttributes.fileType, readBuffer);
+            readBuffer.flip();
+            String fileType = new String(readBuffer.array(), StandardCharsets.UTF_8);
+            readBuffer = ByteBuffer.allocate(view.size(FileAttributes.fileVersion));
+            view.read(FileAttributes.fileType, readBuffer);
+            readBuffer.flip();
+            String fileVersion = new String(readBuffer.array(), StandardCharsets.UTF_8);
+            return fileType.equals(FileAttributes.fileTypeShouldBe) && fileVersion.equals(FileAttributes.fileVersion);
+        } else {
+            return false;
         }
-        return false;
     }
 }

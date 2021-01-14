@@ -18,7 +18,7 @@ public class DatePicker extends com.github.lgooddatepicker.components.DatePicker
             Date dateAsDate = GetStartOf.day(date);
             boolean bool = false;
             try {
-                for(Date ignored : Entries.entriesPerDay(dateAsDate)) {
+                for(Date ignored : Entries.getEntriesPerDay(dateAsDate)) {
                     if (data.containsKey(dateAsDate)) {
                         bool = true;
                         break;
