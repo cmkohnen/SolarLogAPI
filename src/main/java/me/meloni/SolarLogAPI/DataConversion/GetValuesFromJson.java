@@ -48,14 +48,17 @@ public class GetValuesFromJson {
         Date d = formatter.parse(data.get("lastUpdateTime"));
 
         List<Integer> values = new ArrayList<>();
-        int Pac = Integer.parseInt(data.get("Pac"));
         int consPac = Integer.parseInt(data.get("consPac"));
+        int consYieldDay = Integer.parseInt(data.get("consYieldDay"));
+        int Pac = Integer.parseInt(data.get("Pac"));
+        int yieldDay = Integer.parseInt(data.get("yieldDay"));
+        int ownConsumption = Math.min(Pac, consPac);
 
         values.add(consPac);
-        values.add(Integer.parseInt(data.get("consYieldDay")));
+        values.add(consYieldDay);
         values.add(Pac);
-        values.add(Integer.parseInt(data.get("yieldDay")));
-        values.add(Math.min(Pac, consPac));
+        values.add(yieldDay);
+        values.add(ownConsumption);
 
         Map<Date, List<Integer>> returnValue = new HashMap<>();
         returnValue.put(d, values);

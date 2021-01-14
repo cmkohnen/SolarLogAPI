@@ -39,24 +39,24 @@ public class GetData  {
 
     private static List<Integer> values(List<String> strings, List<Integer> positions) {
         //initialize variables
-        int verbrauchw;
-        int verbrauchkwh;
-        int leistungw;
-        int ertragkwh;
-        int energieverbrauchw;
+        int consPac;
+        int consYieldDay;
+        int Pac;
+        int yieldDay;
+        int ownConsumption;
         List<Integer> valuesEach = new ArrayList<>();
         //getting values
-        verbrauchw = Integer.parseInt(strings.get(positions.get(0)));
-        verbrauchkwh = Integer.parseInt(strings.get(positions.get(1)));
-        leistungw = Integer.parseInt(strings.get(positions.get(2)));
-        ertragkwh = Integer.parseInt(strings.get(positions.get(3)));
-        energieverbrauchw = Math.min(verbrauchw, leistungw);
+        consPac = Integer.parseInt(strings.get(positions.get(0)));
+        consYieldDay = Integer.parseInt(strings.get(positions.get(1)));
+        Pac = Integer.parseInt(strings.get(positions.get(2)));
+        yieldDay = Integer.parseInt(strings.get(positions.get(3)));
+        ownConsumption = Math.min(consPac, Pac);
         //writing values to List
-        valuesEach.add(verbrauchw);
-        valuesEach.add(verbrauchkwh);
-        valuesEach.add(leistungw);
-        valuesEach.add(ertragkwh);
-        valuesEach.add(energieverbrauchw);
+        valuesEach.add(consPac);
+        valuesEach.add(consYieldDay);
+        valuesEach.add(Pac);
+        valuesEach.add(yieldDay);
+        valuesEach.add(ownConsumption);
         return valuesEach;
     }
 }

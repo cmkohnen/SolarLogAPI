@@ -21,17 +21,17 @@ public class GetGraphData {
 
         for (Date timestamp : timestamps) {
             List<Double> currentData = new ArrayList<>();
-            int verbrauchw = data.get(timestamp).get(0);
-            int verbrauchkwh = data.get(timestamp).get(1);
-            int leistungw = data.get(timestamp).get(2);
-            int ertragkwh = data.get(timestamp).get(3);
-            int energieverbrauchw = data.get(timestamp).get(4);
+            int consPac = data.get(timestamp).get(0);
+            int consYieldDay = data.get(timestamp).get(1);
+            int Pac = data.get(timestamp).get(2);
+            int yieldDay = data.get(timestamp).get(3);
+            int ownConsumption = data.get(timestamp).get(4);
 
-            currentData.add((double) verbrauchw);
-            currentData.add((double) verbrauchkwh);
-            currentData.add((double) leistungw);
-            currentData.add((double) ertragkwh);
-            currentData.add((double) energieverbrauchw);
+            currentData.add((double) consPac);
+            currentData.add((double) consYieldDay);
+            currentData.add((double) Pac);
+            currentData.add((double) yieldDay);
+            currentData.add((double) ownConsumption);
 
             values.add(currentData);
         }
@@ -45,25 +45,25 @@ public class GetGraphData {
 
         for (Date timestamp : timestamps) {
                 List<Double> currentData = new ArrayList<>();
-                int Erzeugungkwh = 0;
-                int Verbrauchkwh = 0;
-                int Eigenverbrauchkwh = 0;
+                int yieldDay = 0;
+                int consYieldDay = 0;
+                int ownConsumption1 = 0;
 
                 List<Date> days = Entries.getEntriesPerDay(timestamp);
                 for (Date date : days) {
                     if (data.containsKey(date)) {
-                        int verbrauchw = data.get(date).get(0);
-                        int leistungw = data.get(date).get(2);
-                        int energieverbrauchw = data.get(date).get(4);
+                        int consPac = data.get(date).get(0);
+                        int Pac = data.get(date).get(2);
+                        int ownConsumption2 = data.get(date).get(4);
 
-                        Erzeugungkwh = Erzeugungkwh + leistungw;
-                        Verbrauchkwh = Verbrauchkwh + verbrauchw;
-                        Eigenverbrauchkwh = Eigenverbrauchkwh + energieverbrauchw;
+                        yieldDay = yieldDay + Pac;
+                        consYieldDay = consYieldDay + consPac;
+                        ownConsumption1 = ownConsumption1 + ownConsumption2;
                     }
                 }
-                currentData.add((double) Erzeugungkwh);
-                currentData.add((double) Verbrauchkwh);
-                currentData.add((double) Eigenverbrauchkwh);
+                currentData.add((double) yieldDay);
+                currentData.add((double) consYieldDay);
+                currentData.add((double) ownConsumption1);
 
                 values.add(currentData);
         }
@@ -76,18 +76,18 @@ public class GetGraphData {
         List<YearMonth> yearMonths = Entries.getEntriesPerYear(year);
         for (YearMonth yearMonth : yearMonths) {
             List<List<Double>> monthData = getMonthGraphData(yearMonth, data);
-            double Erzeugungkwh = 0;
-            double Verbrauchkwh = 0;
-            double Eigenverbrauchkwh = 0;
+            double yieldMonth = 0;
+            double consYieldMonth = 0;
+            double ownConsumption = 0;
             for (List<Double> monthDatum : monthData) {
-                Erzeugungkwh = Erzeugungkwh + monthDatum.get(0);
-                Verbrauchkwh = Verbrauchkwh + monthDatum.get(1);
-                Eigenverbrauchkwh = Eigenverbrauchkwh + monthDatum.get(2);
+                yieldMonth = yieldMonth + monthDatum.get(0);
+                consYieldMonth = consYieldMonth + monthDatum.get(1);
+                ownConsumption = ownConsumption + monthDatum.get(2);
             }
             List<Double> currentData = new ArrayList<>();
-            currentData.add(Erzeugungkwh);
-            currentData.add(Verbrauchkwh);
-            currentData.add(Eigenverbrauchkwh);
+            currentData.add(yieldMonth);
+            currentData.add(consYieldMonth);
+            currentData.add(ownConsumption);
 
             values.add(currentData);
         }
