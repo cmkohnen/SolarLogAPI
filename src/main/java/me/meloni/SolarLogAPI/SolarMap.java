@@ -467,4 +467,12 @@ public class SolarMap implements Serializable {
         data.clear();
         Logger.log(Logger.INFO_LEVEL_1 + "Cleared " + id.toString());
     }
+
+    @Override
+    public String toString() {
+        Map<String, String> map = new HashMap<>();
+        map.put("ID", id.toString());
+        map.put("CreationTime", createdOn.toString());
+        return map.toString();
+    }
 }
