@@ -14,9 +14,6 @@ import java.util.Scanner;
  * @since 0.0.1
  */
 public class GetDataSection {
-    private static int StartMinuteSection = 0;
-    private static int EndMinuteSection = 0;
-
     static final int InfoRowPosition = 0;
     static final int FileVersionPosition = 1;
 
@@ -42,19 +39,10 @@ public class GetDataSection {
     }
 
     public static List<String> getMinuteDataRows(List<String> data) {
-        for (String s : data) {
-            if(s.startsWith("#MIN")) {
-                StartMinuteSection = data.indexOf(s) + 1;
-            }
-            if(s.startsWith("#Day")) {
-                EndMinuteSection = data.indexOf(s) - 1;
-            }
-        }
-
         List<String> minuteData = new ArrayList<>();
-        if(!(StartMinuteSection == 0 || EndMinuteSection == 0)) {
-            for(int i = StartMinuteSection; i < EndMinuteSection; i++) {
-                minuteData.add(data.get(i));
+        for (String datum : data) {
+            if(datum.startsWith("2;0")) {
+                minuteData.add(datum);
             }
         }
         return minuteData;

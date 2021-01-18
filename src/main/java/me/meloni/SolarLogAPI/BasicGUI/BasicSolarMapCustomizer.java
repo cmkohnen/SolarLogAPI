@@ -26,6 +26,7 @@ public class BasicSolarMapCustomizer {
     private final List<File> dataFiles = new ArrayList<>();
     private final List<File> emlFiles = new ArrayList<>();
     private final List<Database> databases = new ArrayList<>();
+    private final List<File> jsFiles = new ArrayList<>();
 
     public BasicSolarMapCustomizer() {
         initPanel();
@@ -134,6 +135,28 @@ public class BasicSolarMapCustomizer {
             repaintList();
         });
 
+        JButton addJS = new JButton("Add from JS");
+        addJS.addActionListener(e -> {
+            File f = GetChosenFile.chosenJSFile();
+            if(!(f == null) && f.exists()) {
+                jsFiles.add(f);
+                repaintList();
+            }
+        });
+
+        JButton addJSs = new JButton("Add from JSs");
+        addJSs.addActionListener(e -> {
+            try {
+                List<File> files = GetChosenFile.chosenJSFilesInDirectory();
+                if(!(files == null)) {
+                    jsFiles.addAll(files);
+                    repaintList();
+                }
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+        });
+
         buttons.add(addFile);
         buttons.add(addDirectory);
         buttons.add(addTar);
@@ -171,6 +194,9 @@ public class BasicSolarMapCustomizer {
                     for (Database database : databases) {
                         map.addFromInfluxDB(database.getInfluxDB(), database.getDatabase());
                     }
+                }
+                if(jsFiles.size() > 0) {
+                    map.addFromJSFiles(emlFiles);
                 }
                 done = true;
             } catch (Exception ioException) {
@@ -212,6 +238,12 @@ public class BasicSolarMapCustomizer {
             files.add(new JLabel("Databases:"));
             for (Database database : databases) {
                 files.add(new JLabel(database.getInfluxDB().version()));
+            }
+        }
+        if(emlFiles.size() > 0) {
+            files.add(new JLabel("JS Files:"));
+            for (File jsFile : jsFiles) {
+                files.add(new JLabel(jsFile.getName()));
             }
         }
         files.setVisible(false);

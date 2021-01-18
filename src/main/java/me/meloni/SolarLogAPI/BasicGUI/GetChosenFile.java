@@ -56,6 +56,12 @@ public class GetChosenFile {
         return j.getSelectedFile();
     }
 
+    public static File chosenJSFile(){
+        JFileChooser j = JFileChooserPreset.importFromJSFile();
+        j.showOpenDialog(null);
+        return j.getSelectedFile();
+    }
+
     public static List<File> chosenDatFilesInDirectory() throws IOException {
         File dir = chosenDirectory();
         if(!(dir == null) && dir.exists()) {
@@ -78,6 +84,15 @@ public class GetChosenFile {
         File dir = chosenDirectory();
         if(!(dir == null) && dir.exists()) {
             return Arrays.asList(dir.listFiles((dir1, name) -> name.toLowerCase().endsWith(".eml")));
+        } else {
+            return null;
+        }
+    }
+
+    public static List<File> chosenJSFilesInDirectory() {
+        File dir = chosenDirectory();
+        if(!(dir == null) && dir.exists()) {
+            return Arrays.asList(dir.listFiles((dir1, name) -> name.toLowerCase().endsWith(".js")));
         } else {
             return null;
         }

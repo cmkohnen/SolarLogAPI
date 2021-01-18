@@ -119,7 +119,7 @@ public class SolarMap implements Serializable {
     public void addFromDatFile(File file) throws IOException, ParseException {
         if(file.exists()) {
             Logger.log(Logger.INFO_LEVEL_2 + "Adding to " + id.toString() + " from file " + file.getName());
-            addFromMap(GetData.getDataMap(file));
+            addFromMap(GetData.getAsMapFromDatFile(file));
         }
     }
 
@@ -243,6 +243,24 @@ public class SolarMap implements Serializable {
     public void addFromSolarLog(URL SolarLog) throws IOException, org.json.simple.parser.ParseException, ParseException {
         Logger.log(Logger.INFO_LEVEL_2 + "Adding to " + id.toString() + " from SolarLog at " + SolarLog.toString());
         addFromMap(GetValuesFromJson.getAsMap(GetJsonFromSolarLog.getFromSolarLogInterface(SolarLog)));
+    }
+
+    /**
+     * Add from a JS file found on the FTP server
+     * @author ChaosMelone9
+     */
+    public void addFromJSFile(File jsFile) throws IOException, ParseException {
+        addFromMap(GetData.getAsMapFromJSFile(jsFile));
+    }
+
+    /**
+     * Add from a JS files found on the FTP server
+     * @author ChaosMelone9
+     */
+    public void addFromJSFiles(List<File> jsFiles) throws IOException, ParseException {
+        for (File jsFile : jsFiles) {
+            addFromJSFile(jsFile);
+        }
     }
 
 
