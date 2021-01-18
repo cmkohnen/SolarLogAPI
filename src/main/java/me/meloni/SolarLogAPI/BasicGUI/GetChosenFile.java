@@ -32,7 +32,7 @@ public class GetChosenFile {
 
     public static File chosenSaveLocation(){
         JFileChooser j = JFileChooserPreset.saveToSolarLogFile();
-        j.showOpenDialog(null);
+        j.showSaveDialog(null);
         File f = j.getSelectedFile();
         if(f == null) {
             return null;
