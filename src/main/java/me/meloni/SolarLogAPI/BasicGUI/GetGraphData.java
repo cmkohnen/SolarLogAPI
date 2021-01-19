@@ -1,4 +1,6 @@
-package me.meloni.SolarLogAPI.DataConversion;
+package me.meloni.SolarLogAPI.BasicGUI;
+
+import me.meloni.SolarLogAPI.DataConversion.Entries;
 
 import java.text.ParseException;
 import java.time.Year;
@@ -20,20 +22,29 @@ public class GetGraphData {
         List<List<Double>> values = new ArrayList<>();
 
         for (Date timestamp : timestamps) {
-            List<Double> currentData = new ArrayList<>();
-            int consPac = data.get(timestamp).get(0);
-            int consYieldDay = data.get(timestamp).get(1);
-            int Pac = data.get(timestamp).get(2);
-            int yieldDay = data.get(timestamp).get(3);
-            int ownConsumption = data.get(timestamp).get(4);
+            try {
+                List<Double> currentData = new ArrayList<>();
+                int consPac = data.get(timestamp).get(0);
+                int consYieldDay = data.get(timestamp).get(1);
+                int Pac = data.get(timestamp).get(2);
+                int yieldDay = data.get(timestamp).get(3);
+                int ownConsumption = data.get(timestamp).get(4);
 
-            currentData.add((double) consPac);
-            currentData.add((double) consYieldDay);
-            currentData.add((double) Pac);
-            currentData.add((double) yieldDay);
-            currentData.add((double) ownConsumption);
-
-            values.add(currentData);
+                currentData.add((double) consPac);
+                currentData.add((double) consYieldDay);
+                currentData.add((double) Pac);
+                currentData.add((double) yieldDay);
+                currentData.add((double) ownConsumption);
+                values.add(currentData);
+            } catch (NullPointerException ignored) {
+                List<Double> currentData = new ArrayList<>();
+                currentData.add((double) 0);
+                currentData.add((double) 0);
+                currentData.add((double) 0);
+                currentData.add((double) 0);
+                currentData.add((double) 0);
+                values.add(currentData);
+            }
         }
         return values;
     }

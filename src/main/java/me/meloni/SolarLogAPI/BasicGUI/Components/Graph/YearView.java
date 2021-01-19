@@ -1,9 +1,15 @@
 package me.meloni.SolarLogAPI.BasicGUI.Components.Graph;
 
+import me.meloni.SolarLogAPI.BasicGUI.GetGraphData;
+import me.meloni.SolarLogAPI.SolarMap;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
+import java.text.ParseException;
+import java.time.Month;
+import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +20,7 @@ import java.util.List;
  */
 public class YearView extends JPanel {
 
+    private final Year year;
     private final List<List<Double>> data;
 
     private Color GridColor = Color.DARK_GRAY;
@@ -40,8 +47,9 @@ public class YearView extends JPanel {
 
     private static final Stroke GRAPH_STROKE = new BasicStroke(2f);
 
-    public YearView(List<List<Double>> data) {
-        this.data = data;
+    public YearView(SolarMap solarMap, Year year) throws ParseException {
+        this.data = GetGraphData.getYearGraphData(year, solarMap.getAsMap());
+        this.year = year;
     }
 
     @SuppressWarnings("DuplicatedCode")
@@ -74,7 +82,7 @@ public class YearView extends JPanel {
         g2.fillRect(0,0,getWidth(),getHeight());
 
         g2.setColor(GraphBackgroundColor);
-        g2.fillRect(padding + labelPadding, padding, getWidth() - (padding * 2) - labelPadding, getHeight() - (padding * 2));
+        g2.fillRect(padding + labelPadding, padding, getWidth() - (padding * 2) - labelPadding, getHeight() - (padding * 2) - labelPadding);
 
         g2.setColor(AxisColor);
 
@@ -101,7 +109,7 @@ public class YearView extends JPanel {
             int y0 = getHeight() - padding - labelPadding;
             int y1 = y0 - pointWidth;
             g2.drawLine(x0, y0, x0, y1);
-            String xLabel = Integer.toString(i);
+            String xLabel = Integer.toString(i + 1);
             FontMetrics metrics = g2.getFontMetrics();
             int labelWidth = metrics.stringWidth(xLabel);
             g2.drawString(xLabel, x0 - labelWidth / 2, y0 + metrics.getHeight() + 3);
@@ -145,7 +153,7 @@ public class YearView extends JPanel {
             }
         }
 
-        if(mouseX >= labelPadding + padding & mouseX <= getWidth() - labelPadding - padding & mouseY >= padding & mouseY <= getHeight() - padding & mouseGUI & visibleRows() > 0){
+        if(mouseX >= labelPadding + padding & mouseX <= getWidth() - padding & mouseY >= padding & mouseY <= getHeight() - padding & mouseGUI & visibleRows() > 0){
             g2.setStroke(stroke);
             g2.setColor(BackgroundColor);
             g2.fillRect(padding + labelPadding, padding, 200, ((valuePadding + 12) * visibleRows()) + 20);
@@ -154,7 +162,8 @@ public class YearView extends JPanel {
             double ExactMouseXValue = (mouseX - padding -labelPadding) / xScale;
 
             g2.setColor(LabelColor);
-            g2.drawString("Values at " + Math.floor(ExactMouseXValue), padding + labelPadding + valuePadding, padding + valuePadding * 2);
+            String month = Month.of((int) Math.floor(ExactMouseXValue) + 1).toString();
+            g2.drawString("Values at " + month, padding + labelPadding + valuePadding, padding + valuePadding * 2);
             int i = 2;
             if(Row1Visible) {
                 g2.drawString("Verbrauch kWH: " + Math.round(data.get((int)ExactMouseXValue).get(0)), padding + labelPadding + valuePadding, padding + (valuePadding * 2) * i);
@@ -274,5 +283,9 @@ public class YearView extends JPanel {
 
     public void setMouseGUIVisible(boolean mouseGUIVisible) {
         mouseGUI = mouseGUIVisible;
+    }
+
+    public Year getYear() {
+        return year;
     }
 }

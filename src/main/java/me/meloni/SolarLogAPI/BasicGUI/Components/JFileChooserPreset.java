@@ -114,6 +114,24 @@ public class JFileChooserPreset {
         return j;
     }
 
+    public static JFileChooser importFromJSFile(){
+        JFileChooser j = new JFileChooser();
+        j.setDialogTitle("Import from JS");
+        j.setAcceptAllFileFilterUsed(false);
+        j.setFileFilter(new FileFilter() {
+            @Override
+            public boolean accept(File f) {
+                return f.isDirectory() || f.getName().contains(".js");
+            }
+
+            @Override
+            public String getDescription() {
+                return "JS files (*.js)";
+            }
+        });
+        return j;
+    }
+
     public static JFileChooser getChosenDirectory() {
         JFileChooser j = new JFileChooser();
         j.setDialogTitle("Import");

@@ -27,7 +27,7 @@ public class YearCustomizer extends JPanel{
         picker.setMaximumSize(new Dimension(200,40));
         picker.addDateChangeListener(event -> {
             try {
-                cmp = new YearView(data.getYearGraphData(Year.of(event.getNewDate().getYear())));
+                cmp = new YearView(data, Year.of(event.getNewDate().getYear()));
             } catch (ParseException e) {
                 e.printStackTrace();
             }

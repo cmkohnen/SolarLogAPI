@@ -75,5 +75,5 @@ SolarMap solarMap = BasicSolarMapCustomizer.solarMap();
 ```
 or 
 ```java
-GraphCustomizer.run();
+GraphCustomizer.visualize(BasicSolarMapCustomizer.solarMap());
 ```

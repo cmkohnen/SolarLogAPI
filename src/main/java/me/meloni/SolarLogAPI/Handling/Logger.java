@@ -21,6 +21,8 @@ public class Logger {
     public static String INFO_LEVEL_2 = ANSI_GREEN + " >>> ";
     public static String INFO_LEVEL_3 = ANSI_WHITE + "> ";
 
+    public static String WARN_PREFIX = ANSI_RED + "[WARNING] ";
+
     private static boolean enabled = false;
     private static boolean colored = true;
 
@@ -41,17 +43,23 @@ public class Logger {
             Logger.INFO_LEVEL_1 = ANSI_PURPLE + " ===> ";
             Logger.INFO_LEVEL_2 = ANSI_GREEN + " >>> ";
             Logger.INFO_LEVEL_3 = ANSI_WHITE + "> ";
+            Logger.WARN_PREFIX = ANSI_RED + "[WARNING] ";
         } else {
             Logger.INFO_LEVEL_1 = " ===> ";
             Logger.INFO_LEVEL_2 = " >>> ";
             Logger.INFO_LEVEL_3 = "> ";
+            Logger.WARN_PREFIX = "[WARNING] ";
         }
     }
 
-    public static void log(Object o){
+    public static void log(Object o) {
         if(enabled) {
             System.out.println(o);
         }
+    }
+
+    public static void warn(Object o) {
+        info(WARN_PREFIX + o);
     }
 
     public static void info(Object o) {

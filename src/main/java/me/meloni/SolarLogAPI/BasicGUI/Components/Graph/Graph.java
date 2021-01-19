@@ -1,8 +1,9 @@
 package me.meloni.SolarLogAPI.BasicGUI.Components.Graph;
 
-import me.meloni.SolarLogAPI.DataConversion.GetGraphData;
+import me.meloni.SolarLogAPI.SolarMap;
 
 import java.text.ParseException;
+import java.time.Year;
 import java.time.YearMonth;
 import java.util.Date;
 import java.util.List;
@@ -19,12 +20,19 @@ public class Graph {
      * @deprecated
      */
     public static DayView dayView(Date day, Map<Date,List<Integer>> data) throws ParseException {
-        return new DayView(GetGraphData.getDayGraphData(day,data));
+        return new DayView(new SolarMap(data), day);
     }
     /**
      * @deprecated
      */
     public static MonthView monthView(YearMonth month, Map<Date,List<Integer>> data) throws ParseException {
-        return new MonthView(GetGraphData.getMonthGraphData(month,data));
+        return new MonthView(new SolarMap(data), month);
+    }
+
+    /**
+     * @deprecated
+     */
+    public static YearView yearView(Year year, Map<Date,List<Integer>> data) throws ParseException {
+        return new YearView(new SolarMap(data), year);
     }
 }

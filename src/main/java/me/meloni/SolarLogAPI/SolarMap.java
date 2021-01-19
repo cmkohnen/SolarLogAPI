@@ -2,6 +2,7 @@ package me.meloni.SolarLogAPI;
 
 import me.meloni.SolarLogAPI.DataConversion.*;
 import me.meloni.SolarLogAPI.DatabaseInteraction.InfluxDbInteraction;
+import me.meloni.SolarLogAPI.FTPServerInteraction.GetFromFTPServer;
 import me.meloni.SolarLogAPI.FileInteraction.ReadFiles.GetFromEML;
 import me.meloni.SolarLogAPI.FileInteraction.ReadFiles.GetFromTar;
 import me.meloni.SolarLogAPI.FileInteraction.ReadFiles.ReadFileObject;
@@ -15,10 +16,10 @@ import org.json.simple.JSONObject;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.text.ParseException;
 import java.time.LocalDate;
-import java.time.Year;
 import java.time.YearMonth;
 import java.util.*;
 
@@ -119,7 +120,7 @@ public class SolarMap implements Serializable {
     public void addFromDatFile(File file) throws IOException, ParseException {
         if(file.exists()) {
             Logger.log(Logger.INFO_LEVEL_2 + "Adding to " + id.toString() + " from file " + file.getName());
-            addFromMap(GetData.getDataMap(file));
+            addFromMap(GetData.getAsMapFromDatFile(file));
         }
     }
 
@@ -245,6 +246,29 @@ public class SolarMap implements Serializable {
         addFromMap(GetValuesFromJson.getAsMap(GetJsonFromSolarLog.getFromSolarLogInterface(SolarLog)));
     }
 
+    /**
+     * Add from a JS file found on the FTP server
+     * @author ChaosMelone9
+     */
+    public void addFromJSFile(File jsFile) throws IOException, ParseException {
+        addFromMap(GetData.getAsMapFromJSFile(jsFile));
+    }
+
+    /**
+     * Add from a JS files found on the FTP server
+     * @author ChaosMelone9
+     */
+    public void addFromJSFiles(List<File> jsFiles) throws IOException, ParseException {
+        for (File jsFile : jsFiles) {
+            addFromJSFile(jsFile);
+        }
+    }
+
+    public void addFromFTPServer(String host, String user, String password) throws IOException, URISyntaxException, ParseException {
+        Logger.log(Logger.INFO_LEVEL_1 + "Adding to " + id + " from FTP Server " + user + "@" + host);
+        addFromJSFiles(GetFromFTPServer.getJSFilesFromFTPServer(host, user, password));
+    }
+
 
 
 
@@ -309,33 +333,6 @@ public class SolarMap implements Serializable {
      */
     public Integer getValueOnDate(Date date, Integer value) {
         return getValuesOnDate(date).get(value);
-    }
-
-    /**
-     * Get graph data for daily visualization
-     * @author ChaosMelone9
-     * @throws ParseException Bad date
-     */
-    public List<List<Double>> getDayGraphData(Date date) throws ParseException {
-        return GetGraphData.getDayGraphData(date, data);
-    }
-
-    /**
-     * Get graph data for monthly visualization
-     * @author ChaosMelone9
-     * @throws ParseException Bad date
-     */
-    public List<List<Double>> getMonthGraphData(YearMonth yearMonth) throws ParseException {
-        return GetGraphData.getMonthGraphData(yearMonth, data);
-    }
-
-    /**
-     * Get graph data for yearly visualization
-     * @author ChaosMelone9
-     * @throws ParseException Bad date
-     */
-    public List<List<Double>> getYearGraphData(Year year) throws ParseException {
-        return GetGraphData.getYearGraphData(year, data);
     }
 
     /**
@@ -448,5 +445,13 @@ public class SolarMap implements Serializable {
     public void clear() {
         data.clear();
         Logger.log(Logger.INFO_LEVEL_1 + "Cleared " + id.toString());
+    }
+
+    @Override
+    public String toString() {
+        Map<String, String> map = new HashMap<>();
+        map.put("ID", id.toString());
+        map.put("CreationTime", createdOn.toString());
+        return map.toString();
     }
 }

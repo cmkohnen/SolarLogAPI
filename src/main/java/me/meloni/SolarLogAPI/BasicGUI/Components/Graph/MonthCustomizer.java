@@ -28,7 +28,7 @@ public class MonthCustomizer extends JPanel{
         picker.addDateChangeListener(event -> {
             if(data.includesMonth(GetStartOf.yearMonth(event.getNewDate()))){
                 try {
-                    cmp = new MonthView(data.getMonthGraphData(GetStartOf.yearMonth(event.getNewDate())));
+                    cmp = new MonthView(data, GetStartOf.yearMonth(event.getNewDate()));
                     paintComponent();
                 } catch (ParseException e) {
                     e.printStackTrace();

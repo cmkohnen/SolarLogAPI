@@ -32,7 +32,7 @@ public class GetChosenFile {
 
     public static File chosenSaveLocation(){
         JFileChooser j = JFileChooserPreset.saveToSolarLogFile();
-        j.showOpenDialog(null);
+        j.showSaveDialog(null);
         File f = j.getSelectedFile();
         if(f == null) {
             return null;
@@ -52,6 +52,12 @@ public class GetChosenFile {
 
     public static File chosenSolarLogFile(){
         JFileChooser j = JFileChooserPreset.importFromSolarLogFile();
+        j.showOpenDialog(null);
+        return j.getSelectedFile();
+    }
+
+    public static File chosenJSFile(){
+        JFileChooser j = JFileChooserPreset.importFromJSFile();
         j.showOpenDialog(null);
         return j.getSelectedFile();
     }
@@ -78,6 +84,15 @@ public class GetChosenFile {
         File dir = chosenDirectory();
         if(!(dir == null) && dir.exists()) {
             return Arrays.asList(dir.listFiles((dir1, name) -> name.toLowerCase().endsWith(".eml")));
+        } else {
+            return null;
+        }
+    }
+
+    public static List<File> chosenJSFilesInDirectory() {
+        File dir = chosenDirectory();
+        if(!(dir == null) && dir.exists()) {
+            return Arrays.asList(dir.listFiles((dir1, name) -> name.toLowerCase().endsWith(".js") && (name.startsWith("min") && !(name.contains("day") || name.contains("cur")))));
         } else {
             return null;
         }
