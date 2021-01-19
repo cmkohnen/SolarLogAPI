@@ -2,6 +2,7 @@ package me.meloni.SolarLogAPI;
 
 import me.meloni.SolarLogAPI.DataConversion.*;
 import me.meloni.SolarLogAPI.DatabaseInteraction.InfluxDbInteraction;
+import me.meloni.SolarLogAPI.FTPServerInteraction.GetFromFTPServer;
 import me.meloni.SolarLogAPI.FileInteraction.ReadFiles.GetFromEML;
 import me.meloni.SolarLogAPI.FileInteraction.ReadFiles.GetFromTar;
 import me.meloni.SolarLogAPI.FileInteraction.ReadFiles.ReadFileObject;
@@ -15,6 +16,7 @@ import org.json.simple.JSONObject;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.text.ParseException;
 import java.time.LocalDate;
@@ -261,6 +263,11 @@ public class SolarMap implements Serializable {
         for (File jsFile : jsFiles) {
             addFromJSFile(jsFile);
         }
+    }
+
+    public void addFromFTPServer(String host, String user, String password) throws IOException, URISyntaxException, ParseException {
+        Logger.log(Logger.INFO_LEVEL_1 + "Adding to " + id + " from FTP Server " + user + "@" + host);
+        addFromJSFiles(GetFromFTPServer.getJSFilesFromFTPServer(host, user, password));
     }
 
 

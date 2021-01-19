@@ -165,6 +165,8 @@ public class BasicSolarMapCustomizer {
         buttons.add(addEML);
         buttons.add(addEMLs);
         buttons.add(addDatabase);
+        buttons.add(addJS);
+        buttons.add(addJSs);
 
         filePanel.setLayout(new BorderLayout());
 
@@ -196,7 +198,7 @@ public class BasicSolarMapCustomizer {
                     }
                 }
                 if(jsFiles.size() > 0) {
-                    map.addFromJSFiles(emlFiles);
+                    map.addFromJSFiles(jsFiles);
                 }
                 done = true;
             } catch (Exception ioException) {
@@ -240,7 +242,7 @@ public class BasicSolarMapCustomizer {
                 files.add(new JLabel(database.getInfluxDB().version()));
             }
         }
-        if(emlFiles.size() > 0) {
+        if(jsFiles.size() > 0) {
             files.add(new JLabel("JS Files:"));
             for (File jsFile : jsFiles) {
                 files.add(new JLabel(jsFile.getName()));

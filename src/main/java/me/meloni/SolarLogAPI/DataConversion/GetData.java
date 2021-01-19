@@ -60,26 +60,33 @@ public class GetData  {
         Map<Date, List<Integer>> data = new HashMap<>();
         for (String line : lines) {
             String alteredLine = StringUtils.substringBetween(line, "\"" , "\"");
-            alteredLine = alteredLine.replaceAll("\\|", ";");
-            List<String> objects = Arrays.asList(alteredLine.split(";"));
+            if(alteredLine != null) {
+                alteredLine = alteredLine.replaceAll("\\|", ";");
+                List<String> objects = Arrays.asList(alteredLine.split(";"));
+                if(objects.size() >= 7) {
+                    DateFormat formatter = new SimpleDateFormat(DATEFORMAT);
+                    Date d = formatter.parse(objects.get(0));
 
-            DateFormat formatter = new SimpleDateFormat(DATEFORMAT);
-            Date d = formatter.parse(objects.get(0));
+                    try {
+                        List<Integer> valuesEach = new ArrayList<>();
+                        int consPac = Integer.parseInt(objects.get(1));
+                        int consYieldDay = Integer.parseInt(objects.get(3));
+                        int Pac = Integer.parseInt(objects.get(4));
+                        int yieldDay = Integer.parseInt(objects.get(7));
+                        int ownConsumption = Math.min(consPac, Pac);
 
-            List<Integer> valuesEach = new ArrayList<>();
-            int consPac = Integer.parseInt(objects.get(1));
-            int consYieldDay = Integer.parseInt(objects.get(3));
-            int Pac = Integer.parseInt(objects.get(4));
-            int yieldDay = Integer.parseInt(objects.get(7));
-            int ownConsumption = Math.min(consPac, Pac);
+                        valuesEach.add(consPac);
+                        valuesEach.add(consYieldDay);
+                        valuesEach.add(Pac);
+                        valuesEach.add(yieldDay);
+                        valuesEach.add(ownConsumption);
 
-            valuesEach.add(consPac);
-            valuesEach.add(consYieldDay);
-            valuesEach.add(Pac);
-            valuesEach.add(yieldDay);
-            valuesEach.add(ownConsumption);
-
-            data.put(d, valuesEach);
+                        data.put(d, valuesEach);
+                    } catch (NumberFormatException ignored) {
+                        Logger.warn("Unable to convert File " + file.getName());
+                    }
+                }
+            }
         }
         return data;
     }

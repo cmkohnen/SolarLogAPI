@@ -92,7 +92,7 @@ public class GetChosenFile {
     public static List<File> chosenJSFilesInDirectory() {
         File dir = chosenDirectory();
         if(!(dir == null) && dir.exists()) {
-            return Arrays.asList(dir.listFiles((dir1, name) -> name.toLowerCase().endsWith(".js")));
+            return Arrays.asList(dir.listFiles((dir1, name) -> name.toLowerCase().endsWith(".js") && (name.startsWith("min") && !(name.contains("day") || name.contains("cur")))));
         } else {
             return null;
         }
