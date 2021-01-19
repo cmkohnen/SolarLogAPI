@@ -363,4 +363,8 @@ public class DayView extends JPanel {
     public void setMouseGUIVisible(boolean mouseGUIVisible) {
             mouseGUI = mouseGUIVisible;
         }
+
+    public Date getDay() {
+        return date;
+    }
 }
