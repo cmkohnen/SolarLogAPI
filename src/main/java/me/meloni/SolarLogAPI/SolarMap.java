@@ -1,6 +1,5 @@
 package me.meloni.SolarLogAPI;
 
-import me.meloni.SolarLogAPI.BasicGUI.GetGraphData;
 import me.meloni.SolarLogAPI.DataConversion.*;
 import me.meloni.SolarLogAPI.DatabaseInteraction.InfluxDbInteraction;
 import me.meloni.SolarLogAPI.FTPServerInteraction.GetFromFTPServer;
@@ -21,7 +20,6 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.text.ParseException;
 import java.time.LocalDate;
-import java.time.Year;
 import java.time.YearMonth;
 import java.util.*;
 
@@ -335,33 +333,6 @@ public class SolarMap implements Serializable {
      */
     public Integer getValueOnDate(Date date, Integer value) {
         return getValuesOnDate(date).get(value);
-    }
-
-    /**
-     * Get graph data for daily visualization
-     * @author ChaosMelone9
-     * @throws ParseException Bad date
-     */
-    public List<List<Double>> getDayGraphData(Date date) throws ParseException {
-        return GetGraphData.getDayGraphData(date, data);
-    }
-
-    /**
-     * Get graph data for monthly visualization
-     * @author ChaosMelone9
-     * @throws ParseException Bad date
-     */
-    public List<List<Double>> getMonthGraphData(YearMonth yearMonth) throws ParseException {
-        return GetGraphData.getMonthGraphData(yearMonth, data);
-    }
-
-    /**
-     * Get graph data for yearly visualization
-     * @author ChaosMelone9
-     * @throws ParseException Bad date
-     */
-    public List<List<Double>> getYearGraphData(Year year) throws ParseException {
-        return GetGraphData.getYearGraphData(year, data);
     }
 
     /**
