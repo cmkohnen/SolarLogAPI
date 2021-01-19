@@ -1,9 +1,14 @@
 package me.meloni.SolarLogAPI.BasicGUI.Components.Graph;
 
+import me.meloni.SolarLogAPI.BasicGUI.GetGraphData;
+import me.meloni.SolarLogAPI.SolarMap;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
+import java.text.ParseException;
+import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +19,7 @@ import java.util.List;
  */
 public class YearView extends JPanel {
 
+    private final Year year;
     private final List<List<Double>> data;
 
     private Color GridColor = Color.DARK_GRAY;
@@ -40,8 +46,9 @@ public class YearView extends JPanel {
 
     private static final Stroke GRAPH_STROKE = new BasicStroke(2f);
 
-    public YearView(List<List<Double>> data) {
-        this.data = data;
+    public YearView(SolarMap solarMap, Year year) throws ParseException {
+        this.data = GetGraphData.getYearGraphData(year, solarMap.getAsMap());
+        this.year = year;
     }
 
     @SuppressWarnings("DuplicatedCode")

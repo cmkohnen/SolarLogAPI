@@ -1,12 +1,17 @@
 package me.meloni.SolarLogAPI.BasicGUI.Components.Graph;
 
+import me.meloni.SolarLogAPI.BasicGUI.GetGraphData;
 import me.meloni.SolarLogAPI.DataConversion.Entries;
+import me.meloni.SolarLogAPI.DataConversion.GetStartOf;
+import me.meloni.SolarLogAPI.SolarMap;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -16,6 +21,7 @@ import java.util.List;
  */
 public class DayView extends JPanel {
 
+    private final Date date;
     private final List<List<Double>> data;
 
     private Color GridColor = Color.DARK_GRAY;
@@ -46,9 +52,10 @@ public class DayView extends JPanel {
 
     private static final Stroke GRAPH_STROKE = new BasicStroke(2f);
 
-    public DayView(List<List<Double>> data) {
-            this.data = data;
-        }
+    public DayView(SolarMap solarMap, Date day) throws ParseException {
+        this.data = GetGraphData.getDayGraphData(GetStartOf.day(day), solarMap.getAsMap());
+        this.date = day;
+    }
 
     @SuppressWarnings("DuplicatedCode")
     @Override

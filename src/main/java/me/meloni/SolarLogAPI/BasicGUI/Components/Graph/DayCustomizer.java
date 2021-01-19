@@ -1,8 +1,8 @@
 package me.meloni.SolarLogAPI.BasicGUI.Components.Graph;
 
 import me.meloni.SolarLogAPI.BasicGUI.Components.DatePicker;
-import me.meloni.SolarLogAPI.DataConversion.GetStartOf;
 import me.meloni.SolarLogAPI.BasicGUI.GraphCustomizer;
+import me.meloni.SolarLogAPI.DataConversion.GetStartOf;
 import me.meloni.SolarLogAPI.SolarMap;
 
 import javax.swing.*;
@@ -28,7 +28,7 @@ public class DayCustomizer extends JPanel{
         picker.addDateChangeListener(event -> {
             if(data.includesDay(event.getNewDate())){
                 try {
-                    cmp = new DayView(data.getDayGraphData(GetStartOf.day(event.getNewDate())));
+                    cmp = new DayView(data, GetStartOf.day(event.getNewDate()));
                     paintComponent();
                 } catch (ParseException e) {
                     e.printStackTrace();
