@@ -1,5 +1,6 @@
 package me.meloni.SolarLogAPI;
 
+import me.meloni.SolarLogAPI.BasicGUI.GetGraphData;
 import me.meloni.SolarLogAPI.DataConversion.*;
 import me.meloni.SolarLogAPI.DatabaseInteraction.InfluxDbInteraction;
 import me.meloni.SolarLogAPI.FTPServerInteraction.GetFromFTPServer;

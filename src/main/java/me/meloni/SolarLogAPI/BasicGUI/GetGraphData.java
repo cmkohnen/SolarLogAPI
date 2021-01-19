@@ -1,4 +1,6 @@
-package me.meloni.SolarLogAPI.DataConversion;
+package me.meloni.SolarLogAPI.BasicGUI;
+
+import me.meloni.SolarLogAPI.DataConversion.Entries;
 
 import java.text.ParseException;
 import java.time.Year;

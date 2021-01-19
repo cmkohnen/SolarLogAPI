@@ -1,6 +1,6 @@
 package me.meloni.SolarLogAPI.BasicGUI.Components.Graph;
 
-import me.meloni.SolarLogAPI.DataConversion.GetGraphData;
+import me.meloni.SolarLogAPI.BasicGUI.GetGraphData;
 
 import java.text.ParseException;
 import java.time.YearMonth;
