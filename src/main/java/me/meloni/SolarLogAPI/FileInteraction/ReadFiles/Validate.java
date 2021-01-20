@@ -4,6 +4,7 @@ import me.meloni.SolarLogAPI.FileInteraction.GetFile;
 import me.meloni.SolarLogAPI.FileInteraction.Tools.FileAttributes;
 import me.meloni.SolarLogAPI.FileInteraction.Tools.FileVersion;
 import me.meloni.SolarLogAPI.Handling.Logger;
+import me.meloni.SolarLogAPI.Handling.Translation;
 
 import java.io.File;
 import java.io.IOException;
@@ -36,13 +37,13 @@ public class Validate {
         int i2 = 0;
         for (File file : files) {
             i++;
-            Logger.logWithoutBreakup(Logger.INFO_LEVEL_3 + "Validating file " + file + " (" + i + " of " + files.size() + ")");
+            Logger.logWithoutBreakup(Logger.INFO_LEVEL_3 + Translation.get("validate_validating") + file + " (" + i + " of " + files.size() + ")");
             if(isValidDataFile(file)) {
                 ValidFiles.add(file);
                 i2++;
-                Logger.logWithoutBreakup("    yes\n");
+                Logger.logWithoutBreakup("    " + Translation.get("yes") + "\n");
             } else {
-                Logger.logWithoutBreakup("    no\n");
+                Logger.logWithoutBreakup("    " + Translation.get("no") + "\n");
             }
         }
         Logger.log(Logger.INFO_LEVEL_3 + "Done. Checked " + i + ", found " + i2);

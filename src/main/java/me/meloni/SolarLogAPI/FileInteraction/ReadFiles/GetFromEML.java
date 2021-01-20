@@ -1,6 +1,7 @@
 package me.meloni.SolarLogAPI.FileInteraction.ReadFiles;
 
 import me.meloni.SolarLogAPI.Handling.Logger;
+import me.meloni.SolarLogAPI.Handling.Translation;
 import me.meloni.SolarLogAPI.MailInteraction.GetTarFromMessage;
 
 import javax.mail.MessagingException;
@@ -24,7 +25,6 @@ public class GetFromEML {
         Session mailSession = Session.getDefaultInstance(props, null);
         InputStream source = new FileInputStream(emlFile);
         MimeMessage message = new MimeMessage(mailSession, source);
-
         return GetTarFromMessage.getTarArchiveFromMessage(message);
     }
 
@@ -33,7 +33,7 @@ public class GetFromEML {
         int i = 0;
         for (File emlFile : emlFiles) {
             i++;
-            Logger.log(Logger.INFO_LEVEL_3 + "Extracting tars from " + emlFile + "(" + i + " from " + emlFiles.size() + ").");
+            Logger.log(Logger.INFO_LEVEL_3 + Translation.get("eml_export_tars") + emlFile + "(" + i + " from " + emlFiles.size() + ").");
             tars.add(getTarFromEML(emlFile));
         }
         return tars;

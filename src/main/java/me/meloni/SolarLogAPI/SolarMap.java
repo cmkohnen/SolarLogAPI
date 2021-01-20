@@ -9,6 +9,7 @@ import me.meloni.SolarLogAPI.FileInteraction.ReadFiles.ReadFileObject;
 import me.meloni.SolarLogAPI.FileInteraction.Tools.FileObject;
 import me.meloni.SolarLogAPI.FileInteraction.WriteFiles.WriteFileObject;
 import me.meloni.SolarLogAPI.Handling.Logger;
+import me.meloni.SolarLogAPI.Handling.Translation;
 import me.meloni.SolarLogAPI.SolarLogInteraction.GetJsonFromSolarLog;
 import org.influxdb.InfluxDB;
 import org.json.simple.JSONObject;
@@ -16,7 +17,6 @@ import org.json.simple.JSONObject;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.text.ParseException;
 import java.time.LocalDate;
@@ -72,7 +72,7 @@ public class SolarMap implements Serializable {
     public SolarMap() {init(); }
 
     private void init() {
-        Logger.log(Logger.INFO_LEVEL_1 + "Created new SolarMap with ID " + id.toString());
+        Logger.log(Logger.INFO_LEVEL_1 + Translation.get("solarmap_new") + id.toString());
     }
 
 
@@ -107,7 +107,7 @@ public class SolarMap implements Serializable {
      * @author ChaosMelone9
      */
     public void addFromSolarMap(SolarMap map) {
-        Logger.log(Logger.INFO_LEVEL_2 + "Adding to " + id.toString() + " from SolarMap with ID " + map.getId().toString());
+        Logger.log(Logger.INFO_LEVEL_2 + Translation.get("solarmap_adding") + id.toString() + Translation.get("solarmap_add_solarmap") + map.getId().toString());
         addFromMap(map.getAsMap());
     }
 
@@ -119,7 +119,7 @@ public class SolarMap implements Serializable {
      */
     public void addFromDatFile(File file) throws IOException, ParseException {
         if(file.exists()) {
-            Logger.log(Logger.INFO_LEVEL_2 + "Adding to " + id.toString() + " from file " + file.getName());
+            Logger.log(Logger.INFO_LEVEL_2 + Translation.get("solarmap_adding") + id.toString() + Translation.get("solarmap_add_file") + file.getName());
             addFromMap(GetData.getAsMapFromDatFile(file));
         }
     }
@@ -131,12 +131,12 @@ public class SolarMap implements Serializable {
      * @throws ParseException Bad date
      */
     public void addFromDatFiles(List<File> files) throws IOException, ParseException {
-        Logger.log(Logger.INFO_LEVEL_2 + "Adding to " + id.toString() + " from multiple files");
+        Logger.log(Logger.INFO_LEVEL_2 + Translation.get("solarmap_adding") + id.toString() + Translation.get("solarmap_add_files"));
         int i1 = files.size();
         int i2 = 0;
         for (File file : files) {
             i2++;
-            Logger.log(Logger.INFO_LEVEL_3 + "Importing from file " + file.getName() + "  (" + i2 + " of " + i1 + ").");
+            Logger.log(Logger.INFO_LEVEL_3 + Translation.get("importing_from_file") + file.getName() + "  (" + i2 + " of " + i1 + ").");
             addFromDatFile(file);
         }
     }
@@ -148,7 +148,7 @@ public class SolarMap implements Serializable {
      */
     public void addFromTarArchive(File file) throws Exception {
         if(file.exists()) {
-            Logger.log(Logger.INFO_LEVEL_2 + "Adding to " + id.toString() + " from Tar archive " + file.getName());
+            Logger.log(Logger.INFO_LEVEL_2 + Translation.get("solarmap_adding") + id.toString() + Translation.get("solarmap_add_tar") + file.getName());
             addFromDatFiles(GetFromTar.getValidDatFilesFromTarArchive(file));
         }
     }
@@ -167,7 +167,7 @@ public class SolarMap implements Serializable {
      * @author ChaosMelone9
      */
     public void addFromFileObject(FileObject fileObject) {
-        Logger.log(Logger.INFO_LEVEL_2 + "Adding to " + id.toString() + " from FileObject");
+        Logger.log(Logger.INFO_LEVEL_2 + Translation.get("solarmap_adding") + id.toString() + Translation.get("solarmap_add_fileobject"));
         addFromMap(fileObject.getData());
     }
 
@@ -178,7 +178,7 @@ public class SolarMap implements Serializable {
      * @throws ClassNotFoundException Bad file
      */
     public void addFromSolarLogFile(File file) throws IOException, ClassNotFoundException {
-        Logger.log(Logger.INFO_LEVEL_2 + "Adding to " + id.toString() + " from data file " + file.getName());
+        Logger.log(Logger.INFO_LEVEL_2 + Translation.get("solarmap_adding") + id.toString() + Translation.get("solarmap_add_datafile") + file.getName());
         addFromFileObject(ReadFileObject.getObjectFromFile(file));
     }
 
@@ -193,7 +193,7 @@ public class SolarMap implements Serializable {
         int i2 = 0;
         for (File file : files) {
             i2++;
-            Logger.log("Importing from file " + file.getName() + "  (" + i2 + " of " + i1 + ").");
+            Logger.log(Translation.get("importing_from_file") + file.getName() + "  (" + i2 + " of " + i1 + ").");
             addFromSolarLogFile(file);
         }
     }
@@ -225,7 +225,7 @@ public class SolarMap implements Serializable {
      * @author ChaosMelone9
      */
     public void addFromEMLFile(File emlFile) throws Exception {
-        Logger.log(Logger.INFO_LEVEL_2 + "Adding to " + id.toString() + " from EML File " + emlFile.getName());
+        Logger.log(Logger.INFO_LEVEL_2 + Translation.get("solarmap_adding") + id.toString() + Translation.get("solarmap_add_emlfile") + emlFile.getName());
         addFromTarArchive(Objects.requireNonNull(GetFromEML.getTarFromEML(emlFile)));
     }
 
@@ -242,7 +242,7 @@ public class SolarMap implements Serializable {
      * @author ChaosMelone9
      */
     public void addFromSolarLog(URL SolarLog) throws IOException, org.json.simple.parser.ParseException, ParseException {
-        Logger.log(Logger.INFO_LEVEL_2 + "Adding to " + id.toString() + " from SolarLog at " + SolarLog.toString());
+        Logger.log(Logger.INFO_LEVEL_2 + Translation.get("solarmap_adding") + id.toString() + Translation.get("solarmap_add_solarlog") + SolarLog.toString());
         addFromMap(GetValuesFromJson.getAsMap(GetJsonFromSolarLog.getFromSolarLogInterface(SolarLog)));
     }
 
@@ -264,8 +264,8 @@ public class SolarMap implements Serializable {
         }
     }
 
-    public void addFromFTPServer(String host, String user, String password) throws IOException, URISyntaxException, ParseException {
-        Logger.log(Logger.INFO_LEVEL_1 + "Adding to " + id + " from FTP Server " + user + "@" + host);
+    public void addFromFTPServer(String host, String user, String password) throws IOException, ParseException {
+        Logger.log(Logger.INFO_LEVEL_1 + Translation.get("solarmap_adding") + id + Translation.get("solarmap_add_ftp") + user + "@" + host);
         addFromJSFiles(GetFromFTPServer.getJSFilesFromFTPServer(host, user, password));
     }
 
@@ -278,7 +278,7 @@ public class SolarMap implements Serializable {
      * @throws IOException Bad file
      */
     public void writeToDataFile(File file) throws IOException {
-        Logger.log(Logger.INFO_LEVEL_2 + "Writing " + id.toString() + " to data file " + file.getName());
+        Logger.log(Logger.INFO_LEVEL_2 + Translation.get("solarmap_write") + id.toString() + Translation.get("solarmap_write_datafile") + file.getName());
         WriteFileObject.write(file, this.getAsFileObject());
     }
 
@@ -287,7 +287,7 @@ public class SolarMap implements Serializable {
      * @author ChaosMelone9
      */
     public void writeToInfluxDBDataBase(String server, String username, String password, String database, int batchPointLimit) throws NullPointerException{
-        Logger.log(Logger.INFO_LEVEL_2 + "Writing " + id.toString() + " to InfluxDB at " + server);
+        Logger.log(Logger.INFO_LEVEL_2 + Translation.get("solarmap_write") + id.toString() + Translation.get("solarmap_write_influxdb") + server);
         InfluxDbInteraction influxDbInteraction = new InfluxDbInteraction(server, username, password);
         influxDbInteraction.setBatchPointLimit(batchPointLimit);
         influxDbInteraction.setDatabase(database);
@@ -301,7 +301,7 @@ public class SolarMap implements Serializable {
      * @param influxDB assumes a set database
      **/
     public void writeToInfluxDBDataBase(InfluxDB influxDB, int batchPointLimit) throws NullPointerException{
-        Logger.log(Logger.INFO_LEVEL_2 + "Writing " + id.toString() + " to InfluxDB");
+        Logger.log(Logger.INFO_LEVEL_2 + Translation.get("solarmap_write") + id.toString() + Translation.get("solarmap_write_influxdb"));
         InfluxDbInteraction influxDbInteraction = new InfluxDbInteraction(influxDB);
         influxDbInteraction.setBatchPointLimit(batchPointLimit);
         influxDbInteraction.write(this);
@@ -444,7 +444,7 @@ public class SolarMap implements Serializable {
      */
     public void clear() {
         data.clear();
-        Logger.log(Logger.INFO_LEVEL_1 + "Cleared " + id.toString());
+        Logger.log(Logger.INFO_LEVEL_1 + Translation.get("solarmap_cleared") + id.toString());
     }
 
     @Override

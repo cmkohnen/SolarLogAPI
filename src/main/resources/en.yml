@@ -1,0 +1,54 @@
+#
+#  Translation map for everything text related user feedback thing
+#
+
+# Runtime
+runtime_error_message: "Oh no, looks like you tried to run this package inside the commandline. \nHowever this is not supposed to run but be used only as a dependency. \nSee https://github.com/ChaosMelone9/SolarLogAPI for more info."
+
+# SolarMap responses
+solarmap_new: "Created new SolarMap with ID "
+solarmap_adding: "Adding to "
+solarmap_add_solarmap: " from SolarMap with ID "
+solarmap_add_file: " from file "
+solarmap_add_files: " from multiple files"
+solarmap_add_tar: " from Tar archive "
+solarmap_add_fileobject: " from FileObject"
+solarmap_add_datafile: " from data file "
+solarmap_add_emlfile: " from EML File "
+solarmap_add_solarlog: " from SolarLog at "
+solarmap_add_ftp: " from FTP Server "
+solarmap_write: "Writing "
+solarmap_write_datafile: " to data file "
+solarmap_write_influxdb: " to InfluxDB "
+solarmap_cleared: "Cleared "
+
+# messages
+influx_write_batchpoints: "Writing set of BatchPoints "
+influx_query: "Querying data from database "
+influx_mapping: "Mapping results..."
+data_importing: "Importing data from"
+data_fileversion: "using file version v"
+data_unable_to_convert: "Unable to convert File "
+eml_export_tars: "Extracting tars from "
+tar_untaring: "UnTaring %s to dir %s."
+tar_write: "Attempting to write output directory %s."
+tar_create_directory: "Attempting to create output directory %s."
+tar_ungzip: "UnGZipping %s to dir %s."
+tar_extract: "Extracting data from "
+read_reading_1: "Reading file "
+read_reading_2: ". This may take a while."
+validate_validating: "Validating file "
+write_writing_1: "Writing file "
+write_writing_2: ". This may take a while."
+ftp_connecting: "Connecting to FTP Server at "
+ftp_login: "Connected. Logging in with user "
+ftp_list: "Logged in. Retrieving files to download..."
+ftp_downloading_1: "Downloading "
+ftp_downloading_2: " files, this may take a while."
+message_foundtar: "Found attachment"
+
+# other
+importing_from_file: "Importing from file "
+done: "done."
+yes: "yes"
+no: "no"

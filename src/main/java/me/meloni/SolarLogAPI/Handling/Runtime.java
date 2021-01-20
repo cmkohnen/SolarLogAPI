@@ -11,7 +11,6 @@ public class Runtime {
      * @param args arguments passed by runtime
      */
     public static void main(String[] args) {
-        String message = "Oh no, looks like you tried to run this package inside the commandline. \n However this is not supposed to run but be used only as a dependency. \n See https://github.com/ChaosMelone9/SolarLogAPI for more info.";
-        Logger.info(message);
+        Logger.info(Translation.get("runtime_error_message"));
     }
 }

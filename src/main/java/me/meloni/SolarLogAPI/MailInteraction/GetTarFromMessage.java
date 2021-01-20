@@ -3,6 +3,7 @@ package me.meloni.SolarLogAPI.MailInteraction;
 import me.meloni.SolarLogAPI.FileInteraction.WorkingDirectory;
 import me.meloni.SolarLogAPI.FileInteraction.WriteFiles.WriteAttachment;
 import me.meloni.SolarLogAPI.Handling.Logger;
+import me.meloni.SolarLogAPI.Handling.Translation;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -24,7 +25,7 @@ public class GetTarFromMessage {
         for (int i = 0; i < multiPart.getCount(); i++) {
             MimeBodyPart part = (MimeBodyPart) multiPart.getBodyPart(i);
             if (Part.ATTACHMENT.equalsIgnoreCase(part.getDisposition())) {
-                Logger.log(Logger.INFO_LEVEL_3 + "Found attachment \"" + part.getFileName() + "\"");
+                Logger.log(Logger.INFO_LEVEL_3 + Translation.get("message_foundtar") + "\"" + part.getFileName() + "\"");
 
                 File output = new File(WorkingDirectory.getDirectory(), part.getFileName());
 

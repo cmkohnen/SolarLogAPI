@@ -4,6 +4,7 @@ import me.meloni.SolarLogAPI.FileInteraction.GetFile;
 import me.meloni.SolarLogAPI.FileInteraction.ReadFiles.GetFileContent;
 import me.meloni.SolarLogAPI.FileInteraction.Tools.FileVersion;
 import me.meloni.SolarLogAPI.Handling.Logger;
+import me.meloni.SolarLogAPI.Handling.Translation;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
@@ -12,6 +13,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+
 /**
  * This Class includes functions to extract data from lines found in the backup files.
  * @author ChaosMelone9
@@ -24,7 +26,7 @@ public class GetData  {
     public static Map<Date, List<Integer>> getAsMapFromDatFile(File file) throws ParseException, IOException {
         String fileVersion = FileVersion.getFileVersion(file);
         List<Integer> positions = FileVersion.getPositionMatrix().get(fileVersion);
-        Logger.log(Logger.INFO_LEVEL_3 + "Importing data from \"" + file.getAbsolutePath() + "\" using file version v" + fileVersion);
+        Logger.log(Logger.INFO_LEVEL_3 + Translation.get("data_importing") + "\"" + file.getAbsolutePath() + "\"" + Translation.get("data_fileversion") + fileVersion);
         List<String> MinuteData = GetDataSection.getMinuteDataRows(GetFileContent.getFileContentAsList(GetFile.getPathFromFile(file)));
         Map<Date, List<Integer>> data = new HashMap<>();
         for (String item : MinuteData) {
@@ -55,7 +57,7 @@ public class GetData  {
     }
 
     public static Map<Date, List<Integer>> getAsMapFromJSFile(File file) throws IOException, ParseException {
-        Logger.log(Logger.INFO_LEVEL_3 + "Importing data from \"" + file.getAbsolutePath() + "\".");
+        Logger.log(Logger.INFO_LEVEL_3 + Translation.get("data_importing") + "\"" + file.getAbsolutePath() + "\".");
         List<String> lines = GetFileContent.getFileContentAsList(GetFile.getPathFromFile(file));
         Map<Date, List<Integer>> data = new HashMap<>();
         for (String line : lines) {
@@ -83,7 +85,7 @@ public class GetData  {
 
                         data.put(d, valuesEach);
                     } catch (NumberFormatException ignored) {
-                        Logger.warn("Unable to convert File " + file.getName());
+                        Logger.warn(Translation.get("data_unable_to_convert") + file.getName());
                     }
                 }
             }
