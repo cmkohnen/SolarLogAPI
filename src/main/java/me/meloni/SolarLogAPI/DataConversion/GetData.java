@@ -26,7 +26,7 @@ public class GetData  {
     public static Map<Date, List<Integer>> getAsMapFromDatFile(File file) throws ParseException, IOException {
         String fileVersion = FileVersion.getFileVersion(file);
         List<Integer> positions = FileVersion.getPositionMatrix().get(fileVersion);
-        Logger.log(Logger.INFO_LEVEL_3 + Translation.get("data_importing") + "\"" + file.getAbsolutePath() + "\"" + Translation.get("data_fileversion") + fileVersion);
+        Logger.log(Logger.INFO_LEVEL_3 + String.format(Translation.get("data_importing_dat"), file.getAbsolutePath(), fileVersion));
         List<String> MinuteData = GetDataSection.getMinuteDataRows(GetFileContent.getFileContentAsList(GetFile.getPathFromFile(file)));
         Map<Date, List<Integer>> data = new HashMap<>();
         for (String item : MinuteData) {
@@ -57,7 +57,7 @@ public class GetData  {
     }
 
     public static Map<Date, List<Integer>> getAsMapFromJSFile(File file) throws IOException, ParseException {
-        Logger.log(Logger.INFO_LEVEL_3 + Translation.get("data_importing") + "\"" + file.getAbsolutePath() + "\".");
+        Logger.log(Logger.INFO_LEVEL_3 + String.format(Translation.get("data_importing_js"), file.getAbsolutePath()));
         List<String> lines = GetFileContent.getFileContentAsList(GetFile.getPathFromFile(file));
         Map<Date, List<Integer>> data = new HashMap<>();
         for (String line : lines) {
@@ -85,7 +85,7 @@ public class GetData  {
 
                         data.put(d, valuesEach);
                     } catch (NumberFormatException ignored) {
-                        Logger.warn(Translation.get("data_unable_to_convert") + file.getName());
+                        Logger.warn(String.format(Translation.get("data_unable_to_convert"), file.getName()));
                     }
                 }
             }

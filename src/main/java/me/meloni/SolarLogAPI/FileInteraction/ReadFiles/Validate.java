@@ -37,7 +37,7 @@ public class Validate {
         int i2 = 0;
         for (File file : files) {
             i++;
-            Logger.logWithoutBreakup(Logger.INFO_LEVEL_3 + Translation.get("validate_validating") + file + " (" + i + " of " + files.size() + ")");
+            Logger.logWithoutBreakup(Logger.INFO_LEVEL_3 + String.format(Translation.get("validate_validating"), file, i, files.size()));
             if(isValidDataFile(file)) {
                 ValidFiles.add(file);
                 i2++;
@@ -46,7 +46,7 @@ public class Validate {
                 Logger.logWithoutBreakup("    " + Translation.get("no") + "\n");
             }
         }
-        Logger.log(Logger.INFO_LEVEL_3 + "Done. Checked " + i + ", found " + i2);
+        Logger.log(Logger.INFO_LEVEL_3 + String.format(Translation.get("validate_done"), i, i2));
         return ValidFiles;
     }
 

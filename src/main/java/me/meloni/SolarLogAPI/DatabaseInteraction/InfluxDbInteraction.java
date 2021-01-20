@@ -50,18 +50,18 @@ public class InfluxDbInteraction {
                        .build();
                this.batchPoints.point(point);
                if(batchPoints.getPoints().size() >= limit) {
-                   Logger.log(Logger.INFO_LEVEL_3 + Translation.get("influx_write_batchpoints") + "(" + limit + ").");
+                   Logger.log(Logger.INFO_LEVEL_3 + String.format(Translation.get("influx_write_batchpoints"), limit));
                    db.write(batchPoints);
                    this.batchPoints = batchPoints();
                }
                });
-        Logger.log(Logger.INFO_LEVEL_3 + Translation.get("influx_write_batchpoints") + "(" + batchPoints.getPoints().size() + ").");
+        Logger.log(Logger.INFO_LEVEL_3 + String.format(Translation.get("influx_write_batchpoints"), batchPoints.getPoints().size()));
         db.write(batchPoints);
         Logger.log(Logger.INFO_LEVEL_3 + Translation.get("done"));
     }
 
     public Map<Date, List<Integer>> read() {
-        Logger.log(Logger.INFO_LEVEL_2 + Translation.get("influx_query") + database + "...");
+        Logger.log(Logger.INFO_LEVEL_2 + String.format(Translation.get("influx_query"), database));
         QueryResult queryResult = db.query(new Query("SELECT value1,value2,value3,value4,value5 FROM " + database));
         Logger.log(Logger.INFO_LEVEL_3 + Translation.get("done"));
 

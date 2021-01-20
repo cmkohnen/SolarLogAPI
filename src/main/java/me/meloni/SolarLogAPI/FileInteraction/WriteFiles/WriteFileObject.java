@@ -23,7 +23,7 @@ import java.nio.file.attribute.UserDefinedFileAttributeView;
 public class WriteFileObject {
     public static void write(File file, FileObject object) throws IOException {
         UserDefinedFileAttributeView view = Files.getFileAttributeView(GetFile.getPathFromFile(file), UserDefinedFileAttributeView.class);
-        Logger.log(Logger.INFO_LEVEL_2 + Translation.get("write_writing_1") + file + Translation.get("write_writing_1"));
+        Logger.log(Logger.INFO_LEVEL_2 + String.format(Translation.get("write_writing"), file));
         FileOutputStream f = new FileOutputStream(file);
         ObjectOutputStream s = new ObjectOutputStream(f);
         s.writeObject(object);

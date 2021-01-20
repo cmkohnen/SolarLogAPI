@@ -93,7 +93,7 @@ public class GetFromTar {
     public static List<File> getValidDatFilesFromTarArchives(List<File> tars) throws Exception {
         List<File> validFiles = new ArrayList<>();
         for (File tar : tars) {
-            Logger.log(Logger.INFO_LEVEL_3 + Translation.get("tar_extract") + tar.getAbsolutePath());
+            Logger.log(Logger.INFO_LEVEL_3 + String.format(Translation.get("tar_extract"), tar.getAbsolutePath()));
             validFiles.addAll(getValidDatFilesFromTarArchive(tar));
         }
         return validFiles;

@@ -16,14 +16,14 @@ import java.util.List;
 public class GetFromFTPServer {
     public static List<File> getJSFilesFromFTPServer(String host, String user, String password) throws IOException {
         FTPClient ftp = new FTPClient();
-        Logger.log(Logger.INFO_LEVEL_2 + Translation.get("ftp_connect") + host);
+        Logger.log(Logger.INFO_LEVEL_2 + String.format(Translation.get("ftp_connect"), host));
         ftp.connect(host);
         int reply = ftp.getReplyCode();
         if (!FTPReply.isPositiveCompletion(reply)) {
             ftp.disconnect();
             throw new IOException("Exception in connecting to FTP Server");
         }
-        Logger.log(Logger.INFO_LEVEL_2 + Translation.get("ftp_login") + user + "...");
+        Logger.log(Logger.INFO_LEVEL_2 + String.format(Translation.get("ftp_login"), user));
         ftp.login(user, password);
         Logger.log(Logger.INFO_LEVEL_2 + Translation.get("ftp_list"));
         FTPFile[] files = ftp.listFiles();
@@ -35,10 +35,10 @@ public class GetFromFTPServer {
         }
 
         List<File> jsFiles = new ArrayList<>();
-        Logger.log(Logger.INFO_LEVEL_2 + Translation.get("ftp_downloading_1") + minuteFiles.size() + Translation.get("ftp_downloading_2"));
+        Logger.log(Logger.INFO_LEVEL_2 + String.format(Translation.get("ftp_downloading_1"), minuteFiles.size()));
         for (int i = 0; i < minuteFiles.size(); i++) {
             FTPFile minuteFile = minuteFiles.get(i);
-            Logger.log(Logger.INFO_LEVEL_3 + Translation.get("ftp_downloading_1") + minuteFile.getName() + " (" + i + " of " + minuteFiles.size() + ")");
+            Logger.log(Logger.INFO_LEVEL_3 + String.format(Translation.get("ftp_downloading_2"), minuteFile.getName(), i, minuteFiles.size()));
             File download = new File(WorkingDirectory.getDirectory(), minuteFile.getName());
             FileOutputStream out = new FileOutputStream(download);
             ftp.retrieveFile(minuteFile.getName(),out);

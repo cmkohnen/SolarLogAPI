@@ -17,7 +17,7 @@ import java.io.ObjectInputStream;
 public class ReadFileObject {
     public static FileObject getObjectFromFile(File file) throws IOException, ClassNotFoundException {
         if(!(file == null) && file.exists()) {
-            Logger.log(Logger.INFO_LEVEL_2 + Translation.get("read_reading_1") + file + Translation.get("read_reading_2"));
+            Logger.log(Logger.INFO_LEVEL_2 + String.format(Translation.get("read_reading"), file));
             FileInputStream f = new FileInputStream(file);
             ObjectInputStream s = new ObjectInputStream(f);
             FileObject o = (FileObject) s.readObject();
