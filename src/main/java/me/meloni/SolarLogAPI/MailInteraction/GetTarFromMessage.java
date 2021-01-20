@@ -11,7 +11,6 @@ import javax.mail.Part;
 import javax.mail.internet.MimeBodyPart;
 import java.io.File;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.nio.file.FileAlreadyExistsException;
 /**
  * This Class provides a way to extract an tar archive from a {@link Message}
@@ -19,7 +18,7 @@ import java.nio.file.FileAlreadyExistsException;
  * @since 3.0.5
  */
 public class GetTarFromMessage {
-    public static File getTarArchiveFromMessage(Message message) throws MessagingException, IOException, URISyntaxException {
+    public static File getTarArchiveFromMessage(Message message) throws MessagingException, IOException {
         Multipart multiPart = (Multipart) message.getContent();
 
         for (int i = 0; i < multiPart.getCount(); i++) {

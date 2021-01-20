@@ -9,12 +9,11 @@ import org.apache.commons.net.ftp.FTPReply;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class GetFromFTPServer {
-    public static List<File> getJSFilesFromFTPServer(String host, String user, String password) throws IOException, URISyntaxException {
+    public static List<File> getJSFilesFromFTPServer(String host, String user, String password) throws IOException {
         FTPClient ftp = new FTPClient();
         Logger.log(Logger.INFO_LEVEL_2 + "Connecting to FTP Server at " + host);
         ftp.connect(host);

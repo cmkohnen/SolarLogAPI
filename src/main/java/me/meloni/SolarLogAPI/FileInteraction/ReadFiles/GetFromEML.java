@@ -10,7 +10,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -20,7 +19,7 @@ import java.util.Properties;
  * @since 3.0.5
  */
 public class GetFromEML {
-    public static File getTarFromEML(File emlFile) throws IOException, MessagingException, URISyntaxException {
+    public static File getTarFromEML(File emlFile) throws IOException, MessagingException {
         Properties props = System.getProperties();
         Session mailSession = Session.getDefaultInstance(props, null);
         InputStream source = new FileInputStream(emlFile);
@@ -29,7 +28,7 @@ public class GetFromEML {
         return GetTarFromMessage.getTarArchiveFromMessage(message);
     }
 
-    public static List<File> getTarsFromEMLS(List<File> emlFiles) throws IOException, MessagingException, URISyntaxException {
+    public static List<File> getTarsFromEMLS(List<File> emlFiles) throws IOException, MessagingException {
         List<File> tars = new ArrayList<>();
         int i = 0;
         for (File emlFile : emlFiles) {
