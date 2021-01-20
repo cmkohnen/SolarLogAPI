@@ -15,7 +15,9 @@ Greetings, Chaosmelone9
 ## Features
 
 - Read from .dat-files
+- Read from .js-files
 - Direct tar support
+- FTP support
 - InfluxDB support
 - EML file support
 - Persistent storage support
