@@ -1,6 +1,7 @@
 package me.meloni.SolarLogAPI.BasicGUI;
 
 import me.meloni.SolarLogAPI.Handling.Logger;
+import me.meloni.SolarLogAPI.Handling.Translation;
 import me.meloni.SolarLogAPI.SolarMap;
 
 import javax.swing.*;
@@ -22,7 +23,7 @@ public class BasicSaveOptions {
     private static JPanel panel(SolarMap solarMap) {
         JPanel panel = new JPanel();
 
-        JButton writeToFile = new JButton("Write to file");
+        JButton writeToFile = new JButton(Translation.get("gui_write_file"));
         writeToFile.addActionListener(actionEvent -> {
 
             try {
@@ -35,12 +36,12 @@ public class BasicSaveOptions {
             }
         });
 
-        JButton writeToInfluxDB = new JButton("Write to InfluxDB");
+        JButton writeToInfluxDB = new JButton(Translation.get("gui_write_influx"));
         writeToInfluxDB.addActionListener(actionEvent -> {
             try {
                 solarMap.writeToInfluxDBDataBase(GetDataBase.database().getInfluxDB(), 125000);
             } catch (NullPointerException e) {
-                Logger.log(Logger.INFO_LEVEL_3 + "Database incorrect.");
+                Logger.warn(Logger.INFO_LEVEL_3 + Translation.get("influx_error"));
             }
         });
 

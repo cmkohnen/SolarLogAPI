@@ -2,7 +2,8 @@ package me.meloni.SolarLogAPI.BasicGUI.Components.Graph;
 
 import me.meloni.SolarLogAPI.BasicGUI.Components.DatePicker;
 import me.meloni.SolarLogAPI.DataConversion.GetStartOf;
-import me.meloni.SolarLogAPI.BasicGUI.GraphCustomizer;
+import me.meloni.SolarLogAPI.BasicGUI.BasicGraphCustomizer;
+import me.meloni.SolarLogAPI.Handling.Translation;
 import me.meloni.SolarLogAPI.SolarMap;
 
 import javax.swing.*;
@@ -16,9 +17,9 @@ import java.text.ParseException;
  */
 public class MonthCustomizer extends JPanel{
     static MonthView cmp = null;
-    GraphCustomizer instance;
+    BasicGraphCustomizer instance;
 
-    public MonthCustomizer(SolarMap data, GraphCustomizer instance) {
+    public MonthCustomizer(SolarMap data, BasicGraphCustomizer instance) {
         this.instance = instance;
         setLayout(new BorderLayout());
 
@@ -48,9 +49,9 @@ public class MonthCustomizer extends JPanel{
         JCheckBox b1 = new JCheckBox();
         JCheckBox b2 = new JCheckBox();
         JCheckBox b3 = new JCheckBox();
-        b1.setText("Row 1");
-        b2.setText("Row 2");
-        b3.setText("Row 3");
+        b1.setText(Translation.get("gui_graph_monthly_value1_name"));
+        b2.setText(Translation.get("gui_graph_monthly_value2_name"));
+        b3.setText(Translation.get("gui_graph_monthly_value3_name"));
         b1.setSelected(true);
         b2.setSelected(true);
         b3.setSelected(true);
@@ -71,7 +72,7 @@ public class MonthCustomizer extends JPanel{
         p.add(b3);
 
         JCheckBox mouseGUI = new JCheckBox();
-        mouseGUI.setText("MouseGUI");
+        mouseGUI.setText(Translation.get("gui_choice_overlay"));
         mouseGUI.setSelected(true);
         mouseGUI.addActionListener(actionEvent -> {
             cmp.setMouseGUIVisible(mouseGUI.isSelected());
@@ -83,6 +84,6 @@ public class MonthCustomizer extends JPanel{
     }
 
     private void paintComponent() {
-        instance.setGraph(cmp);
+        instance.setGraph(cmp, cmp.getTitle());
     }
 }

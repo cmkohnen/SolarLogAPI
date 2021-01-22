@@ -1,7 +1,8 @@
 package me.meloni.SolarLogAPI.BasicGUI.Components.Graph;
 
 import me.meloni.SolarLogAPI.BasicGUI.Components.DatePicker;
-import me.meloni.SolarLogAPI.BasicGUI.GraphCustomizer;
+import me.meloni.SolarLogAPI.BasicGUI.BasicGraphCustomizer;
+import me.meloni.SolarLogAPI.Handling.Translation;
 import me.meloni.SolarLogAPI.SolarMap;
 
 import javax.swing.*;
@@ -16,9 +17,9 @@ import java.time.Year;
  */
 public class YearCustomizer extends JPanel{
     static YearView cmp = null;
-    GraphCustomizer instance;
+    BasicGraphCustomizer instance;
 
-    public YearCustomizer(SolarMap data, GraphCustomizer instance) {
+    public YearCustomizer(SolarMap data, BasicGraphCustomizer instance) {
         this.instance = instance;
         setLayout(new BorderLayout());
 
@@ -42,9 +43,9 @@ public class YearCustomizer extends JPanel{
         JCheckBox b1 = new JCheckBox();
         JCheckBox b2 = new JCheckBox();
         JCheckBox b3 = new JCheckBox();
-        b1.setText("Row 1");
-        b2.setText("Row 2");
-        b3.setText("Row 3");
+        b1.setText(Translation.get("gui_graph_yearly_value1_name"));
+        b2.setText(Translation.get("gui_graph_yearly_value2_name"));
+        b3.setText(Translation.get("gui_graph_yearly_value3_name"));
         b1.setSelected(true);
         b2.setSelected(true);
         b3.setSelected(true);
@@ -65,7 +66,7 @@ public class YearCustomizer extends JPanel{
         p.add(b3);
 
         JCheckBox mouseGUI = new JCheckBox();
-        mouseGUI.setText("MouseGUI");
+        mouseGUI.setText(Translation.get("gui_choice_overlay"));
         mouseGUI.setSelected(true);
         mouseGUI.addActionListener(actionEvent -> {
             cmp.setMouseGUIVisible(mouseGUI.isSelected());
@@ -77,6 +78,6 @@ public class YearCustomizer extends JPanel{
     }
 
     private void paintComponent() {
-        instance.setGraph(cmp);
+        instance.setGraph(cmp, cmp.getTitle());
     }
 }

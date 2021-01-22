@@ -1,6 +1,7 @@
 package me.meloni.SolarLogAPI.BasicGUI.Components;
 
 import me.meloni.SolarLogAPI.FileInteraction.ReadFiles.Validate;
+import me.meloni.SolarLogAPI.Handling.Translation;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
@@ -16,7 +17,7 @@ public class JFileChooserPreset {
 
     public static JFileChooser importFromDat(){
         JFileChooser j = new JFileChooser();
-        j.setDialogTitle("Import");
+        j.setDialogTitle(Translation.get("gui_choose_file_title"));
         j.setAcceptAllFileFilterUsed(false);
         j.setFileFilter(new FileFilter() {
             @Override
@@ -41,7 +42,7 @@ public class JFileChooserPreset {
 
     public static JFileChooser saveToSolarLogFile() {
         JFileChooser j = new JFileChooser();
-        j.setDialogTitle("Safe");
+        j.setDialogTitle(Translation.get("gui_save_file_title"));
         j.setAcceptAllFileFilterUsed(false);
         j.setFileFilter(new FileFilter() {
             @Override
@@ -61,7 +62,7 @@ public class JFileChooserPreset {
         JFileChooser j = new JFileChooser();
 
         // invoke the showsSaveDialog function to show the save dialog
-        j.setDialogTitle("Import");
+        j.setDialogTitle(Translation.get("gui_choose_file_title"));
         j.setFileFilter(new FileFilter() {
             @Override
             public boolean accept(File f) {
@@ -79,7 +80,7 @@ public class JFileChooserPreset {
 
     public static JFileChooser importFromTar(){
         JFileChooser j = new JFileChooser();
-        j.setDialogTitle("Import");
+        j.setDialogTitle(Translation.get("gui_choose_file_title"));
         j.setAcceptAllFileFilterUsed(false);
         j.setFileFilter(new FileFilter() {
             @Override
@@ -98,7 +99,7 @@ public class JFileChooserPreset {
 
     public static JFileChooser importFromEML(){
         JFileChooser j = new JFileChooser();
-        j.setDialogTitle("Import from EML");
+        j.setDialogTitle(Translation.get("gui_choose_file_title"));
         j.setAcceptAllFileFilterUsed(false);
         j.setFileFilter(new FileFilter() {
             @Override
@@ -116,7 +117,7 @@ public class JFileChooserPreset {
 
     public static JFileChooser importFromJSFile(){
         JFileChooser j = new JFileChooser();
-        j.setDialogTitle("Import from JS");
+        j.setDialogTitle(Translation.get("gui_choose_file_title"));
         j.setAcceptAllFileFilterUsed(false);
         j.setFileFilter(new FileFilter() {
             @Override
@@ -134,7 +135,7 @@ public class JFileChooserPreset {
 
     public static JFileChooser getChosenDirectory() {
         JFileChooser j = new JFileChooser();
-        j.setDialogTitle("Import");
+        j.setDialogTitle(Translation.get("gui_choose_file_title"));
         j.setAcceptAllFileFilterUsed(false);
         j.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         return j;

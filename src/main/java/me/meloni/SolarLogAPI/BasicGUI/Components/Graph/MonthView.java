@@ -1,6 +1,7 @@
 package me.meloni.SolarLogAPI.BasicGUI.Components.Graph;
 
 import me.meloni.SolarLogAPI.BasicGUI.GetGraphData;
+import me.meloni.SolarLogAPI.Handling.Translation;
 import me.meloni.SolarLogAPI.SolarMap;
 
 import javax.swing.*;
@@ -11,6 +12,7 @@ import java.text.ParseException;
 import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * This Class represents the implementation of a simple graph for monthly scale.
@@ -162,18 +164,18 @@ public class MonthView extends JPanel {
 
             g2.setColor(LabelColor);
             String mouseDate = ((int) Math.floor(ExactMouseXValue) + 1) + ". " + yearMonth.getMonthValue() + ". " + yearMonth.getYear();
-            g2.drawString("Values at " + mouseDate, padding + labelPadding + valuePadding, padding + valuePadding * 2);
+            g2.drawString(String.format(Translation.get("gui_graph_monthly_description"), mouseDate), padding + labelPadding + valuePadding, padding + valuePadding * 2);
             int i = 2;
             if(Row1Visible) {
-                g2.drawString("Verbrauch kWH: " + Math.round(data.get((int)ExactMouseXValue).get(0)), padding + labelPadding + valuePadding, padding + (valuePadding * 2) * i);
+                g2.drawString(String.format(Translation.get("gui_graph_monthly_value1"), Math.round(data.get((int)ExactMouseXValue).get(0))), padding + labelPadding + valuePadding, padding + (valuePadding * 2) * i);
                 i++;
             }
             if(Row2Visible) {
-                g2.drawString("EigenVerbrauch kWH: " + Math.round(data.get((int)ExactMouseXValue).get(1)), padding + labelPadding + valuePadding, padding + (valuePadding * 2) * i);
+                g2.drawString(String.format(Translation.get("gui_graph_monthly_value2"), Math.round(data.get((int)ExactMouseXValue).get(1))), padding + labelPadding + valuePadding, padding + (valuePadding * 2) * i);
                 i++;
             }
             if(Row3Visible) {
-                g2.drawString("Produktion kWH: " + Math.round(data.get((int)ExactMouseXValue).get(2)), padding + labelPadding + valuePadding, padding + (valuePadding * 2) * i);
+                g2.drawString(String.format(Translation.get("gui_graph_monthly_value3"), Math.round(data.get((int)ExactMouseXValue).get(2))), padding + labelPadding + valuePadding, padding + (valuePadding * 2) * i);
             }
         }
 
@@ -286,5 +288,10 @@ public class MonthView extends JPanel {
 
     public YearMonth getMonth() {
         return yearMonth;
+    }
+
+    public String getTitle() {
+        String month = Translation.get(getMonth().getMonth().toString().toLowerCase(Locale.ROOT)) + " " + getMonth().getYear();
+        return String.format(Translation.get("gui_graph_monthly_title"), month);
     }
 }

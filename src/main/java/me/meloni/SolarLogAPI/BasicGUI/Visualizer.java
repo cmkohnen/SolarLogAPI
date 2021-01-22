@@ -14,7 +14,8 @@ import java.util.Date;
 public class Visualizer {
     public static void visualizeDay(SolarMap data, Date day) throws ParseException {
         JFrame f = new JFrame(day.toString());
-        f.add(new DayView(data, day));
+        DayView component = new DayView(data, day);
+        f.add(component);
         f.setSize(1000,600);
         f.setLocationRelativeTo(null);
         f.pack();
@@ -22,7 +23,8 @@ public class Visualizer {
     }
     public static void visualizeMonth(SolarMap data, YearMonth month) throws ParseException {
         JFrame f = new JFrame(month.toString());
-        f.add(new MonthView(data, month));
+        MonthView component = new MonthView(data, month);
+        f.add(component);
         f.setSize(1000,600);
         f.setLocationRelativeTo(null);
         f.pack();
@@ -30,7 +32,8 @@ public class Visualizer {
     }
     public static void visualizeYear(SolarMap data, Year year) throws ParseException {
         JFrame f = new JFrame(year.toString());
-        f.add(new YearView(data, year));
+        YearView component = new YearView(data, year);
+        f.add(component);
         f.setSize(1000,600);
         f.setLocationRelativeTo(null);
         f.pack();

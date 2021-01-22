@@ -1,6 +1,7 @@
 package me.meloni.SolarLogAPI.BasicGUI.Components.Graph;
 
 import me.meloni.SolarLogAPI.BasicGUI.GetGraphData;
+import me.meloni.SolarLogAPI.Handling.Translation;
 import me.meloni.SolarLogAPI.SolarMap;
 
 import javax.swing.*;
@@ -12,6 +13,7 @@ import java.time.Month;
 import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * This Class represents the implementation of a simple graph for yearly scale.
@@ -163,18 +165,18 @@ public class YearView extends JPanel {
 
             g2.setColor(LabelColor);
             String month = Month.of((int) Math.floor(ExactMouseXValue) + 1).toString();
-            g2.drawString("Values at " + month, padding + labelPadding + valuePadding, padding + valuePadding * 2);
+            g2.drawString(String.format(Translation.get("gui_graph_yearly_description"), month.toLowerCase(Locale.ROOT)), padding + labelPadding + valuePadding, padding + valuePadding * 2);
             int i = 2;
             if(Row1Visible) {
-                g2.drawString("Verbrauch kWH: " + Math.round(data.get((int)ExactMouseXValue).get(0)), padding + labelPadding + valuePadding, padding + (valuePadding * 2) * i);
+                g2.drawString(String.format(Translation.get("gui_graph_yearly_value1"), Math.round(data.get((int)ExactMouseXValue).get(0))), padding + labelPadding + valuePadding, padding + (valuePadding * 2) * i);
                 i++;
             }
             if(Row2Visible) {
-                g2.drawString("EigenVerbrauch kWH: " + Math.round(data.get((int)ExactMouseXValue).get(1)), padding + labelPadding + valuePadding, padding + (valuePadding * 2) * i);
+                g2.drawString(String.format(Translation.get("gui_graph_yearly_value2"), Math.round(data.get((int)ExactMouseXValue).get(0))), padding + labelPadding + valuePadding, padding + (valuePadding * 2) * i);
                 i++;
             }
             if(Row3Visible) {
-                g2.drawString("Produktion kWH: " + Math.round(data.get((int)ExactMouseXValue).get(2)), padding + labelPadding + valuePadding, padding + (valuePadding * 2) * i);
+                g2.drawString(String.format(Translation.get("gui_graph_yearly_value3"), Math.round(data.get((int)ExactMouseXValue).get(0))), padding + labelPadding + valuePadding, padding + (valuePadding * 2) * i);
             }
         }
 
@@ -287,5 +289,10 @@ public class YearView extends JPanel {
 
     public Year getYear() {
         return year;
+    }
+
+    public String getTitle() {
+        String year = getYear().toString();
+        return String.format(Translation.get("gui_graph_yearly_title"), year);
     }
 }
