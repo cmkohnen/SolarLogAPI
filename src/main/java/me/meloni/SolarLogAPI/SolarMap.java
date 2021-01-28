@@ -22,6 +22,7 @@ import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.*;
+import java.util.function.BiConsumer;
 
 /**
  * This Class provides a universal way to handle the data and implements useful functions to convert data. THIS SHOULD NOT BE USED TO STORE DATA PERMANENTLY. For that use please refer to {@link FileObject}.
@@ -109,6 +110,14 @@ public class SolarMap implements Serializable {
     public void addFromSolarMap(SolarMap map) {
         Logger.log(Logger.INFO_LEVEL_2 + String.format(Translation.get("solarmap_add_solarmap"), id.toString(), map.getId().toString()));
         addFromMap(map.getAsMap());
+    }
+
+    /**
+     * Same as addFromSolarMap() for consistency with {@link Map}
+     * @author ChaosMelone9
+     */
+    public void merge(SolarMap map) {
+        addFromSolarMap(map);
     }
 
     /**
@@ -279,7 +288,7 @@ public class SolarMap implements Serializable {
      */
     public void writeToDataFile(File file) throws IOException {
         Logger.log(Logger.INFO_LEVEL_2 + String.format(Translation.get("solarmap_write_datafile"), id.toString(), file.getName()));
-        WriteFileObject.write(file, this.getAsFileObject());
+        WriteFileObject.write(file, getAsFileObject());
     }
 
     /**
@@ -352,6 +361,20 @@ public class SolarMap implements Serializable {
      */
     public JSONObject getAsJSON() {
         return ConvertJson.convertMapToJson(getAsMap());
+    }
+
+    /**
+     * Get Only Data from a specific timeframe
+     * @author ChaosMelone9
+     */
+    public SolarMap getInTimeframe(Date firstDate, Date lastDate) {
+        Map<Date, List<Integer>> map = new HashMap<>();
+        data.forEach((date, integers) -> {
+            if (date.after(firstDate) & date.before(lastDate)) {
+                map.put(date,integers);
+            }
+        });
+        return new SolarMap(map);
     }
 
 
@@ -427,6 +450,14 @@ public class SolarMap implements Serializable {
     }
 
     /**
+     * weather or not the map is empty
+     * @author ChaosMelone9
+     */
+    public boolean isEmpty() {
+        return data.isEmpty();
+    }
+
+    /**
      * returns the time this {@link SolarMap} was created
      * @author ChaosMelone9
      */
@@ -447,11 +478,39 @@ public class SolarMap implements Serializable {
         Logger.log(Logger.INFO_LEVEL_1 + String.format(Translation.get("solarmap_cleared"), id.toString()));
     }
 
+    /**
+     * Get values as collection
+     * @author ChaosMelone9
+     */
+    public Collection<List<Integer>> values() {
+        return data.values();
+    }
+
+    /**
+     * Overrides toString() to something human readable
+     * @author ChaosMelone9
+     */
     @Override
     public String toString() {
         Map<String, String> map = new HashMap<>();
         map.put("ID", id.toString());
         map.put("CreationTime", createdOn.toString());
         return map.toString();
+    }
+
+    /**
+     * Same as getAsMap().forEach()
+     * @author ChaosMelone9
+     */
+    public void forEach(BiConsumer<? super Date, ? super List<? super Integer>> consumer) {
+        data.forEach(consumer);
+    }
+
+    /**
+     * Compares the contents of two SolarMaps
+     * @author ChaosMelone9
+     */
+    public boolean equals(SolarMap solarMap) {
+        return data.equals(solarMap.getAsMap());
     }
 }
