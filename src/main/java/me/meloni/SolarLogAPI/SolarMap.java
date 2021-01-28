@@ -16,7 +16,6 @@ import org.json.simple.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.Serializable;
 import java.net.URL;
 import java.text.ParseException;
 import java.time.LocalDate;
@@ -29,7 +28,7 @@ import java.util.function.BiConsumer;
  * @author ChaosMelone9
  * @since 2.0.0
  */
-public class SolarMap implements Serializable {
+public class SolarMap {
     private Map<Date, List<Integer>> data = new HashMap<>();
     private Date createdOn = Calendar.getInstance().getTime();
     private UUID id = UUID.randomUUID();
@@ -361,6 +360,14 @@ public class SolarMap implements Serializable {
      */
     public JSONObject getAsJSON() {
         return ConvertJson.convertMapToJson(getAsMap());
+    }
+
+    /**
+     * Return a {@link JSONObject} as String for compatibility
+     * @author ChaosMelone9
+     */
+    public String getAsJSONString() {
+        return getAsJSON().toJSONString();
     }
 
     /**
