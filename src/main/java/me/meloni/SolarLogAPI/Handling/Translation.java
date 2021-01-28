@@ -13,8 +13,7 @@ public class Translation {
     }
 
     public static void setLanguage(InputStream inputStream) {
-        Yaml yaml = new Yaml();
-        translation = yaml.load(inputStream);
+        translation = new Yaml().load(inputStream);
     }
 
     public static String get(String key) {
@@ -29,5 +28,10 @@ public class Translation {
             init();
         }
         return translation;
+    }
+
+    public static void expand(InputStream inputStream) {
+        Map<String, String> map = new Yaml().load(inputStream);
+        map.forEach((s, s2) -> translation.putIfAbsent(s, s2));
     }
 }

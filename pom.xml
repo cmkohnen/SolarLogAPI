@@ -7,7 +7,7 @@
     <groupId>me.meloni</groupId>
     <artifactId>SolarLogAPI</artifactId>
     <packaging>jar</packaging>
-    <version>3.9.2</version>
+    <version>3.9.3</version>
     <name>SolarLogAPI</name>
     <url>https://github.com/ChaosMelone9/SolarLogAPI</url>
     <licenses>
