@@ -96,6 +96,18 @@ public class DayCustomizer extends JPanel{
         });
         p.add(mouseGUI);
 
+        JCheckBox shaded = new JCheckBox();
+        shaded.setText(Translation.get("gui_choice_shaded"));
+        shaded.setSelected(true);
+        shaded.addActionListener(actionEvent -> {
+            boolean selected = shaded.isSelected();
+            cmp.setRow1Shaded(selected);
+            cmp.setRow3Shaded(selected);
+            cmp.setRow5Shaded(selected);
+            paintComponent();
+        });
+        p.add(shaded);
+
         add(p,BorderLayout.WEST);
     }
 

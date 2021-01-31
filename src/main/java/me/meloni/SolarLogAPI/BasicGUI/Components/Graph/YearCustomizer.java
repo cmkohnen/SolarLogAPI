@@ -74,6 +74,18 @@ public class YearCustomizer extends JPanel{
         });
         p.add(mouseGUI);
 
+        JCheckBox shaded = new JCheckBox();
+        shaded.setText(Translation.get("gui_choice_shaded"));
+        shaded.setSelected(false);
+        shaded.addActionListener(actionEvent -> {
+            boolean selected = shaded.isSelected();
+            cmp.setRow1Shaded(selected);
+            cmp.setRow2Shaded(selected);
+            cmp.setRow3Shaded(selected);
+            paintComponent();
+        });
+        p.add(shaded);
+
         add(p,BorderLayout.WEST);
     }
 

@@ -26,26 +26,30 @@ public class DayView extends JPanel {
     private final Date date;
     private final List<List<Double>> data;
 
-    private Color GridColor = Color.DARK_GRAY;
-    private Color BackgroundColor = Color.GRAY;
-    private Color GraphBackgroundColor = Color.WHITE;
-    private Color AxisColor = Color.BLACK;
-    private Color LabelColor = Color.BLACK;
-    private Color Row1Color = new Color(191, 97, 106);
-    private Color Row2Color = new Color(94, 129, 172);
-    private Color Row3Color = new Color(235, 203, 139);
-    private Color Row4Color = new Color(136, 192, 208);
-    private Color Row5Color = new Color(163, 190, 140);
+    private Color gridColor = Color.DARK_GRAY;
+    private Color backgroundColor = Color.GRAY;
+    private Color graphBackgroundColor = Color.WHITE;
+    private Color axisColor = Color.BLACK;
+    private Color labelColor = Color.BLACK;
+    private Color row1Color = new Color(191, 97, 106);
+    private Color row2Color = new Color(94, 129, 172);
+    private Color row3Color = new Color(235, 203, 139);
+    private Color row4Color = new Color(136, 192, 208);
+    private Color row5Color = new Color(163, 190, 140);
 
     private int padding = 25;
     private int labelPadding = 25;
     private int valuePadding = 10;
 
-    private boolean Row1Visible = true;
-    private boolean Row2Visible = true;
-    private boolean Row3Visible = true;
-    private boolean Row4Visible = true;
-    private boolean Row5Visible = true;
+    private boolean row1Visible = true;
+    private boolean row2Visible = true;
+    private boolean row3Visible = true;
+    private boolean row4Visible = true;
+    private boolean row5Visible = true;
+
+    private boolean row1Shaded = true;
+    private boolean row3Shaded = true;
+    private boolean row5Shaded = true;
 
     private boolean mouseGUI = true;
 
@@ -72,34 +76,34 @@ public class DayView extends JPanel {
         double yaScale = ((double) getHeight() - 2 * padding - labelPadding) / (getMaxAScore() - getMinScore());
         double ybScale = ((double) getHeight() - 2 * padding - labelPadding) / (getMaxBScore() - getMinScore());
 
-        List<Point> Row1 = new ArrayList<>();
-        List<Point> Row2 = new ArrayList<>();
-        List<Point> Row3 = new ArrayList<>();
-        List<Point> Row4 = new ArrayList<>();
-        List<Point> Row5 = new ArrayList<>();
+        List<Point> row1 = new ArrayList<>();
+        List<Point> row2 = new ArrayList<>();
+        List<Point> row3 = new ArrayList<>();
+        List<Point> row4 = new ArrayList<>();
+        List<Point> row5 = new ArrayList<>();
         for (int i = 0; i < data.size(); i++) {
             int x = (int) (i * xScale + padding + labelPadding);
 
-            int Row1y = (int) ((getMaxAScore() - data.get(i).get(0)) * yaScale + padding);
-            int Row2y = (int) ((getMaxBScore() - data.get(i).get(1)) * ybScale + padding);
-            int Row3y = (int) ((getMaxAScore() - data.get(i).get(2)) * yaScale + padding);
-            int Row4y = (int) ((getMaxBScore() - data.get(i).get(3)) * ybScale + padding);
-            int Row5y = (int) ((getMaxAScore() - data.get(i).get(4)) * yaScale + padding);
-            Row1.add(new Point(x, Row1y));
-            Row2.add(new Point(x, Row2y));
-            Row3.add(new Point(x, Row3y));
-            Row4.add(new Point(x, Row4y));
-            Row5.add(new Point(x, Row5y));
+            int row1y = (int) ((getMaxAScore() - data.get(i).get(0)) * yaScale + padding);
+            int row2y = (int) ((getMaxBScore() - data.get(i).get(1)) * ybScale + padding);
+            int row3y = (int) ((getMaxAScore() - data.get(i).get(2)) * yaScale + padding);
+            int row4y = (int) ((getMaxBScore() - data.get(i).get(3)) * ybScale + padding);
+            int row5y = (int) ((getMaxAScore() - data.get(i).get(4)) * yaScale + padding);
+            row1.add(new Point(x, row1y));
+            row2.add(new Point(x, row2y));
+            row3.add(new Point(x, row3y));
+            row4.add(new Point(x, row4y));
+            row5.add(new Point(x, row5y));
         }
 
         //paint background
-        g2.setColor(BackgroundColor);
+        g2.setColor(backgroundColor);
         g2.fillRect(0,0,getWidth(),getHeight());
 
-        g2.setColor(GraphBackgroundColor);
+        g2.setColor(graphBackgroundColor);
         g2.fillRect(padding + labelPadding, padding, getWidth() - (padding * 2) - (labelPadding * 2), getHeight() - (padding * 2) - labelPadding);
 
-        g2.setColor(AxisColor);
+        g2.setColor(axisColor);
 
         // create hatch marks and grid lines for y axis.
         int pointWidth = 4;
@@ -108,9 +112,9 @@ public class DayView extends JPanel {
             int x0 = padding + labelPadding;
             int x1 = pointWidth + padding + labelPadding;
             int y0 = getHeight() - ((i * (getHeight() - padding * 2 - labelPadding)) / numberYDivisions + padding + labelPadding);
-            g2.setColor(GridColor);
+            g2.setColor(gridColor);
             g2.drawLine(padding + labelPadding + 1 + pointWidth, y0, getWidth() - padding - labelPadding, y0);
-            g2.setColor(LabelColor);
+            g2.setColor(labelColor);
             String y1Label = ((int) ((getMinScore() + (getMaxAScore() - getMinScore()) * ((i * 1.0) / numberYDivisions)) * 100)) / 100 + "";
             String y2Label = ((int) ((getMinScore() + (getMaxBScore() - getMinScore()) * ((i * 1.0) / numberYDivisions)) * 100)) / 100 + "";
             FontMetrics metrics = g2.getFontMetrics();
@@ -133,9 +137,9 @@ public class DayView extends JPanel {
                 i2 = i2 * 3;
             }
             if ((i % ((data.size() / i2) + 1)) == 0) {
-                g2.setColor(GridColor);
+                g2.setColor(gridColor);
                 g2.drawLine(x0, getHeight() - padding - labelPadding - 1 - pointWidth , x0, padding);
-                g2.setColor(LabelColor);
+                g2.setColor(labelColor);
                 String xLabel = i + ":00";
                 FontMetrics metrics = g2.getFontMetrics();
                 int labelWidth = metrics.stringWidth(xLabel);
@@ -145,92 +149,128 @@ public class DayView extends JPanel {
         }
 
         // create x and y*2 axes
-        g2.setColor(AxisColor);
+        g2.setColor(axisColor);
         g2.drawLine(padding + labelPadding, getHeight() - padding - labelPadding, padding + labelPadding, padding);
         g2.drawLine(padding + labelPadding, getHeight() - padding - labelPadding, getWidth() - padding - labelPadding , getHeight() - padding - labelPadding);
         g2.drawLine(getWidth() - padding - labelPadding, getHeight() - padding - labelPadding, getWidth() - padding - labelPadding ,   padding);
 
         g2.setStroke(GRAPH_STROKE);
-        if(Row1Visible) {
-            g2.setColor(Row1Color);
-            for (int i = 0; i < Row1.size() - 1; i++) {
-                int x1 = Row1.get(i).x;
-                int y1 = Row1.get(i).y;
-                int x2 = Row1.get(i + 1).x;
-                int y2 = Row1.get(i + 1).y;
+        if(row1Visible) {
+            g2.setColor(row1Color);
+            if (row1Shaded) {
+                Polygon row1Polygon = new Polygon();
+                row1Polygon.addPoint(labelPadding + padding, getHeight() - padding - labelPadding);
+                for (Point point : row1) {
+                    int x = point.x;
+                    int y = point.y;
+                    row1Polygon.addPoint(x, y);
+                }
+                row1Polygon.addPoint(getWidth() - labelPadding - padding, getHeight() - padding - labelPadding);
+                g2.fillPolygon(row1Polygon);
+            } else {
+                for (int i = 0; i < row1.size() - 1; i++) {
+                    int x1 = row1.get(i).x;
+                    int y1 = row1.get(i).y;
+                    int x2 = row1.get(i + 1).x;
+                    int y2 = row1.get(i + 1).y;
+                    g2.drawLine(x1, y1, x2, y2);
+                }
+            }
+        }
+        if(row2Visible) {
+            g2.setColor(row2Color);
+            for (int i = 0; i < row2.size() - 1; i++) {
+                int x1 = row2.get(i).x;
+                int y1 = row2.get(i).y;
+                int x2 = row2.get(i + 1).x;
+                int y2 = row2.get(i + 1).y;
                 g2.drawLine(x1, y1, x2, y2);
             }
         }
-        if(Row2Visible) {
-            g2.setColor(Row2Color);
-            for (int i = 0; i < Row2.size() - 1; i++) {
-                int x1 = Row2.get(i).x;
-                int y1 = Row2.get(i).y;
-                int x2 = Row2.get(i + 1).x;
-                int y2 = Row2.get(i + 1).y;
+        if(row3Visible) {
+            g2.setColor(row3Color);
+            if (row3Shaded) {
+                Polygon row3Polygon = new Polygon();
+                row3Polygon.addPoint(labelPadding + padding, getHeight() - padding - labelPadding);
+                for (Point point : row3) {
+                    int x = point.x;
+                    int y = point.y;
+                    row3Polygon.addPoint(x, y);
+                }
+                row3Polygon.addPoint(getWidth() - labelPadding - padding, getHeight() - padding - labelPadding);
+                g2.fillPolygon(row3Polygon);
+            } else {
+                for (int i = 0; i < row3.size() - 1; i++) {
+                    int x1 = row3.get(i).x;
+                    int y1 = row3.get(i).y;
+                    int x2 = row3.get(i + 1).x;
+                    int y2 = row3.get(i + 1).y;
+                    g2.drawLine(x1, y1, x2, y2);
+                }
+            }
+        }
+        if(row4Visible) {
+            g2.setColor(row4Color);
+            for (int i = 0; i < row4.size() - 1; i++) {
+                int x1 = row4.get(i).x;
+                int y1 = row4.get(i).y;
+                int x2 = row4.get(i + 1).x;
+                int y2 = row4.get(i + 1).y;
                 g2.drawLine(x1, y1, x2, y2);
             }
         }
-        if(Row3Visible) {
-            g2.setColor(Row3Color);
-            for (int i = 0; i < Row3.size() - 1; i++) {
-                int x1 = Row3.get(i).x;
-                int y1 = Row3.get(i).y;
-                int x2 = Row3.get(i + 1).x;
-                int y2 = Row3.get(i + 1).y;
-                g2.drawLine(x1, y1, x2, y2);
-            }
-        }
-        if(Row4Visible) {
-            g2.setColor(Row4Color);
-            for (int i = 0; i < Row4.size() - 1; i++) {
-                int x1 = Row4.get(i).x;
-                int y1 = Row4.get(i).y;
-                int x2 = Row4.get(i + 1).x;
-                int y2 = Row4.get(i + 1).y;
-                g2.drawLine(x1, y1, x2, y2);
-            }
-        }
-        if(Row5Visible) {
-            g2.setColor(Row5Color);
-            for (int i = 0; i < Row5.size() - 1; i++) {
-                int x1 = Row5.get(i).x;
-                int y1 = Row5.get(i).y;
-                int x2 = Row5.get(i + 1).x;
-                int y2 = Row5.get(i + 1).y;
-                g2.drawLine(x1, y1, x2, y2);
+        if(row5Visible) {
+            g2.setColor(row5Color);
+            if (row5Shaded) {
+                Polygon row5Polygon = new Polygon();
+                row5Polygon.addPoint(labelPadding + padding, getHeight() - padding - labelPadding);
+                for (Point point : row5) {
+                    int x = point.x;
+                    int y = point.y;
+                    row5Polygon.addPoint(x, y);
+                }
+                row5Polygon.addPoint(getWidth() - labelPadding - padding, getHeight() - padding - labelPadding);
+                g2.fillPolygon(row5Polygon);
+            } else {
+                for (int i = 0; i < row5.size() - 1; i++) {
+                    int x1 = row5.get(i).x;
+                    int y1 = row5.get(i).y;
+                    int x2 = row5.get(i + 1).x;
+                    int y2 = row5.get(i + 1).y;
+                    g2.drawLine(x1, y1, x2, y2);
+                }
             }
         }
 
         if(mouseX >= labelPadding + padding & mouseX <= getWidth() - labelPadding - padding & mouseY >= padding & mouseY <= getHeight() - padding - labelPadding & mouseGUI & visibleRows() > 0){
             g2.setStroke(stroke);
-            g2.setColor(GraphBackgroundColor);
+            g2.setColor(graphBackgroundColor);
             g2.fillRect(padding + labelPadding, padding, 200, ((valuePadding + 12) * visibleRows()) + 20);
-            g2.setColor(GridColor);
+            g2.setColor(gridColor);
             g2.drawRect(padding + labelPadding, padding, 200, ((valuePadding + 12) * visibleRows()) + 20);
             double ExactMouseXValue = (mouseX - padding -labelPadding) / xScale;
 
-            g2.setColor(LabelColor);
+            g2.setColor(labelColor);
             g2.drawString(String.format(Translation.get("gui_graph_daily_description"), Entries.timestamps().get((int)Math.floor(ExactMouseXValue))), padding + labelPadding + valuePadding, padding + valuePadding * 2);
 
             int i = 2;
-            if(Row1Visible) {
+            if(row1Visible) {
                 g2.drawString(String.format(Translation.get("gui_graph_daily_value1"), Math.round(data.get((int)ExactMouseXValue).get(0))), padding + labelPadding + valuePadding, padding + (valuePadding * 2) * i);
                 i++;
             }
-            if(Row2Visible) {
+            if(row2Visible) {
                 g2.drawString(String.format(Translation.get("gui_graph_daily_value2"), Math.round(data.get((int)ExactMouseXValue).get(1))), padding + labelPadding + valuePadding, padding + (valuePadding * 2) * i);
                 i++;
             }
-            if(Row3Visible) {
+            if(row3Visible) {
                 g2.drawString(String.format(Translation.get("gui_graph_daily_value3"), Math.round(data.get((int)ExactMouseXValue).get(2))), padding + labelPadding + valuePadding, padding + (valuePadding * 2) * i);
                 i++;
             }
-            if(Row4Visible) {
+            if(row4Visible) {
                 g2.drawString(String.format(Translation.get("gui_graph_daily_value4"), Math.round(data.get((int)ExactMouseXValue).get(3))), padding + labelPadding + valuePadding, padding + (valuePadding * 2) * i);
                 i++;
             }
-            if(Row5Visible) {
+            if(row5Visible) {
                 g2.drawString(String.format(Translation.get("gui_graph_daily_value5"), Math.round(data.get((int)ExactMouseXValue).get(4))), padding + labelPadding + valuePadding, padding + (valuePadding * 2) * i);
             }
         }
@@ -286,50 +326,50 @@ public class DayView extends JPanel {
 
     public int visibleRows() {
         int i = 0;
-        if(Row1Visible) {i++;}
-        if(Row2Visible) {i++;}
-        if(Row3Visible) {i++;}
-        if(Row4Visible) {i++;}
-        if(Row5Visible) {i++;}
+        if(row1Visible) {i++;}
+        if(row2Visible) {i++;}
+        if(row3Visible) {i++;}
+        if(row4Visible) {i++;}
+        if(row5Visible) {i++;}
         return i;
     }
 
     public void setGridColor(Color color){
-            GridColor = color;
+            gridColor = color;
         }
 
     public void setBackgroundColor(Color color){
-            BackgroundColor = color;
+            backgroundColor = color;
         }
 
-    public void setGraphBackgroundColor(Color graphBackgroundColor) { GraphBackgroundColor = graphBackgroundColor; }
+    public void setGraphBackgroundColor(Color graphBackgroundColor) { this.graphBackgroundColor = graphBackgroundColor; }
 
     public void setAxisColor(Color color){
-            AxisColor = color;
+            axisColor = color;
         }
 
     public void setLabelColor(Color color){
-            LabelColor = color;
+            labelColor = color;
         }
 
     public void setRow1Color(Color color){
-            Row1Color = color;
+            row1Color = color;
         }
 
     public void setRow2Color(Color color){
-            Row2Color = color;
+            row2Color = color;
         }
 
     public void setRow3Color(Color color){
-            Row3Color = color;
+            row3Color = color;
         }
 
     public void setRow4Color(Color color){
-            Row4Color = color;
+            row4Color = color;
         }
 
     public void setRow5Color(Color color){
-            Row5Color = color;
+            row5Color = color;
         }
 
     public void setPadding(int i){
@@ -343,24 +383,36 @@ public class DayView extends JPanel {
     public void setValuePadding(int i) { valuePadding = i; }
 
     public void setRow1Visible(boolean rowVisible) {
-            Row1Visible = rowVisible;
+            row1Visible = rowVisible;
         }
 
     public void setRow2Visible(boolean rowVisible) {
-            Row2Visible = rowVisible;
+            row2Visible = rowVisible;
         }
 
     public void setRow3Visible(boolean rowVisible) {
-            Row3Visible = rowVisible;
+            row3Visible = rowVisible;
         }
 
     public void setRow4Visible(boolean rowVisible) {
-            Row4Visible = rowVisible;
+            row4Visible = rowVisible;
         }
 
     public void setRow5Visible(boolean rowVisible) {
-            Row5Visible = rowVisible;
+            row5Visible = rowVisible;
         }
+
+    public void setRow1Shaded(boolean rowShaded) {
+        row1Shaded = rowShaded;
+    }
+
+    public void setRow3Shaded(boolean rowShaded) {
+        row3Shaded = rowShaded;
+    }
+
+    public void setRow5Shaded(boolean rowShaded) {
+        row5Shaded = rowShaded;
+    }
 
     public void setMouseGUIVisible(boolean mouseGUIVisible) {
             mouseGUI = mouseGUIVisible;
