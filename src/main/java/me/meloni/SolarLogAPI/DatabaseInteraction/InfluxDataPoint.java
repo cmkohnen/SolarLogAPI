@@ -11,7 +11,7 @@ import java.time.Instant;
  * @since 3.2.0
  */
 @Measurement(name ="solar")
-public class DataPoint {
+public class InfluxDataPoint {
 
     @Column(name = "time")
     public Instant time;

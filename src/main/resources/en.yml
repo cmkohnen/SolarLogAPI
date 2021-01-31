@@ -107,7 +107,7 @@ gui_customizer_importing_dat: ".dat-files: "
 gui_customizer_importing_tar: "tar archives: "
 gui_customizer_importing_data: "data files: "
 gui_customizer_importing_eml: ".eml-files: "
-gui_customizer_importing_db: "Databases: "
+gui_customizer_importing_influx: "InfluxDBs: "
 gui_customizer_importing_js: ".js-files: "
 gui_customizer_return: "return"
 

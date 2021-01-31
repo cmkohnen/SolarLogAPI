@@ -67,20 +67,20 @@ public class InfluxDbInteraction {
 
         Logger.log(Logger.INFO_LEVEL_3 + Translation.get("influx_mapping"));
         InfluxDBResultMapper resultMapper = new InfluxDBResultMapper();
-        List<DataPoint> dataPointList = resultMapper.toPOJO(queryResult, DataPoint.class);
+        List<InfluxDataPoint> influxDataPointList = resultMapper.toPOJO(queryResult, InfluxDataPoint.class);
         Logger.log(Logger.INFO_LEVEL_3 + Translation.get("done"));
 
         Map<Date, List<Integer>> data = new HashMap<>();
 
-        for (DataPoint dataPoint : dataPointList) {
+        for (InfluxDataPoint influxDataPoint : influxDataPointList) {
             List<Integer> values = new ArrayList<>();
-            values.add(dataPoint.value1);
-            values.add(dataPoint.value2);
-            values.add(dataPoint.value3);
-            values.add(dataPoint.value4);
-            values.add(dataPoint.value5);
+            values.add(influxDataPoint.value1);
+            values.add(influxDataPoint.value2);
+            values.add(influxDataPoint.value3);
+            values.add(influxDataPoint.value4);
+            values.add(influxDataPoint.value5);
 
-            Date date = Date.from(dataPoint.time);
+            Date date = Date.from(influxDataPoint.time);
 
             data.putIfAbsent(date, values);
         }

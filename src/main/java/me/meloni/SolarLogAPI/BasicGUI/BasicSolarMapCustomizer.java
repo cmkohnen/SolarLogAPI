@@ -1,6 +1,6 @@
 package me.meloni.SolarLogAPI.BasicGUI;
 
-import me.meloni.SolarLogAPI.DatabaseInteraction.Database;
+import me.meloni.SolarLogAPI.DatabaseInteraction.InfluxDatabase;
 import me.meloni.SolarLogAPI.Handling.Translation;
 import me.meloni.SolarLogAPI.SolarMap;
 
@@ -26,7 +26,7 @@ public class BasicSolarMapCustomizer {
     private final List<File> tarArchives = new ArrayList<>();
     private final List<File> dataFiles = new ArrayList<>();
     private final List<File> emlFiles = new ArrayList<>();
-    private final List<Database> databases = new ArrayList<>();
+    private final List<InfluxDatabase> influxDatabases = new ArrayList<>();
     private final List<File> jsFiles = new ArrayList<>();
 
     public BasicSolarMapCustomizer() {
@@ -132,7 +132,7 @@ public class BasicSolarMapCustomizer {
 
         JButton addInfluxDB = new JButton(Translation.get("gui_customizer_add_influx"));
         addInfluxDB.addActionListener(e -> {
-            databases.add(GetDataBase.database());
+            influxDatabases.add(GetDataBase.database());
             repaintList();
         });
 
@@ -193,9 +193,9 @@ public class BasicSolarMapCustomizer {
                 if(emlFiles.size() > 0) {
                     map.addFromEMLFiles(emlFiles);
                 }
-                if(databases.size() > 0) {
-                    for (Database database : databases) {
-                        map.addFromInfluxDB(database.getInfluxDB(), database.getDatabase());
+                if(influxDatabases.size() > 0) {
+                    for (InfluxDatabase influxDatabase : influxDatabases) {
+                        map.addFromInfluxDB(influxDatabase.getInfluxDB(), influxDatabase.getDatabase());
                     }
                 }
                 if(jsFiles.size() > 0) {
@@ -237,10 +237,10 @@ public class BasicSolarMapCustomizer {
                 files.add(new JLabel(emlFile.getName()));
             }
         }
-        if(databases.size() > 0) {
-            files.add(new JLabel(Translation.get("gui_customizer_importing_db")));
-            for (Database database : databases) {
-                files.add(new JLabel(database.getInfluxDB().version()));
+        if(influxDatabases.size() > 0) {
+            files.add(new JLabel(Translation.get("gui_customizer_importing_influx")));
+            for (InfluxDatabase influxDatabase : influxDatabases) {
+                files.add(new JLabel(influxDatabase.getInfluxDB().version()));
             }
         }
         if(jsFiles.size() > 0) {
