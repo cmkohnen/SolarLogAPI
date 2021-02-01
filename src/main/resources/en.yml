@@ -45,6 +45,7 @@ ftp_downloading_1: "Downloading %s files, this may take a while."
 ftp_downloading_2: "Downloading %s (%s of %s)"
 message_foundtar: "Found attachment %s"
 influx_error: "Database incorrect."
+sql_error: "Unable to write %s"
 
 #GUI
 gui_graph_daily_description: "Values at %s:"
