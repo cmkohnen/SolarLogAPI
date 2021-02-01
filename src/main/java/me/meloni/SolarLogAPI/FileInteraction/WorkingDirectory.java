@@ -20,7 +20,7 @@ public class WorkingDirectory {
     public static File getDirectory() throws IOException {
         if(workingDirectory == null) {
             Date time = Calendar.getInstance().getTime();
-            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_hh-mm-ss");
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
             String run = dateFormat.format(time);
             workingDirectory = new File(Paths.get("").toAbsolutePath().toString(), run);
             if(!workingDirectory.mkdirs()) {
