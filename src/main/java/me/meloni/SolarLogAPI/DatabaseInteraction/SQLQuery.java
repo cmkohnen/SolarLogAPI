@@ -12,6 +12,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * This Class provides functionality to write an SQL query to a file
+ * @author ChaosMelone9
+ * @since 3.10.1
+ */
 public class SQLQuery {
     private static final String BASE_WRITE_QUERY = "INSERT INTO `%s`.`%s` (`%s`, `%s`, `%s`, `%s`, `%s`, `%s`) VALUES ('%s', '%s', '%s', '%s', '%s', '%s');";
     private static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";

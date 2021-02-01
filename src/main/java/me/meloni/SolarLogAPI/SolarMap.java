@@ -2,6 +2,8 @@ package me.meloni.SolarLogAPI;
 
 import me.meloni.SolarLogAPI.DataConversion.*;
 import me.meloni.SolarLogAPI.DatabaseInteraction.InfluxDbInteraction;
+import me.meloni.SolarLogAPI.DatabaseInteraction.MySQLInteraction;
+import me.meloni.SolarLogAPI.DatabaseInteraction.SQLQuery;
 import me.meloni.SolarLogAPI.FTPServerInteraction.GetFromFTPServer;
 import me.meloni.SolarLogAPI.FileInteraction.ReadFiles.GetFromEML;
 import me.meloni.SolarLogAPI.FileInteraction.ReadFiles.GetFromTar;
@@ -17,6 +19,7 @@ import org.json.simple.JSONObject;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.YearMonth;
@@ -314,6 +317,24 @@ public class SolarMap {
         influxDbInteraction.setBatchPointLimit(batchPointLimit);
         influxDbInteraction.write(this);
         influxDbInteraction.close();
+    }
+
+    /**
+     * Write SQL query to file
+     * @author ChaosMelone9
+     **/
+    public File writeSQLQueryToFile(String database, String table, String key, String value1, String value2, String value3, String value4, String value5) throws IOException {
+        Logger.log(Logger.INFO_LEVEL_2 + String.format(Translation.get("solarmap_get_sql_query"), id.toString()));
+        return SQLQuery.getWriteQuery(database,table,key,value1,value2,value3,value4,value5,this);
+    }
+
+    /**
+     * Write to an MySQL database
+     * @author ChaosMelone9
+     **/
+    public void writeToMySQLDatabase(String host, String user, String password, String database, String table) throws SQLException {
+        Logger.log(Logger.INFO_LEVEL_2 + String.format(Translation.get("solarmap_write_sql"), id.toString(), host));
+        MySQLInteraction.write(host,user,password,database,table,this);
     }
 
 

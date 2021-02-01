@@ -19,6 +19,8 @@ solarmap_add_solarlog: "Adding to %s from SolarLog at %s"
 solarmap_add_ftp: "Adding to %s from FTP Server %s@%s"
 solarmap_write_datafile: "Writing %s to data file %s"
 solarmap_write_influxdb: "Writing %s to InfluxDB "
+solarmap_get_sql_query: "Writing SQL query to file for %s"
+solarmap_write_sql: "Writing %s to MySQL database %S"
 solarmap_cleared: "Cleared %s"
 
 # messages
