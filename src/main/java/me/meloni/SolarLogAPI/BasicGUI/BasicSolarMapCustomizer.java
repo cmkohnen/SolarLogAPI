@@ -132,7 +132,7 @@ public class BasicSolarMapCustomizer {
 
         JButton addInfluxDB = new JButton(Translation.get("gui_customizer_add_influx"));
         addInfluxDB.addActionListener(e -> {
-            influxDatabases.add(GetDataBase.database());
+            influxDatabases.add(GetDatabase.influxDatabase());
             repaintList();
         });
 
