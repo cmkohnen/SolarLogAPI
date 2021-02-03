@@ -1,7 +1,6 @@
 package me.meloni.SolarLogAPI.DatabaseInteraction;
 
 import me.meloni.SolarLogAPI.Handling.Logger;
-import me.meloni.SolarLogAPI.Handling.Translation;
 import me.meloni.SolarLogAPI.SolarMap;
 import org.influxdb.InfluxDB;
 import org.influxdb.InfluxDBFactory;
@@ -50,25 +49,25 @@ public class InfluxDbInteraction {
                        .build();
                this.batchPoints.point(point);
                if(batchPoints.getPoints().size() >= limit) {
-                   Logger.log(Logger.INFO_LEVEL_3 + String.format(Translation.get("influx_write_batchpoints"), limit));
+                   Logger.log(Logger.INFO_LEVEL_3 + String.format("Writing set of BatchPoints (%s)", limit));
                    db.write(batchPoints);
                    this.batchPoints = batchPoints();
                }
                });
-        Logger.log(Logger.INFO_LEVEL_3 + String.format(Translation.get("influx_write_batchpoints"), batchPoints.getPoints().size()));
+        Logger.log(Logger.INFO_LEVEL_3 + String.format("Writing set of BatchPoints (%s)", batchPoints.getPoints().size()));
         db.write(batchPoints);
-        Logger.log(Logger.INFO_LEVEL_3 + Translation.get("done"));
+        Logger.log(Logger.INFO_LEVEL_3 + "done.");
     }
 
     public Map<Date, List<Integer>> read() {
-        Logger.log(Logger.INFO_LEVEL_2 + String.format(Translation.get("influx_query"), database));
+        Logger.log(Logger.INFO_LEVEL_2 + String.format("Querying data from database %s...", database));
         QueryResult queryResult = db.query(new Query("SELECT value1,value2,value3,value4,value5 FROM " + database));
-        Logger.log(Logger.INFO_LEVEL_3 + Translation.get("done"));
+        Logger.log(Logger.INFO_LEVEL_3 + "done.");
 
-        Logger.log(Logger.INFO_LEVEL_3 + Translation.get("influx_mapping"));
+        Logger.log(Logger.INFO_LEVEL_3 + "Mapping results...");
         InfluxDBResultMapper resultMapper = new InfluxDBResultMapper();
         List<InfluxDataPoint> influxDataPointList = resultMapper.toPOJO(queryResult, InfluxDataPoint.class);
-        Logger.log(Logger.INFO_LEVEL_3 + Translation.get("done"));
+        Logger.log(Logger.INFO_LEVEL_3 + "done.");
 
         Map<Date, List<Integer>> data = new HashMap<>();
 

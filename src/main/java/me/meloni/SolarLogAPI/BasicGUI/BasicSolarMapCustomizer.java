@@ -1,7 +1,6 @@
 package me.meloni.SolarLogAPI.BasicGUI;
 
 import me.meloni.SolarLogAPI.DatabaseInteraction.InfluxDatabase;
-import me.meloni.SolarLogAPI.Handling.Translation;
 import me.meloni.SolarLogAPI.SolarMap;
 
 import javax.swing.*;
@@ -37,7 +36,7 @@ public class BasicSolarMapCustomizer {
         JFrame f = new JFrame();
         f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         f.setSize(300,500);
-        f.setTitle(Translation.get("gui_customizer_title"));
+        f.setTitle("Customization");
         BasicSolarMapCustomizer basicSolarMapCustomizer = new BasicSolarMapCustomizer();
         f.add(filePanel);
         f.setVisible(true);
@@ -55,7 +54,7 @@ public class BasicSolarMapCustomizer {
         JPanel buttons = new JPanel();
         buttons.setLayout(new BoxLayout(buttons, BoxLayout.Y_AXIS));
 
-        JButton addDatFile = new JButton(Translation.get("gui_customizer_add_dat"));
+        JButton addDatFile = new JButton("Add .dat-file");
         addDatFile.addActionListener(e -> {
             File f = GetChosenFile.chosenDatFile();
             if(!(f == null) && f.exists()) {
@@ -64,7 +63,7 @@ public class BasicSolarMapCustomizer {
             }
         });
 
-        JButton addDatFiles = new JButton(Translation.get("gui_customizer_add_dats"));
+        JButton addDatFiles = new JButton("Add .dat-files");
         addDatFiles.addActionListener(e -> {
             try {
                 List<File> files = GetChosenFile.chosenDatFilesInDirectory();
@@ -77,7 +76,7 @@ public class BasicSolarMapCustomizer {
             }
         });
 
-        JButton addTarArchive = new JButton(Translation.get("gui_customizer_add_tar"));
+        JButton addTarArchive = new JButton("Add tar archive");
         addTarArchive.addActionListener(e -> {
             File f = GetChosenFile.chosenTarArchive();
             if(!(f == null) && f.exists()) {
@@ -86,7 +85,7 @@ public class BasicSolarMapCustomizer {
             }
         });
 
-        JButton addTarArchives = new JButton(Translation.get("gui_customizer_add_tars"));
+        JButton addTarArchives = new JButton("Add tar archives");
         addTarArchives.addActionListener(e -> {
             try {
                 List<File> files = GetChosenFile.chosenTarArchivesInDirectory();
@@ -99,7 +98,7 @@ public class BasicSolarMapCustomizer {
             }
         });
 
-        JButton addDataFile = new JButton(Translation.get("gui_customizer_add_data"));
+        JButton addDataFile = new JButton("Add data file");
         addDataFile.addActionListener(e -> {
             File f = GetChosenFile.chosenSolarLogFile();
             if(!(f == null) && f.exists()) {
@@ -108,7 +107,7 @@ public class BasicSolarMapCustomizer {
             }
         });
 
-        JButton addEMLFile = new JButton(Translation.get("gui_customizer_add_eml"));
+        JButton addEMLFile = new JButton("Add .eml-file");
         addEMLFile.addActionListener(e -> {
             File f = GetChosenFile.chosenEMLFile();
             if(!(f == null) && f.exists()) {
@@ -117,7 +116,7 @@ public class BasicSolarMapCustomizer {
             }
         });
 
-        JButton addEMLFiles = new JButton(Translation.get("gui_customizer_add_emls"));
+        JButton addEMLFiles = new JButton("Add .eml-files");
         addEMLFiles.addActionListener(e -> {
             try {
                 List<File> files = GetChosenFile.chosenEMLFilesInDirectory();
@@ -130,13 +129,13 @@ public class BasicSolarMapCustomizer {
             }
         });
 
-        JButton addInfluxDB = new JButton(Translation.get("gui_customizer_add_influx"));
+        JButton addInfluxDB = new JButton("Add InfluxDB");
         addInfluxDB.addActionListener(e -> {
             influxDatabases.add(GetDatabase.influxDatabase());
             repaintList();
         });
 
-        JButton addJSFile = new JButton(Translation.get("gui_customizer_add_js"));
+        JButton addJSFile = new JButton("Add .js-file");
         addJSFile.addActionListener(e -> {
             File f = GetChosenFile.chosenJSFile();
             if(!(f == null) && f.exists()) {
@@ -145,7 +144,7 @@ public class BasicSolarMapCustomizer {
             }
         });
 
-        JButton addJSFiles = new JButton(Translation.get("gui_customizer_add_jss"));
+        JButton addJSFiles = new JButton("Add .js-files");
         addJSFiles.addActionListener(e -> {
             try {
                 List<File> files = GetChosenFile.chosenJSFilesInDirectory();
@@ -212,39 +211,39 @@ public class BasicSolarMapCustomizer {
 
     private void repaintList() {
         files.removeAll();
-        files.add(new JLabel(Translation.get("gui_customizer_importing")));
+        files.add(new JLabel("Importing from: "));
         if(datFiles.size() > 0) {
-            files.add(new JLabel(Translation.get("gui_customizer_importing_dat")));
+            files.add(new JLabel(".dat-files: "));
             for (File importFile : datFiles) {
                 files.add(new JLabel(importFile.getName()));
             }
         }
         if(tarArchives.size() > 0) {
-            files.add(new JLabel(Translation.get("gui_customizer_importing_tar")));
+            files.add(new JLabel("tar archives: "));
             for (File importTar : tarArchives) {
                 files.add(new JLabel(importTar.getName()));
             }
         }
         if(dataFiles.size() > 0) {
-            files.add(new JLabel(Translation.get("gui_customizer_importing_data")));
+            files.add(new JLabel("data files: "));
             for (File dataFile : dataFiles) {
                 files.add(new JLabel(dataFile.getName()));
             }
         }
         if(emlFiles.size() > 0) {
-            files.add(new JLabel(Translation.get("gui_customizer_importing_eml")));
+            files.add(new JLabel(".eml-files: "));
             for (File emlFile : emlFiles) {
                 files.add(new JLabel(emlFile.getName()));
             }
         }
         if(influxDatabases.size() > 0) {
-            files.add(new JLabel(Translation.get("gui_customizer_importing_influx")));
+            files.add(new JLabel("InfluxDBs: "));
             for (InfluxDatabase influxDatabase : influxDatabases) {
                 files.add(new JLabel(influxDatabase.getInfluxDB().version()));
             }
         }
         if(jsFiles.size() > 0) {
-            files.add(new JLabel(Translation.get("gui_customizer_importing_js")));
+            files.add(new JLabel(".js-files: "));
             for (File jsFile : jsFiles) {
                 files.add(new JLabel(jsFile.getName()));
             }

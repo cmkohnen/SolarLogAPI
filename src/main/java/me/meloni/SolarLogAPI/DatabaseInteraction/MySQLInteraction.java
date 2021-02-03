@@ -1,7 +1,6 @@
 package me.meloni.SolarLogAPI.DatabaseInteraction;
 
 import me.meloni.SolarLogAPI.Handling.Logger;
-import me.meloni.SolarLogAPI.Handling.Translation;
 import me.meloni.SolarLogAPI.SolarMap;
 
 import java.sql.Connection;
@@ -30,7 +29,7 @@ public class MySQLInteraction {
                 String query = String.format(BASE_WRITE_QUERY, database, table, timestamp, objects.get(0), objects.get(1), objects.get(2), objects.get(3), objects.get(4));
                 st.executeUpdate(query);
             } catch (SQLException ignored) {
-                Logger.warn(String.format(Translation.get("sql_error"), timestamp));
+                Logger.warn(String.format("Unable to write %s", timestamp));
             }
         });
         conn.close();

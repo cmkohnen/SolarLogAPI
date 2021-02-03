@@ -3,7 +3,6 @@ package me.meloni.SolarLogAPI.BasicGUI.Components.Graph;
 import me.meloni.SolarLogAPI.BasicGUI.GetGraphData;
 import me.meloni.SolarLogAPI.DataConversion.Entries;
 import me.meloni.SolarLogAPI.DataConversion.GetStartOf;
-import me.meloni.SolarLogAPI.Handling.Translation;
 import me.meloni.SolarLogAPI.SolarMap;
 
 import javax.swing.*;
@@ -251,27 +250,27 @@ public class DayView extends JPanel {
             double ExactMouseXValue = (mouseX - padding -labelPadding) / xScale;
 
             g2.setColor(labelColor);
-            g2.drawString(String.format(Translation.get("gui_graph_daily_description"), Entries.timestamps().get((int)Math.floor(ExactMouseXValue))), padding + labelPadding + valuePadding, padding + valuePadding * 2);
+            g2.drawString(String.format("Values at %s:", Entries.timestamps().get((int)Math.floor(ExactMouseXValue))), padding + labelPadding + valuePadding, padding + valuePadding * 2);
 
             int i = 2;
             if(row1Visible) {
-                g2.drawString(String.format(Translation.get("gui_graph_daily_value1"), Math.round(data.get((int)ExactMouseXValue).get(0))), padding + labelPadding + valuePadding, padding + (valuePadding * 2) * i);
+                g2.drawString(String.format("verbrauchw: %s", Math.round(data.get((int)ExactMouseXValue).get(0))), padding + labelPadding + valuePadding, padding + (valuePadding * 2) * i);
                 i++;
             }
             if(row2Visible) {
-                g2.drawString(String.format(Translation.get("gui_graph_daily_value2"), Math.round(data.get((int)ExactMouseXValue).get(1))), padding + labelPadding + valuePadding, padding + (valuePadding * 2) * i);
+                g2.drawString(String.format("verbrauchkwh: %s", Math.round(data.get((int)ExactMouseXValue).get(1))), padding + labelPadding + valuePadding, padding + (valuePadding * 2) * i);
                 i++;
             }
             if(row3Visible) {
-                g2.drawString(String.format(Translation.get("gui_graph_daily_value3"), Math.round(data.get((int)ExactMouseXValue).get(2))), padding + labelPadding + valuePadding, padding + (valuePadding * 2) * i);
+                g2.drawString(String.format("leistungw: %s", Math.round(data.get((int)ExactMouseXValue).get(2))), padding + labelPadding + valuePadding, padding + (valuePadding * 2) * i);
                 i++;
             }
             if(row4Visible) {
-                g2.drawString(String.format(Translation.get("gui_graph_daily_value4"), Math.round(data.get((int)ExactMouseXValue).get(3))), padding + labelPadding + valuePadding, padding + (valuePadding * 2) * i);
+                g2.drawString(String.format("ertragkwh: %s", Math.round(data.get((int)ExactMouseXValue).get(3))), padding + labelPadding + valuePadding, padding + (valuePadding * 2) * i);
                 i++;
             }
             if(row5Visible) {
-                g2.drawString(String.format(Translation.get("gui_graph_daily_value5"), Math.round(data.get((int)ExactMouseXValue).get(4))), padding + labelPadding + valuePadding, padding + (valuePadding * 2) * i);
+                g2.drawString(String.format("energieverbrauchw: %s", Math.round(data.get((int)ExactMouseXValue).get(4))), padding + labelPadding + valuePadding, padding + (valuePadding * 2) * i);
             }
         }
 
@@ -424,6 +423,6 @@ public class DayView extends JPanel {
 
     public String getTitle() {
         String day = new SimpleDateFormat("dd. MM. yyyy").format(getDay());
-        return String.format(Translation.get("gui_graph_daily_title"), day);
+        return String.format("Visualizing %s", day);
     }
 }

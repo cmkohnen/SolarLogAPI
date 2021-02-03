@@ -1,7 +1,6 @@
 package me.meloni.SolarLogAPI.FileInteraction.ReadFiles;
 
 import me.meloni.SolarLogAPI.Handling.Logger;
-import me.meloni.SolarLogAPI.Handling.Translation;
 import me.meloni.SolarLogAPI.MailInteraction.GetTarFromMessage;
 
 import javax.mail.MessagingException;
@@ -33,7 +32,7 @@ public class GetFromEML {
         int i = 0;
         for (File emlFile : emlFiles) {
             i++;
-            Logger.log(Logger.INFO_LEVEL_3 + String.format(Translation.get("eml_export_tars"),emlFile, i, emlFiles.size()));
+            Logger.log(Logger.INFO_LEVEL_3 + String.format("Extracting tars from %s (%s of %s)",emlFile, i, emlFiles.size()));
             tars.add(getTarFromEML(emlFile));
         }
         return tars;

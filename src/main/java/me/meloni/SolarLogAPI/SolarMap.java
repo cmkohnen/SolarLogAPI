@@ -11,7 +11,6 @@ import me.meloni.SolarLogAPI.FileInteraction.ReadFiles.ReadFileObject;
 import me.meloni.SolarLogAPI.FileInteraction.Tools.FileObject;
 import me.meloni.SolarLogAPI.FileInteraction.WriteFiles.WriteFileObject;
 import me.meloni.SolarLogAPI.Handling.Logger;
-import me.meloni.SolarLogAPI.Handling.Translation;
 import me.meloni.SolarLogAPI.SolarLogInteraction.GetJsonFromSolarLog;
 import org.influxdb.InfluxDB;
 import org.json.simple.JSONObject;
@@ -75,7 +74,7 @@ public class SolarMap {
     public SolarMap() {init(); }
 
     private void init() {
-        Logger.log(Logger.INFO_LEVEL_1 + String.format(Translation.get("solarmap_new"), id.toString()));
+        Logger.log(Logger.INFO_LEVEL_1 + String.format("Created new SolarMap with ID %s", id.toString()));
     }
 
 
@@ -110,7 +109,7 @@ public class SolarMap {
      * @author ChaosMelone9
      */
     public void addFromSolarMap(SolarMap map) {
-        Logger.log(Logger.INFO_LEVEL_2 + String.format(Translation.get("solarmap_add_solarmap"), id.toString(), map.getId().toString()));
+        Logger.log(Logger.INFO_LEVEL_2 + String.format("Adding to %s from SolarMap with ID %s", id.toString(), map.getId().toString()));
         addFromMap(map.getAsMap());
     }
 
@@ -130,7 +129,7 @@ public class SolarMap {
      */
     public void addFromDatFile(File file) throws IOException, ParseException {
         if(file.exists()) {
-            Logger.log(Logger.INFO_LEVEL_2 + String.format(Translation.get("solarmap_add_file"), id.toString(), file.getName()));
+            Logger.log(Logger.INFO_LEVEL_2 + String.format("Adding to %s from file %s", id.toString(), file.getName()));
             addFromMap(GetData.getAsMapFromDatFile(file));
         }
     }
@@ -142,12 +141,12 @@ public class SolarMap {
      * @throws ParseException Bad date
      */
     public void addFromDatFiles(List<File> files) throws IOException, ParseException {
-        Logger.log(Logger.INFO_LEVEL_2 + String.format(Translation.get("solarmap_add_files"), id.toString()));
+        Logger.log(Logger.INFO_LEVEL_2 + String.format("Adding to %s from multiple files", id.toString()));
         int i1 = files.size();
         int i2 = 0;
         for (File file : files) {
             i2++;
-            Logger.log(Logger.INFO_LEVEL_3 + String.format(Translation.get("solarmap_importing_from_file"), file.getName(), i2, i1));
+            Logger.log(Logger.INFO_LEVEL_3 + String.format("Importing from file %s (%s of %s)", file.getName(), i2, i1));
             addFromDatFile(file);
         }
     }
@@ -159,7 +158,7 @@ public class SolarMap {
      */
     public void addFromTarArchive(File file) throws Exception {
         if(file.exists()) {
-            Logger.log(Logger.INFO_LEVEL_2 + String.format(Translation.get("solarmap_add_tar"), id.toString(), file.getName()));
+            Logger.log(Logger.INFO_LEVEL_2 + String.format("Adding to %s from Tar archive %s", id.toString(), file.getName()));
             addFromDatFiles(GetFromTar.getValidDatFilesFromTarArchive(file));
         }
     }
@@ -178,7 +177,7 @@ public class SolarMap {
      * @author ChaosMelone9
      */
     public void addFromFileObject(FileObject fileObject) {
-        Logger.log(Logger.INFO_LEVEL_2 + String.format(Translation.get("solarmap_add_fileobject"), id.toString()));
+        Logger.log(Logger.INFO_LEVEL_2 + String.format("Adding to %s from FileObject", id.toString()));
         addFromMap(fileObject.getData());
     }
 
@@ -189,7 +188,7 @@ public class SolarMap {
      * @throws ClassNotFoundException Bad file
      */
     public void addFromSolarLogFile(File file) throws IOException, ClassNotFoundException {
-        Logger.log(Logger.INFO_LEVEL_2 + String.format(Translation.get("solarmap_add_datafile"), id.toString(), file.getName()));
+        Logger.log(Logger.INFO_LEVEL_2 + String.format("Adding to %s from data file %s", id.toString(), file.getName()));
         addFromFileObject(ReadFileObject.getObjectFromFile(file));
     }
 
@@ -204,7 +203,7 @@ public class SolarMap {
         int i2 = 0;
         for (File file : files) {
             i2++;
-            Logger.log(Logger.INFO_LEVEL_2 + String.format(Translation.get("solarmap_importing_from_file"), file.getName(), i2, i1));
+            Logger.log(Logger.INFO_LEVEL_2 + String.format("Adding from data file %s (%s of %s)", file.getName(), i2, i1));
             addFromSolarLogFile(file);
         }
     }
@@ -236,7 +235,7 @@ public class SolarMap {
      * @author ChaosMelone9
      */
     public void addFromEMLFile(File emlFile) throws Exception {
-        Logger.log(Logger.INFO_LEVEL_2 + String.format(Translation.get("solarmap_add_emlfile"), id.toString(), emlFile.getName()));
+        Logger.log(Logger.INFO_LEVEL_2 + String.format("Adding to %s from EML File %s", id.toString(), emlFile.getName()));
         addFromTarArchive(Objects.requireNonNull(GetFromEML.getTarFromEML(emlFile)));
     }
 
@@ -253,7 +252,7 @@ public class SolarMap {
      * @author ChaosMelone9
      */
     public void addFromSolarLog(URL solarLog) throws IOException, org.json.simple.parser.ParseException, ParseException {
-        Logger.log(Logger.INFO_LEVEL_2 + String.format(Translation.get("solarmap_add_solarlog"), id.toString(), solarLog.toString()));
+        Logger.log(Logger.INFO_LEVEL_2 + String.format("Adding to %s from SolarLog at %s", id.toString(), solarLog.toString()));
         addFromMap(GetValuesFromJson.getAsMap(GetJsonFromSolarLog.getFromSolarLogInterface(solarLog)));
     }
 
@@ -276,7 +275,7 @@ public class SolarMap {
     }
 
     public void addFromFTPServer(String host, String user, String password) throws IOException, ParseException {
-        Logger.log(Logger.INFO_LEVEL_1 + String.format(Translation.get("solarmap_add_ftp"), id, user, host));
+        Logger.log(Logger.INFO_LEVEL_1 + String.format("Adding to %s from FTP Server %s@%s", id, user, host));
         addFromJSFiles(GetFromFTPServer.getJSFilesFromFTPServer(host, user, password));
     }
 
@@ -289,7 +288,7 @@ public class SolarMap {
      * @throws IOException Bad file
      */
     public void writeToDataFile(File file) throws IOException {
-        Logger.log(Logger.INFO_LEVEL_2 + String.format(Translation.get("solarmap_write_datafile"), id.toString(), file.getName()));
+        Logger.log(Logger.INFO_LEVEL_2 + String.format("Writing %s to data file %s", id.toString(), file.getName()));
         WriteFileObject.write(file, getAsFileObject());
     }
 
@@ -298,7 +297,7 @@ public class SolarMap {
      * @author ChaosMelone9
      */
     public void writeToInfluxDBDataBase(String server, String username, String password, String database, int batchPointLimit) throws NullPointerException{
-        Logger.log(Logger.INFO_LEVEL_2 + String.format(Translation.get("solarmap_write_influxdb"), id.toString()) + server);
+        Logger.log(Logger.INFO_LEVEL_2 + String.format("Writing %s to InfluxDB %s", id.toString(), server));
         InfluxDbInteraction influxDbInteraction = new InfluxDbInteraction(server, username, password);
         influxDbInteraction.setBatchPointLimit(batchPointLimit);
         influxDbInteraction.setDatabase(database);
@@ -312,7 +311,7 @@ public class SolarMap {
      * @param influxDB assumes a set database
      **/
     public void writeToInfluxDBDataBase(InfluxDB influxDB, int batchPointLimit) throws NullPointerException{
-        Logger.log(Logger.INFO_LEVEL_2 + String.format(Translation.get("solarmap_write_influxdb"), id.toString()));
+        Logger.log(Logger.INFO_LEVEL_2 + String.format("Writing %s to InfluxDB", id.toString()));
         InfluxDbInteraction influxDbInteraction = new InfluxDbInteraction(influxDB);
         influxDbInteraction.setBatchPointLimit(batchPointLimit);
         influxDbInteraction.write(this);
@@ -324,7 +323,7 @@ public class SolarMap {
      * @author ChaosMelone9
      **/
     public File writeSQLQueryToFile(String database, String table, String key, String value1, String value2, String value3, String value4, String value5) throws IOException {
-        Logger.log(Logger.INFO_LEVEL_2 + String.format(Translation.get("solarmap_get_sql_query"), id.toString()));
+        Logger.log(Logger.INFO_LEVEL_2 + String.format("Writing SQL query to file for %s", id.toString()));
         return SQLQuery.getWriteQuery(database,table,key,value1,value2,value3,value4,value5,this);
     }
 
@@ -333,7 +332,7 @@ public class SolarMap {
      * @author ChaosMelone9
      **/
     public void writeToMySQLDatabase(String host, String user, String password, String database, String table) throws SQLException {
-        Logger.log(Logger.INFO_LEVEL_2 + String.format(Translation.get("solarmap_write_sql"), id.toString(), host));
+        Logger.log(Logger.INFO_LEVEL_2 + String.format("Writing %s to MySQL database %S", id.toString(), host));
         MySQLInteraction.write(host,user,password,database,table,this);
     }
 
@@ -503,7 +502,7 @@ public class SolarMap {
      */
     public void clear() {
         data.clear();
-        Logger.log(Logger.INFO_LEVEL_1 + String.format(Translation.get("solarmap_cleared"), id.toString()));
+        Logger.log(Logger.INFO_LEVEL_1 + String.format("Cleared %s", id.toString()));
     }
 
     /**

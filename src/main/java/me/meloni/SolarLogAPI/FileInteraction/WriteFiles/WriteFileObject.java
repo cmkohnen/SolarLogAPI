@@ -4,7 +4,6 @@ import me.meloni.SolarLogAPI.FileInteraction.GetFile;
 import me.meloni.SolarLogAPI.FileInteraction.Tools.FileAttributes;
 import me.meloni.SolarLogAPI.FileInteraction.Tools.FileObject;
 import me.meloni.SolarLogAPI.Handling.Logger;
-import me.meloni.SolarLogAPI.Handling.Translation;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -23,7 +22,7 @@ import java.nio.file.attribute.UserDefinedFileAttributeView;
 public class WriteFileObject {
     public static void write(File file, FileObject object) throws IOException {
         UserDefinedFileAttributeView view = Files.getFileAttributeView(GetFile.getPathFromFile(file), UserDefinedFileAttributeView.class);
-        Logger.log(Logger.INFO_LEVEL_2 + String.format(Translation.get("write_writing"), file));
+        Logger.log(Logger.INFO_LEVEL_2 + String.format("Writing file %s. This may take a while.", file));
         FileOutputStream f = new FileOutputStream(file);
         ObjectOutputStream s = new ObjectOutputStream(f);
         s.writeObject(object);
@@ -39,6 +38,6 @@ public class WriteFileObject {
         writeBuffer.put(bytes);
         writeBuffer.flip();
         view.write(FileAttributes.fileVersion, writeBuffer);
-        Logger.log(Logger.INFO_LEVEL_2 + Translation.get("done"));
+        Logger.log(Logger.INFO_LEVEL_2 + "done.");
     }
 }

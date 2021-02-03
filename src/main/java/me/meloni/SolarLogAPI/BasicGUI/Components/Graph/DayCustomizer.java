@@ -3,7 +3,6 @@ package me.meloni.SolarLogAPI.BasicGUI.Components.Graph;
 import me.meloni.SolarLogAPI.BasicGUI.Components.DatePicker;
 import me.meloni.SolarLogAPI.BasicGUI.BasicGraphCustomizer;
 import me.meloni.SolarLogAPI.DataConversion.GetStartOf;
-import me.meloni.SolarLogAPI.Handling.Translation;
 import me.meloni.SolarLogAPI.SolarMap;
 
 import javax.swing.*;
@@ -51,11 +50,11 @@ public class DayCustomizer extends JPanel{
         JCheckBox b3 = new JCheckBox();
         JCheckBox b4 = new JCheckBox();
         JCheckBox b5 = new JCheckBox();
-        b1.setText(Translation.get("gui_graph_daily_value1_name"));
-        b2.setText(Translation.get("gui_graph_daily_value2_name"));
-        b3.setText(Translation.get("gui_graph_daily_value3_name"));
-        b4.setText(Translation.get("gui_graph_daily_value4_name"));
-        b5.setText(Translation.get("gui_graph_daily_value5_name"));
+        b1.setText("verbrauchw");
+        b2.setText("verbrauchkwh");
+        b3.setText("leistungw");
+        b4.setText("ertragkwh");
+        b5.setText("energieverbrauchw");
         b1.setSelected(true);
         b2.setSelected(true);
         b3.setSelected(true);
@@ -88,7 +87,7 @@ public class DayCustomizer extends JPanel{
         p.add(b5);
 
         JCheckBox mouseGUI = new JCheckBox();
-        mouseGUI.setText(Translation.get("gui_choice_overlay"));
+        mouseGUI.setText("Mouse Feedback");
         mouseGUI.setSelected(true);
         mouseGUI.addActionListener(actionEvent -> {
             cmp.setMouseGUIVisible(mouseGUI.isSelected());
@@ -97,7 +96,7 @@ public class DayCustomizer extends JPanel{
         p.add(mouseGUI);
 
         JCheckBox shaded = new JCheckBox();
-        shaded.setText(Translation.get("gui_choice_shaded"));
+        shaded.setText("Shade graph");
         shaded.setSelected(true);
         shaded.addActionListener(actionEvent -> {
             boolean selected = shaded.isSelected();

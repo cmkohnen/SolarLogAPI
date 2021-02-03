@@ -2,7 +2,6 @@ package me.meloni.SolarLogAPI.FileInteraction.ReadFiles;
 
 import me.meloni.SolarLogAPI.FileInteraction.WorkingDirectory;
 import me.meloni.SolarLogAPI.Handling.Logger;
-import me.meloni.SolarLogAPI.Handling.Translation;
 import org.apache.commons.compress.archivers.ArchiveException;
 import org.apache.commons.compress.archivers.ArchiveStreamFactory;
 import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
@@ -25,7 +24,7 @@ import java.util.zip.GZIPInputStream;
 public class GetFromTar {
 
     private static List<File> unTar(final File inputFile, final File outputDir) throws Exception {
-        Logger.log(Logger.INFO_LEVEL_3 + String.format(Translation.get("tar_untaring"), inputFile.getAbsolutePath(), outputDir.getAbsolutePath()));
+        Logger.log(Logger.INFO_LEVEL_3 + String.format("UnTaring %s to dir %s.", inputFile.getAbsolutePath(), outputDir.getAbsolutePath()));
 
         final List<File> unTaredFiles = new LinkedList<>();
         final InputStream is = new FileInputStream(inputFile);
@@ -34,9 +33,9 @@ public class GetFromTar {
         while ((entry = (TarArchiveEntry)debInputStream.getNextEntry()) != null) {
             final File outputFile = new File(outputDir, entry.getName());
             if (entry.isDirectory()) {
-                Logger.log(Logger.INFO_LEVEL_3 + String.format(Translation.get("tar_write"), outputFile.getAbsolutePath()));
+                Logger.log(Logger.INFO_LEVEL_3 + String.format("Attempting to write output directory %s.", outputFile.getAbsolutePath()));
                 if (!outputFile.exists()) {
-                    Logger.log(Logger.INFO_LEVEL_3 + String.format(Translation.get("tar_create_directory"), outputFile.getAbsolutePath()));
+                    Logger.log(Logger.INFO_LEVEL_3 + String.format("Attempting to create output directory %s.", outputFile.getAbsolutePath()));
                     if (!outputFile.mkdirs()) {
                         throw new IllegalStateException(String.format("Couldn't create directory %s.", outputFile.getAbsolutePath()));
                     }
@@ -59,7 +58,7 @@ public class GetFromTar {
     }
 
     private static File unGzip(final File inputFile, final File outputDir) throws Exception {
-        Logger.log(Logger.INFO_LEVEL_3 + String.format(Translation.get("tar_ungzip"), inputFile.getAbsolutePath(), outputDir.getAbsolutePath()));
+        Logger.log(Logger.INFO_LEVEL_3 + String.format("UnGZipping %s to dir %s.", inputFile.getAbsolutePath(), outputDir.getAbsolutePath()));
 
         final File outputFile = new File(outputDir, inputFile.getName().substring(0, inputFile.getName().length() - 3));
         if(!outputFile.toPath().normalize().startsWith(outputDir.toPath())) {
@@ -93,7 +92,7 @@ public class GetFromTar {
     public static List<File> getValidDatFilesFromTarArchives(List<File> tars) throws Exception {
         List<File> validFiles = new ArrayList<>();
         for (File tar : tars) {
-            Logger.log(Logger.INFO_LEVEL_3 + String.format(Translation.get("tar_extract"), tar.getAbsolutePath()));
+            Logger.log(Logger.INFO_LEVEL_3 + String.format("Extracting data from %s", tar.getAbsolutePath()));
             validFiles.addAll(getValidDatFilesFromTarArchive(tar));
         }
         return validFiles;

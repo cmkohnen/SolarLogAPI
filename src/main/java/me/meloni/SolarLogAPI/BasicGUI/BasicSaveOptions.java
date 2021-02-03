@@ -2,7 +2,6 @@ package me.meloni.SolarLogAPI.BasicGUI;
 
 import me.meloni.SolarLogAPI.DatabaseInteraction.SQLDatabase;
 import me.meloni.SolarLogAPI.Handling.Logger;
-import me.meloni.SolarLogAPI.Handling.Translation;
 import me.meloni.SolarLogAPI.SolarMap;
 
 import javax.swing.*;
@@ -25,7 +24,7 @@ public class BasicSaveOptions {
     private static JPanel panel(SolarMap solarMap) {
         JPanel panel = new JPanel();
 
-        JButton writeToFile = new JButton(Translation.get("gui_write_file"));
+        JButton writeToFile = new JButton("Write to file");
         writeToFile.addActionListener(actionEvent -> {
 
             try {
@@ -38,23 +37,23 @@ public class BasicSaveOptions {
             }
         });
 
-        JButton writeToInfluxDB = new JButton(Translation.get("gui_write_influx"));
+        JButton writeToInfluxDB = new JButton("Write to InfluxDB");
         writeToInfluxDB.addActionListener(actionEvent -> {
             try {
                 solarMap.writeToInfluxDBDataBase(GetDatabase.influxDatabase().getInfluxDB(), 125000);
             } catch (NullPointerException e) {
-                Logger.warn(Logger.INFO_LEVEL_3 + Translation.get("influx_error"));
+                Logger.warn(Logger.INFO_LEVEL_3 + "Database incorrect.");
             }
         });
 
-        JButton writeToSQL = new JButton(Translation.get("gui_write_sql"));
+        JButton writeToSQL = new JButton("Write to SQL");
         writeToSQL.addActionListener(actionEvent -> {
             SQLDatabase sqlDatabase = GetDatabase.SQLDatabase();
             try {
                 assert sqlDatabase != null;
                 solarMap.writeToMySQLDatabase(sqlDatabase.getHost(), sqlDatabase.getUser(), sqlDatabase.getPassword(), sqlDatabase.getDatabase(), sqlDatabase.getTable());
             } catch (NullPointerException | SQLException e) {
-                Logger.warn(Logger.INFO_LEVEL_3 + String.format(Translation.get("sql_error"), "null"));
+                Logger.warn(Logger.INFO_LEVEL_3 + "Unable to write to database");
             }
         });
 

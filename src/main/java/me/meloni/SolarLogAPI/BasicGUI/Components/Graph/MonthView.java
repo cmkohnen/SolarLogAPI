@@ -1,8 +1,8 @@
 package me.meloni.SolarLogAPI.BasicGUI.Components.Graph;
 
 import me.meloni.SolarLogAPI.BasicGUI.GetGraphData;
-import me.meloni.SolarLogAPI.Handling.Translation;
 import me.meloni.SolarLogAPI.SolarMap;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,7 +12,6 @@ import java.text.ParseException;
 import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * This Class represents the implementation of a simple graph for monthly scale.
@@ -203,19 +202,19 @@ public class MonthView extends JPanel {
             double ExactMouseXValue = (mouseX - padding -labelPadding) / xScale;
 
             g2.setColor(labelColor);
-            String mouseDate = ((int) Math.floor(ExactMouseXValue) + 1) + ". " + yearMonth.getMonthValue() + ". " + yearMonth.getYear();
-            g2.drawString(String.format(Translation.get("gui_graph_monthly_description"), mouseDate), padding + labelPadding + valuePadding, padding + valuePadding * 2);
+            String mouseDate = String.format("%s. %s. %s", (int) Math.floor(ExactMouseXValue) + 1, yearMonth.getMonthValue(), yearMonth.getYear());
+            g2.drawString(String.format("Values at %s:", mouseDate), padding + labelPadding + valuePadding, padding + valuePadding * 2);
             int i = 2;
             if(row1Visible) {
-                g2.drawString(String.format(Translation.get("gui_graph_monthly_value1"), Math.round(data.get((int)ExactMouseXValue).get(0))), padding + labelPadding + valuePadding, padding + (valuePadding * 2) * i);
+                g2.drawString(String.format("Verbrauch kWH: %s", Math.round(data.get((int)ExactMouseXValue).get(0))), padding + labelPadding + valuePadding, padding + (valuePadding * 2) * i);
                 i++;
             }
             if(row2Visible) {
-                g2.drawString(String.format(Translation.get("gui_graph_monthly_value2"), Math.round(data.get((int)ExactMouseXValue).get(1))), padding + labelPadding + valuePadding, padding + (valuePadding * 2) * i);
+                g2.drawString(String.format("EigenVerbrauch kWH: %s", Math.round(data.get((int)ExactMouseXValue).get(1))), padding + labelPadding + valuePadding, padding + (valuePadding * 2) * i);
                 i++;
             }
             if(row3Visible) {
-                g2.drawString(String.format(Translation.get("gui_graph_monthly_value3"), Math.round(data.get((int)ExactMouseXValue).get(2))), padding + labelPadding + valuePadding, padding + (valuePadding * 2) * i);
+                g2.drawString(String.format("Produktion kWH: %s", Math.round(data.get((int)ExactMouseXValue).get(2))), padding + labelPadding + valuePadding, padding + (valuePadding * 2) * i);
             }
         }
 
@@ -343,7 +342,7 @@ public class MonthView extends JPanel {
     }
 
     public String getTitle() {
-        String month = Translation.get(getMonth().getMonth().toString().toLowerCase(Locale.ROOT)) + " " + getMonth().getYear();
-        return String.format(Translation.get("gui_graph_monthly_title"), month);
+        String month = String.format("%s %s", StringUtils.capitalize(getMonth().getMonth().toString().toLowerCase()), getMonth().getYear());
+        return String.format("Visualizing %s", month);
     }
 }
