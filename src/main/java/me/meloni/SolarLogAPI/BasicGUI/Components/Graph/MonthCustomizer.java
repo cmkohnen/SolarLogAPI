@@ -1,13 +1,13 @@
 package me.meloni.SolarLogAPI.BasicGUI.Components.Graph;
 
-import me.meloni.SolarLogAPI.BasicGUI.Components.DatePicker;
-import me.meloni.SolarLogAPI.DataConversion.GetStartOf;
 import me.meloni.SolarLogAPI.BasicGUI.BasicGraphCustomizer;
+import me.meloni.SolarLogAPI.BasicGUI.Components.MonthPicker;
 import me.meloni.SolarLogAPI.SolarMap;
 
 import javax.swing.*;
 import java.awt.*;
 import java.text.ParseException;
+import java.time.YearMonth;
 
 /**
  * This Class includes a function to display monthly graph data.
@@ -22,24 +22,20 @@ public class MonthCustomizer extends JPanel{
         this.instance = instance;
         setLayout(new BorderLayout());
 
-        DatePicker picker = new DatePicker();
-        picker.addVetoPolicy(data);
-        picker.setMaximumSize(new Dimension(200,40));
-        picker.addDateChangeListener(event -> {
-            if(data.includesMonth(GetStartOf.yearMonth(event.getNewDate()))){
+
+        MonthPicker picker = new MonthPicker();
+        picker.setSize(new Dimension(getWidth(), 80));
+        picker.addActionListener(event -> {
+            YearMonth month = picker.getMonth();
+            if(month != null && data.includesMonth(month)) {
                 try {
-                    cmp = new MonthView(data, GetStartOf.yearMonth(event.getNewDate()));
+                    cmp = new MonthView(data, month);
                     paintComponent();
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-            } else {
-                if(!(event.getOldDate() == null)){
-                    picker.setDate(event.getOldDate());
-                }
             }
         });
-
         add(picker, BorderLayout.PAGE_START);
 
         JPanel p = new JPanel();

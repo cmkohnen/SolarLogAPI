@@ -1,7 +1,7 @@
 package me.meloni.SolarLogAPI.BasicGUI.Components.Graph;
 
-import me.meloni.SolarLogAPI.BasicGUI.Components.DatePicker;
 import me.meloni.SolarLogAPI.BasicGUI.BasicGraphCustomizer;
+import me.meloni.SolarLogAPI.BasicGUI.Components.YearPicker;
 import me.meloni.SolarLogAPI.SolarMap;
 
 import javax.swing.*;
@@ -22,16 +22,18 @@ public class YearCustomizer extends JPanel{
         this.instance = instance;
         setLayout(new BorderLayout());
 
-        DatePicker picker = new DatePicker();
-        picker.addVetoPolicy(data);
+        YearPicker picker = new YearPicker();
         picker.setMaximumSize(new Dimension(200,40));
-        picker.addDateChangeListener(event -> {
-            try {
-                cmp = new YearView(data, Year.of(event.getNewDate().getYear()));
-            } catch (ParseException e) {
-                e.printStackTrace();
+        picker.addActionListener(event -> {
+            Year year = picker.getYear();
+            if(year != null) {
+                try {
+                    cmp = new YearView(data, year);
+                    paintComponent();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
-            paintComponent();
         });
 
         add(picker, BorderLayout.PAGE_START);
