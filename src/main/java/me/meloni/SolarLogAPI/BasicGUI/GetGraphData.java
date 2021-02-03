@@ -1,6 +1,7 @@
 package me.meloni.SolarLogAPI.BasicGUI;
 
 import me.meloni.SolarLogAPI.DataConversion.Entries;
+import me.meloni.SolarLogAPI.Handling.Logger;
 
 import java.text.ParseException;
 import java.time.Year;
@@ -55,28 +56,28 @@ public class GetGraphData {
         List<List<Double>> values = new ArrayList<>();
 
         for (Date timestamp : timestamps) {
-                List<Double> currentData = new ArrayList<>();
-                int yieldDay = 0;
-                int consYieldDay = 0;
-                int ownConsumption1 = 0;
+            List<Double> currentData = new ArrayList<>();
+            int yieldDay = 0;
+            int consYieldDay = 0;
+            int ownConsumption1 = 0;
 
-                List<Date> days = Entries.getEntriesPerDay(timestamp);
-                for (Date date : days) {
-                    if (data.containsKey(date)) {
-                        int consPac = data.get(date).get(0);
-                        int Pac = data.get(date).get(2);
-                        int ownConsumption2 = data.get(date).get(4);
+            List<Date> days = Entries.getEntriesPerDay(timestamp);
+            for (Date date : days) {
+                if (data.containsKey(date)) {
+                    int consPac = data.get(date).get(0);
+                    int Pac = data.get(date).get(2);
+                    int ownConsumption2 = data.get(date).get(4);
 
-                        yieldDay = yieldDay + Pac;
-                        consYieldDay = consYieldDay + consPac;
-                        ownConsumption1 = ownConsumption1 + ownConsumption2;
-                    }
+                    yieldDay = yieldDay + Pac;
+                    consYieldDay = consYieldDay + consPac;
+                    ownConsumption1 = ownConsumption1 + ownConsumption2;
                 }
-                currentData.add((double) yieldDay);
-                currentData.add((double) consYieldDay);
-                currentData.add((double) ownConsumption1);
+            }
+            currentData.add((double) yieldDay);
+            currentData.add((double) consYieldDay);
+            currentData.add((double) ownConsumption1);
 
-                values.add(currentData);
+            values.add(currentData);
         }
         return values;
     }

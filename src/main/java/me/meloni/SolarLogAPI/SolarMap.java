@@ -18,6 +18,7 @@ import org.json.simple.JSONObject;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.NoSuchFileException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.time.LocalDate;
@@ -64,8 +65,14 @@ public class SolarMap {
      * @throws  IOException Unusable file
      * @throws ClassNotFoundException Unusable file
      */
-    public SolarMap(File dataFile) throws IOException, ClassNotFoundException { init();
-        addFromSolarLogFile(dataFile);}
+    public SolarMap(File dataFile) throws IOException, ClassNotFoundException {
+        init();
+        if(dataFile != null) {
+            addFromSolarLogFile(dataFile);
+        } else {
+            throw new NoSuchFileException("This file does not exist.");
+        }
+    }
 
     /**
      * Instantiates blank

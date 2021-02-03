@@ -88,7 +88,7 @@ public class Entries {
           int maxDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
           for (int i = 1; i < maxDay; i++)
           {
-              cal.set(yearMonth.getYear(),yearMonth.getMonthValue() ,i + 1,0,0,0);
+              cal.set(yearMonth.getYear(),(yearMonth.getMonthValue() - 1) ,i,0,0,0);
               dateList.add(cal.getTime());
           }
           return dateList;
