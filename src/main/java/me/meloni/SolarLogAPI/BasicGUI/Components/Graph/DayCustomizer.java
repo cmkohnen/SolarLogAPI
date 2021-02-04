@@ -61,24 +61,44 @@ public class DayCustomizer extends JPanel{
         b4.setSelected(true);
         b5.setSelected(true);
         b1.addActionListener(actionEvent -> {
-            cmp.setRow1Visible(b1.isSelected());
-            paintComponent();
+            try {
+                cmp.setRow1Visible(b1.isSelected());
+                paintComponent();
+            } catch (NullPointerException e) {
+                b1.setSelected(!b1.isSelected());
+            }
         });
         b2.addActionListener(actionEvent -> {
-            cmp.setRow2Visible(b2.isSelected());
-            paintComponent();
+            try {
+                cmp.setRow2Visible(b2.isSelected());
+                paintComponent();
+            } catch (NullPointerException e) {
+                b2.setSelected(!b2.isSelected());
+            }
         });
         b3.addActionListener(actionEvent -> {
-            cmp.setRow3Visible(b3.isSelected());
-            paintComponent();
+            try {
+                cmp.setRow3Visible(b3.isSelected());
+                paintComponent();
+            } catch (NullPointerException e) {
+                b3.setSelected(!b3.isSelected());
+            }
         });
         b4.addActionListener(actionEvent -> {
-            cmp.setRow4Visible(b4.isSelected());
-            paintComponent();
+            try {
+                cmp.setRow4Visible(b4.isSelected());
+                paintComponent();
+            } catch (NullPointerException e) {
+                b4.setSelected(!b4.isSelected());
+            }
         });
         b5.addActionListener(actionEvent -> {
-            cmp.setRow5Visible(b5.isSelected());
-            paintComponent();
+            try {
+                cmp.setRow5Visible(b5.isSelected());
+                paintComponent();
+            } catch (NullPointerException e) {
+                b5.setSelected(!b5.isSelected());
+            }
         });
         p.add(b1);
         p.add(b2);
@@ -90,8 +110,12 @@ public class DayCustomizer extends JPanel{
         mouseGUI.setText("Mouse Feedback");
         mouseGUI.setSelected(true);
         mouseGUI.addActionListener(actionEvent -> {
-            cmp.setMouseGUIVisible(mouseGUI.isSelected());
-            paintComponent();
+            try {
+                cmp.setMouseGUIVisible(mouseGUI.isSelected());
+                paintComponent();
+            } catch (NullPointerException e) {
+                mouseGUI.setSelected(!mouseGUI.isSelected());
+            }
         });
         p.add(mouseGUI);
 
@@ -100,10 +124,14 @@ public class DayCustomizer extends JPanel{
         shaded.setSelected(true);
         shaded.addActionListener(actionEvent -> {
             boolean selected = shaded.isSelected();
-            cmp.setRow1Shaded(selected);
-            cmp.setRow3Shaded(selected);
-            cmp.setRow5Shaded(selected);
-            paintComponent();
+            try {
+                cmp.setRow1Shaded(selected);
+                cmp.setRow3Shaded(selected);
+                cmp.setRow5Shaded(selected);
+                paintComponent();
+            } catch (NullPointerException e) {
+                shaded.setSelected(!selected);
+            }
         });
         p.add(shaded);
 

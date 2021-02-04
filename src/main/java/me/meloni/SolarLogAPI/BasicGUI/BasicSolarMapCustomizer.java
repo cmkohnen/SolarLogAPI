@@ -131,8 +131,12 @@ public class BasicSolarMapCustomizer {
 
         JButton addInfluxDB = new JButton("Add InfluxDB");
         addInfluxDB.addActionListener(e -> {
-            influxDatabases.add(GetDatabase.influxDatabase());
-            repaintList();
+            try {
+                influxDatabases.add(GetDatabase.influxDatabase());
+                repaintList();
+            } catch (NullPointerException ignored) {
+
+            }
         });
 
         JButton addJSFile = new JButton("Add .js-file");

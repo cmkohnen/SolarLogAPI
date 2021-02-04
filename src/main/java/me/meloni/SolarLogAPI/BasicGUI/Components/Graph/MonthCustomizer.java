@@ -51,16 +51,28 @@ public class MonthCustomizer extends JPanel{
         b2.setSelected(true);
         b3.setSelected(true);
         b1.addActionListener(actionEvent -> {
-            cmp.setRow1Visible(b1.isSelected());
-            paintComponent();
+            try {
+                cmp.setRow1Visible(b1.isSelected());
+                paintComponent();
+            } catch (NullPointerException e) {
+                b1.setSelected(!b1.isSelected());
+            }
         });
         b2.addActionListener(actionEvent -> {
-            cmp.setRow2Visible(b2.isSelected());
-            paintComponent();
+            try {
+                cmp.setRow2Visible(b2.isSelected());
+                paintComponent();
+            } catch (NullPointerException e) {
+                b2.setSelected(!b2.isSelected());
+            }
         });
         b3.addActionListener(actionEvent -> {
-            cmp.setRow3Visible(b3.isSelected());
-            paintComponent();
+            try {
+                cmp.setRow3Visible(b3.isSelected());
+                paintComponent();
+            } catch (NullPointerException e) {
+                b3.setSelected(!b3.isSelected());
+            }
         });
         p.add(b1);
         p.add(b2);
@@ -70,8 +82,12 @@ public class MonthCustomizer extends JPanel{
         mouseGUI.setText("Mouse Feedback");
         mouseGUI.setSelected(true);
         mouseGUI.addActionListener(actionEvent -> {
-            cmp.setMouseGUIVisible(mouseGUI.isSelected());
-            paintComponent();
+            try {
+                cmp.setMouseGUIVisible(mouseGUI.isSelected());
+                paintComponent();
+            } catch (NullPointerException e) {
+                mouseGUI.setSelected(!mouseGUI.isSelected());
+            }
         });
         p.add(mouseGUI);
 
@@ -80,10 +96,14 @@ public class MonthCustomizer extends JPanel{
         shaded.setSelected(false);
         shaded.addActionListener(actionEvent -> {
             boolean selected = shaded.isSelected();
-            cmp.setRow1Shaded(selected);
-            cmp.setRow2Shaded(selected);
-            cmp.setRow3Shaded(selected);
-            paintComponent();
+            try {
+                cmp.setRow1Shaded(selected);
+                cmp.setRow2Shaded(selected);
+                cmp.setRow3Shaded(selected);
+                paintComponent();
+            } catch (NullPointerException e) {
+                shaded.setSelected(!selected);
+            }
         });
         p.add(shaded);
 

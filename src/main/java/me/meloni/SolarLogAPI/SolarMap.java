@@ -22,6 +22,7 @@ import java.nio.file.NoSuchFileException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.time.LocalDate;
+import java.time.Year;
 import java.time.YearMonth;
 import java.util.*;
 import java.util.function.BiConsumer;
@@ -132,9 +133,8 @@ public class SolarMap {
      * Add imported data from a .dat-file
      * @author ChaosMelone9
      * @throws IOException Bad file
-     * @throws ParseException Bad date
      */
-    public void addFromDatFile(File file) throws IOException, ParseException {
+    public void addFromDatFile(File file) throws IOException {
         if(file.exists()) {
             Logger.log(Logger.INFO_LEVEL_2 + String.format("Adding to %s from file %s", id.toString(), file.getName()));
             addFromMap(GetData.getAsMapFromDatFile(file));
@@ -145,9 +145,8 @@ public class SolarMap {
      * Add imported data from a .dat-files
      * @author ChaosMelone9
      * @throws IOException Bad file
-     * @throws ParseException Bad date
      */
-    public void addFromDatFiles(List<File> files) throws IOException, ParseException {
+    public void addFromDatFiles(List<File> files) throws IOException {
         Logger.log(Logger.INFO_LEVEL_2 + String.format("Adding to %s from multiple files", id.toString()));
         int i1 = files.size();
         int i2 = 0;
@@ -267,7 +266,7 @@ public class SolarMap {
      * Add from a JS file found on the FTP server
      * @author ChaosMelone9
      */
-    public void addFromJSFile(File jsFile) throws IOException, ParseException {
+    public void addFromJSFile(File jsFile) throws IOException {
         addFromMap(GetData.getAsMapFromJSFile(jsFile));
     }
 
@@ -275,13 +274,13 @@ public class SolarMap {
      * Add from a JS files found on the FTP server
      * @author ChaosMelone9
      */
-    public void addFromJSFiles(List<File> jsFiles) throws IOException, ParseException {
+    public void addFromJSFiles(List<File> jsFiles) throws IOException {
         for (File jsFile : jsFiles) {
             addFromJSFile(jsFile);
         }
     }
 
-    public void addFromFTPServer(String host, String user, String password) throws IOException, ParseException {
+    public void addFromFTPServer(String host, String user, String password) throws IOException {
         Logger.log(Logger.INFO_LEVEL_1 + String.format("Adding to %s from FTP Server %s@%s", id, user, host));
         addFromJSFiles(GetFromFTPServer.getJSFilesFromFTPServer(host, user, password));
     }
@@ -469,6 +468,19 @@ public class SolarMap {
     public boolean includesMonth(YearMonth yearMonth) {
         for (Date date : Entries.getEntriesPerMonth(yearMonth)) {
             if(includesDay(date)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * whether or not a year is included
+     * @author ChaosMelone9
+     */
+    public boolean includesYear(Year year) {
+        for (YearMonth month : Entries.getEntriesPerYear(year)) {
+            if (includesMonth(month)) {
                 return true;
             }
         }

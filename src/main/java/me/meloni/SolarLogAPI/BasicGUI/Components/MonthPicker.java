@@ -24,6 +24,7 @@ public class MonthPicker extends JPanel {
         this.accept = new JButton("...");
 
         year.setEditable(true);
+        year.setText("2000");
 
         setLayout(new BorderLayout());
         add(month, BorderLayout.NORTH);

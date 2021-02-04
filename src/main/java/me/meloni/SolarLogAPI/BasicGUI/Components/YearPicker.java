@@ -15,6 +15,7 @@ public class YearPicker extends JPanel {
         this.accept = new JButton("...");
 
         year.setEditable(true);
+        year.setText("2000");
 
         setLayout(new BorderLayout());
         add(year, BorderLayout.WEST);
