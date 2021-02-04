@@ -241,12 +241,12 @@ public class DayView extends JPanel {
             }
         }
 
-        if(mouseX >= labelPadding + padding & mouseX <= getWidth() - labelPadding - padding & mouseY >= padding & mouseY <= getHeight() - padding - labelPadding & mouseGUI & visibleRows() > 0){
+        if(mouseX >= labelPadding + padding & mouseX <= getWidth() - labelPadding - padding & mouseY >= padding & mouseY <= getHeight() - padding - labelPadding & mouseGUI & getVisibleRows() > 0){
             g2.setStroke(stroke);
             g2.setColor(graphBackgroundColor);
-            g2.fillRect(padding + labelPadding, padding, 200, ((valuePadding + 12) * visibleRows()) + 20);
+            g2.fillRect(padding + labelPadding, padding, 200, ((valuePadding + 12) * getVisibleRows()) + 20);
             g2.setColor(gridColor);
-            g2.drawRect(padding + labelPadding, padding, 200, ((valuePadding + 12) * visibleRows()) + 20);
+            g2.drawRect(padding + labelPadding, padding, 200, ((valuePadding + 12) * getVisibleRows()) + 20);
             double ExactMouseXValue = (mouseX - padding -labelPadding) / xScale;
 
             g2.setColor(labelColor);
@@ -323,7 +323,7 @@ public class DayView extends JPanel {
         return maxScore;
     }
 
-    public int visibleRows() {
+    public int getVisibleRows() {
         int i = 0;
         if(row1Visible) {i++;}
         if(row2Visible) {i++;}
@@ -424,5 +424,93 @@ public class DayView extends JPanel {
     public String getTitle() {
         String day = new SimpleDateFormat("dd. MM. yyyy").format(getDay());
         return String.format("Visualizing %s", day);
+    }
+
+    public Color getGridColor() {
+        return gridColor;
+    }
+
+    public Color getBackgroundColor() {
+        return backgroundColor;
+    }
+
+    public Color getGraphBackgroundColor() {
+        return graphBackgroundColor;
+    }
+
+    public Color getAxisColor() {
+        return axisColor;
+    }
+
+    public Color getLabelColor() {
+        return labelColor;
+    }
+
+    public Color getRow1Color() {
+        return row1Color;
+    }
+
+    public Color getRow2Color() {
+        return row2Color;
+    }
+
+    public Color getRow3Color() {
+        return row3Color;
+    }
+
+    public Color getRow4Color() {
+        return row4Color;
+    }
+
+    public Color getRow5Color() {
+        return row5Color;
+    }
+
+    public int getPadding() {
+        return padding;
+    }
+
+    public int getLabelPadding() {
+        return labelPadding;
+    }
+
+    public int getValuePadding() {
+        return valuePadding;
+    }
+
+    public boolean isRow1Visible() {
+        return row1Visible;
+    }
+
+    public boolean isRow2Visible() {
+        return row2Visible;
+    }
+
+    public boolean isRow3Visible() {
+        return row3Visible;
+    }
+
+    public boolean isRow4Visible() {
+        return row4Visible;
+    }
+
+    public boolean isRow5Visible() {
+        return row5Visible;
+    }
+
+    public boolean isRow1Shaded() {
+        return row1Shaded;
+    }
+
+    public boolean isRow3Shaded() {
+        return row3Shaded;
+    }
+
+    public boolean isRow5Shaded() {
+        return row5Shaded;
+    }
+
+    public boolean isMouseGUIVisible() {
+        return mouseGUI;
     }
 }

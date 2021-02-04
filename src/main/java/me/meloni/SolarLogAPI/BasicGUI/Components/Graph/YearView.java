@@ -194,12 +194,12 @@ public class YearView extends JPanel {
             }
         }
 
-        if(mouseX >= labelPadding + padding & mouseX <= getWidth() - padding & mouseY >= padding & mouseY <= getHeight() - padding & mouseGUI & visibleRows() > 0){
+        if(mouseX >= labelPadding + padding & mouseX <= getWidth() - padding & mouseY >= padding & mouseY <= getHeight() - padding & mouseGUI & getVisibleRows() > 0){
             g2.setStroke(stroke);
             g2.setColor(backgroundColor);
-            g2.fillRect(padding + labelPadding, padding, 200, ((valuePadding + 12) * visibleRows()) + 20);
+            g2.fillRect(padding + labelPadding, padding, 200, ((valuePadding + 12) * getVisibleRows()) + 20);
             g2.setColor(gridColor);
-            g2.drawRect(padding + labelPadding, padding, 200, ((valuePadding + 12) * visibleRows()) + 20);
+            g2.drawRect(padding + labelPadding, padding, 200, ((valuePadding + 12) * getVisibleRows()) + 20);
             double ExactMouseXValue = (mouseX - padding -labelPadding) / xScale;
 
             g2.setColor(labelColor);
@@ -259,7 +259,7 @@ public class YearView extends JPanel {
         return maxScore;
     }
 
-    public int visibleRows() {
+    public int getVisibleRows() {
         int i = 0;
         if(row1Visible) {i++;}
         if(row2Visible) {i++;}
@@ -308,7 +308,8 @@ public class YearView extends JPanel {
     }
 
     public void setValuePadding(int i) {
-        valuePadding = i; }
+        valuePadding = i;
+    }
 
     public void setRow1Visible(boolean rowVisible) {
         row1Visible = rowVisible;
@@ -345,5 +346,77 @@ public class YearView extends JPanel {
     public String getTitle() {
         String year = getYear().toString();
         return String.format("Visualizing %s", year);
+    }
+
+    public Color getGridColor() {
+        return gridColor;
+    }
+
+    public Color getBackgroundColor() {
+        return backgroundColor;
+    }
+
+    public Color getGraphBackgroundColor() {
+        return graphBackgroundColor;
+    }
+
+    public Color getAxisColor() {
+        return axisColor;
+    }
+
+    public Color getLabelColor() {
+        return labelColor;
+    }
+
+    public Color getRow1Color() {
+        return row1Color;
+    }
+
+    public Color getRow2Color() {
+        return row2Color;
+    }
+
+    public Color getRow3Color() {
+        return row3Color;
+    }
+
+    public int getPadding() {
+        return padding;
+    }
+
+    public int getLabelPadding() {
+        return labelPadding;
+    }
+
+    public int getValuePadding() {
+        return valuePadding;
+    }
+
+    public boolean isRow1Visible() {
+        return row1Visible;
+    }
+
+    public boolean isRow2Visible() {
+        return row2Visible;
+    }
+
+    public boolean isRow3Visible() {
+        return row3Visible;
+    }
+
+    public boolean isRow1Shaded() {
+        return row1Shaded;
+    }
+
+    public boolean isRow3Shaded() {
+        return row2Shaded;
+    }
+
+    public boolean isRow5Shaded() {
+        return row3Shaded;
+    }
+
+    public boolean isMouseGUIVisible() {
+        return mouseGUI;
     }
 }
