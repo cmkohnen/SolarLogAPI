@@ -1,44 +1,87 @@
+/*
+Copyright 2020 - 2021 Christoph Kohnen
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+ */
 package me.meloni.SolarLogAPI.BasicGUI;
 
-import me.meloni.SolarLogAPI.DatabaseInteraction.Database;
+import me.meloni.SolarLogAPI.DatabaseInteraction.InfluxDatabase;
 import me.meloni.SolarLogAPI.SolarMap;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This Class includes a function to call a GUI capable of customizing a SolarMap to the users likes.
- * @author ChaosMelone9
+ * This class includes a function to call a GUI capable of customizing a SolarMap to the users likes.
+ * @author Christoph Kohnen
  * @since 1.0.0
  */
 public class BasicSolarMapCustomizer {
 
-    private static final JPanel filePanel = new JPanel();
+    /**
+     * Main panel to which every component gets added
+     */
+    private static final JPanel mainPanel = new JPanel();
+    /**
+     * Panel in which the upcoming result will be displayed
+     */
     private final JPanel files = new JPanel();
+    /**
+     * The main {@link SolarMap} to which all data is being added
+     */
     private final SolarMap map = new SolarMap();
+    /**
+     * Temporal boolean to wait until the user returns
+     */
     private boolean done = false;
-    private final List<File> importFiles = new ArrayList<>();
-    private final List<File> importTars = new ArrayList<>();
-    private final List<File> dataFiles = new ArrayList<>();
+    /**
+     * A list of all .dat files of which all data should be extracted and added into the main {@link SolarMap}
+     */
+    private final List<File> datFiles = new ArrayList<>();
+    /**
+     * A list of all tar archives of which all data should be extracted and added into the main {@link SolarMap}
+     */
+    private final List<File> tarArchives = new ArrayList<>();
+    /**
+     * A list of all SolarLog files of which all data should be extracted and added into the main {@link SolarMap}
+     */
+    private final List<File> solarLogFiles = new ArrayList<>();
+    /**
+     * A list of all .eml files of which all data should be extracted and added into the main {@link SolarMap}
+     */
     private final List<File> emlFiles = new ArrayList<>();
-    private final List<Database> databases = new ArrayList<>();
+    /**
+     * A list of all Influx databases of which all data should be extracted and added into the main {@link SolarMap}
+     */
+    private final List<InfluxDatabase> influxDatabases = new ArrayList<>();
+    /**
+     * A list of all .js files of which all data should be extracted and added into the main {@link SolarMap}
+     */
     private final List<File> jsFiles = new ArrayList<>();
 
-    public BasicSolarMapCustomizer() {
-        initPanel();
-    }
-
+    /**
+     * main function to call a GUI capable of customizing a SolarMap to the users likes.
+     * @return A customized {@link SolarMap}
+     */
     public static SolarMap solarMap() {
         JFrame f = new JFrame();
-        f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         f.setSize(300,500);
         f.setTitle("Customization");
         BasicSolarMapCustomizer basicSolarMapCustomizer = new BasicSolarMapCustomizer();
-        f.add(filePanel);
+        f.add(mainPanel);
         f.setVisible(true);
         while (!basicSolarMapCustomizer.done) {
             System.getSecurityManager();
@@ -48,49 +91,48 @@ public class BasicSolarMapCustomizer {
         return basicSolarMapCustomizer.map;
     }
 
-    private void initPanel() {
-        filePanel.setLayout(new BorderLayout());
+    /**
+     * Constructor to setup all components
+     */
+    public BasicSolarMapCustomizer() {
+        mainPanel.setLayout(new BorderLayout());
 
         JPanel buttons = new JPanel();
         buttons.setLayout(new BoxLayout(buttons, BoxLayout.Y_AXIS));
 
-        JButton addFile = new JButton("Add File");
-        addFile.addActionListener(e -> {
+        JButton addDatFile = new JButton("Add .dat-file");
+        addDatFile.addActionListener(e -> {
             File f = GetChosenFile.chosenDatFile();
             if(!(f == null) && f.exists()) {
-                importFiles.add(f);
+                datFiles.add(f);
                 repaintList();
             }
         });
 
-        JButton addDirectory = new JButton("Add from Folder");
-        addDirectory.addActionListener(e -> {
-            try {
-                List<File> files = GetChosenFile.chosenDatFilesInDirectory();
-                if(!(files == null)) {
-                    importFiles.addAll(files);
-                    repaintList();
-                }
-            } catch (IOException ioException) {
-                ioException.printStackTrace();
+        JButton addDatFiles = new JButton("Add .dat-files");
+        addDatFiles.addActionListener(e -> {
+            List<File> files = GetChosenFile.chosenDatFilesInDirectory();
+            if(!(files == null)) {
+                datFiles.addAll(files);
+                repaintList();
             }
         });
 
-        JButton addTar = new JButton("Add from tar");
-        addTar.addActionListener(e -> {
+        JButton addTarArchive = new JButton("Add tar archive");
+        addTarArchive.addActionListener(e -> {
             File f = GetChosenFile.chosenTarArchive();
             if(!(f == null) && f.exists()) {
-                importTars.add(f);
+                tarArchives.add(f);
                 repaintList();
             }
         });
 
-        JButton addTars = new JButton("Add from tars");
-        addTars.addActionListener(e -> {
+        JButton addTarArchives = new JButton("Add tar archives");
+        addTarArchives.addActionListener(e -> {
             try {
                 List<File> files = GetChosenFile.chosenTarArchivesInDirectory();
                 if(!(files == null)) {
-                    importTars.addAll(files);
+                    tarArchives.addAll(files);
                     repaintList();
                 }
             } catch (Exception exception) {
@@ -98,17 +140,17 @@ public class BasicSolarMapCustomizer {
             }
         });
 
-        JButton addDataFile = new JButton("Add from Data File");
-        addDataFile.addActionListener(e -> {
+        JButton addSolarLogFile = new JButton("Add data file");
+        addSolarLogFile.addActionListener(e -> {
             File f = GetChosenFile.chosenSolarLogFile();
             if(!(f == null) && f.exists()) {
-                dataFiles.add(f);
+                solarLogFiles.add(f);
                 repaintList();
             }
         });
 
-        JButton addEML = new JButton("Add from EML");
-        addEML.addActionListener(e -> {
+        JButton addEMLFile = new JButton("Add .eml-file");
+        addEMLFile.addActionListener(e -> {
             File f = GetChosenFile.chosenEMLFile();
             if(!(f == null) && f.exists()) {
                 emlFiles.add(f);
@@ -116,8 +158,8 @@ public class BasicSolarMapCustomizer {
             }
         });
 
-        JButton addEMLs = new JButton("Add from EMLs");
-        addEMLs.addActionListener(e -> {
+        JButton addEMLFiles = new JButton("Add .eml-files");
+        addEMLFiles.addActionListener(e -> {
             try {
                 List<File> files = GetChosenFile.chosenEMLFilesInDirectory();
                 if(!(files == null)) {
@@ -129,14 +171,18 @@ public class BasicSolarMapCustomizer {
             }
         });
 
-        JButton addDatabase = new JButton("Add from Database");
-        addDatabase.addActionListener(e -> {
-            databases.add(GetDataBase.database());
-            repaintList();
+        JButton addInfluxDB = new JButton("Add InfluxDB");
+        addInfluxDB.addActionListener(e -> {
+            try {
+                influxDatabases.add(GetDatabase.influxDatabase());
+                repaintList();
+            } catch (NullPointerException ignored) {
+
+            }
         });
 
-        JButton addJS = new JButton("Add from JS");
-        addJS.addActionListener(e -> {
+        JButton addJSFile = new JButton("Add .js-file");
+        addJSFile.addActionListener(e -> {
             File f = GetChosenFile.chosenJSFile();
             if(!(f == null) && f.exists()) {
                 jsFiles.add(f);
@@ -144,8 +190,8 @@ public class BasicSolarMapCustomizer {
             }
         });
 
-        JButton addJSs = new JButton("Add from JSs");
-        addJSs.addActionListener(e -> {
+        JButton addJSFiles = new JButton("Add .js-files");
+        addJSFiles.addActionListener(e -> {
             try {
                 List<File> files = GetChosenFile.chosenJSFilesInDirectory();
                 if(!(files == null)) {
@@ -157,44 +203,44 @@ public class BasicSolarMapCustomizer {
             }
         });
 
-        buttons.add(addFile);
-        buttons.add(addDirectory);
-        buttons.add(addTar);
-        buttons.add(addTars);
-        buttons.add(addDataFile);
-        buttons.add(addEML);
-        buttons.add(addEMLs);
-        buttons.add(addDatabase);
-        buttons.add(addJS);
-        buttons.add(addJSs);
+        buttons.add(addDatFile);
+        buttons.add(addDatFiles);
+        buttons.add(addTarArchive);
+        buttons.add(addTarArchives);
+        buttons.add(addSolarLogFile);
+        buttons.add(addEMLFile);
+        buttons.add(addEMLFiles);
+        buttons.add(addInfluxDB);
+        buttons.add(addJSFile);
+        buttons.add(addJSFiles);
 
-        filePanel.setLayout(new BorderLayout());
+        mainPanel.setLayout(new BorderLayout());
 
         files.setLayout(new BoxLayout(files, BoxLayout.Y_AXIS));
 
-        filePanel.add(files, BorderLayout.CENTER);
+        mainPanel.add(files, BorderLayout.CENTER);
 
-        filePanel.add(buttons, BorderLayout.PAGE_START);
+        mainPanel.add(buttons, BorderLayout.PAGE_START);
 
         JButton retrain = new JButton("Return");
-        filePanel.add(retrain, BorderLayout.PAGE_END);
+        mainPanel.add(retrain, BorderLayout.PAGE_END);
         retrain.addActionListener(e -> {
             try {
-                if(importFiles.size() > 0) {
-                    map.addFromDatFiles(importFiles);
+                if(datFiles.size() > 0) {
+                    map.addFromDatFiles(datFiles);
                 }
-                if(importTars.size() > 0) {
-                    map.addFromTarArchives(importTars);
+                if(tarArchives.size() > 0) {
+                    map.addFromTarArchives(tarArchives);
                 }
-                if(dataFiles.size() > 0) {
-                    map.addFromSolarLogFiles(dataFiles);
+                if(solarLogFiles.size() > 0) {
+                    map.addFromSolarLogFiles(solarLogFiles);
                 }
                 if(emlFiles.size() > 0) {
                     map.addFromEMLFiles(emlFiles);
                 }
-                if(databases.size() > 0) {
-                    for (Database database : databases) {
-                        map.addFromInfluxDB(database.getInfluxDB(), database.getDatabase());
+                if(influxDatabases.size() > 0) {
+                    for (InfluxDatabase influxDatabase : influxDatabases) {
+                        map.addFromInfluxDB(influxDatabase.getInfluxDB(), influxDatabase.getDatabase());
                     }
                 }
                 if(jsFiles.size() > 0) {
@@ -205,45 +251,46 @@ public class BasicSolarMapCustomizer {
                 ioException.printStackTrace();
             }
         });
-
-
     }
 
+    /**
+     * Repaint the list displaying from where data should be added
+     */
     private void repaintList() {
         files.removeAll();
-        files.add(new JLabel("Importing from:"));
-        if(importFiles.size() > 0) {
-            files.add(new JLabel("Data Files:"));
-            for (File importFile : importFiles) {
+        files.add(new JLabel("Importing from: "));
+        if(datFiles.size() > 0) {
+            files.add(new JLabel(".dat-files: "));
+            for (File importFile : datFiles) {
                 files.add(new JLabel(importFile.getName()));
             }
         }
-        if(importTars.size() > 0) {
-            files.add(new JLabel("Tar Archives:"));
-            for (File importTar : importTars) {
+        if(tarArchives.size() > 0) {
+            files.add(new JLabel("tar archives: "));
+            for (File importTar : tarArchives) {
                 files.add(new JLabel(importTar.getName()));
             }
         }
-        if(dataFiles.size() > 0) {
-            files.add(new JLabel("Data Files:"));
-            for (File dataFile : dataFiles) {
+        if(solarLogFiles.size() > 0) {
+            files.add(new JLabel("SolarLog files: "));
+            for (File dataFile : solarLogFiles) {
                 files.add(new JLabel(dataFile.getName()));
             }
         }
         if(emlFiles.size() > 0) {
-            files.add(new JLabel("EML Files:"));
+            files.add(new JLabel(".eml-files: "));
             for (File emlFile : emlFiles) {
                 files.add(new JLabel(emlFile.getName()));
             }
         }
-        if(databases.size() > 0) {
-            files.add(new JLabel("Databases:"));
-            for (Database database : databases) {
-                files.add(new JLabel(database.getInfluxDB().version()));
+        if(influxDatabases.size() > 0) {
+            files.add(new JLabel("InfluxDBs: "));
+            for (InfluxDatabase influxDatabase : influxDatabases) {
+                files.add(new JLabel(influxDatabase.getInfluxDB().version()));
             }
         }
         if(jsFiles.size() > 0) {
-            files.add(new JLabel("JS Files:"));
+            files.add(new JLabel(".js-files: "));
             for (File jsFile : jsFiles) {
                 files.add(new JLabel(jsFile.getName()));
             }

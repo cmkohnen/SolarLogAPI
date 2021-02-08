@@ -15,14 +15,20 @@ import java.nio.file.Files;
 import java.nio.file.attribute.UserDefinedFileAttributeView;
 
 /**
- * This Class includes a function to write an object to a specified file.
- * @author ChaosMelone9
+ * This class includes a function to write an {@link FileObject} to a specified file.
+ * @author Christoph Kohnen
  * @since 0.0.2
  */
 public class WriteFileObject {
+    /**
+     * Function to write a {@link FileObject} to a {@link File}
+     * @param file The {@link File} the {@link FileObject} should be written to
+     * @param object The {@link FileObject} desired to write to the file system
+     * @throws IOException If the process is not permitted to modify the {@link File}
+     */
     public static void write(File file, FileObject object) throws IOException {
         UserDefinedFileAttributeView view = Files.getFileAttributeView(GetFile.getPathFromFile(file), UserDefinedFileAttributeView.class);
-        Logger.log(Logger.INFO_LEVEL_2 + "Writing to \"" + file + "\". This may take a while.");
+        Logger.log(Logger.INFO_LEVEL_2 + String.format("Writing file %s. This may take a while.", file));
         FileOutputStream f = new FileOutputStream(file);
         ObjectOutputStream s = new ObjectOutputStream(f);
         s.writeObject(object);

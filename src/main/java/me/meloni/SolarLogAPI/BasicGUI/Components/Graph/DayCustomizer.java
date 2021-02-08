@@ -1,24 +1,49 @@
+/*
+Copyright 2020 - 2021 Christoph Kohnen
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+ */
 package me.meloni.SolarLogAPI.BasicGUI.Components.Graph;
 
+import me.meloni.SolarLogAPI.BasicGUI.BasicGraphCustomizer;
 import me.meloni.SolarLogAPI.BasicGUI.Components.DatePicker;
-import me.meloni.SolarLogAPI.BasicGUI.GraphCustomizer;
 import me.meloni.SolarLogAPI.DataConversion.GetStartOf;
 import me.meloni.SolarLogAPI.SolarMap;
 
 import javax.swing.*;
 import java.awt.*;
-import java.text.ParseException;
 
 /**
- * This Class includes a function to display daily graph data.
- * @author ChaosMelone9
+ * This class includes a function to display daily graph data.
+ * @author Christoph Kohnen
  * @since 1.0.0
  */
-public class DayCustomizer extends JPanel{
-    static DayView cmp = null;
-    GraphCustomizer instance;
+public class DayCustomizer extends JPanel {
+    /**
+     * The currently used graph
+     */
+    static DayView graph = null;
+    /**
+     * The instance of the {@link BasicGraphCustomizer}
+     */
+    BasicGraphCustomizer instance;
 
-    public DayCustomizer(SolarMap data, GraphCustomizer instance) {
+    /**
+     * Construct the JPanel and setup all components
+     * @param data The data that should be used
+     * @param instance The instance of the {@link BasicGraphCustomizer}
+     */
+    public DayCustomizer(SolarMap data, BasicGraphCustomizer instance) {
         this.instance = instance;
         setLayout(new BorderLayout());
 
@@ -27,12 +52,8 @@ public class DayCustomizer extends JPanel{
         picker.setMaximumSize(new Dimension(200,40));
         picker.addDateChangeListener(event -> {
             if(data.includesDay(event.getNewDate())){
-                try {
-                    cmp = new DayView(data, GetStartOf.day(event.getNewDate()));
-                    paintComponent();
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
+                graph = new DayView(data, GetStartOf.day(event.getNewDate()));
+                paintComponent();
             } else {
                 if(!(event.getOldDate() == null)){
                     picker.setDate(event.getOldDate());
@@ -50,35 +71,55 @@ public class DayCustomizer extends JPanel{
         JCheckBox b3 = new JCheckBox();
         JCheckBox b4 = new JCheckBox();
         JCheckBox b5 = new JCheckBox();
-        b1.setText("Row 1");
-        b2.setText("Row 2");
-        b3.setText("Row 3");
-        b4.setText("Row 4");
-        b5.setText("Row 5");
+        b1.setText("verbrauchw");
+        b2.setText("verbrauchkwh");
+        b3.setText("leistungw");
+        b4.setText("ertragkwh");
+        b5.setText("energieverbrauchw");
         b1.setSelected(true);
         b2.setSelected(true);
         b3.setSelected(true);
         b4.setSelected(true);
         b5.setSelected(true);
         b1.addActionListener(actionEvent -> {
-            cmp.setRow1Visible(b1.isSelected());
-            paintComponent();
+            try {
+                graph.setRow1Visible(b1.isSelected());
+                paintComponent();
+            } catch (NullPointerException e) {
+                b1.setSelected(!b1.isSelected());
+            }
         });
         b2.addActionListener(actionEvent -> {
-            cmp.setRow2Visible(b2.isSelected());
-            paintComponent();
+            try {
+                graph.setRow2Visible(b2.isSelected());
+                paintComponent();
+            } catch (NullPointerException e) {
+                b2.setSelected(!b2.isSelected());
+            }
         });
         b3.addActionListener(actionEvent -> {
-            cmp.setRow3Visible(b3.isSelected());
-            paintComponent();
+            try {
+                graph.setRow3Visible(b3.isSelected());
+                paintComponent();
+            } catch (NullPointerException e) {
+                b3.setSelected(!b3.isSelected());
+            }
         });
         b4.addActionListener(actionEvent -> {
-            cmp.setRow4Visible(b4.isSelected());
-            paintComponent();
+            try {
+                graph.setRow4Visible(b4.isSelected());
+                paintComponent();
+            } catch (NullPointerException e) {
+                b4.setSelected(!b4.isSelected());
+            }
         });
         b5.addActionListener(actionEvent -> {
-            cmp.setRow5Visible(b5.isSelected());
-            paintComponent();
+            try {
+                graph.setRow5Visible(b5.isSelected());
+                paintComponent();
+            } catch (NullPointerException e) {
+                b5.setSelected(!b5.isSelected());
+            }
         });
         p.add(b1);
         p.add(b2);
@@ -87,18 +128,41 @@ public class DayCustomizer extends JPanel{
         p.add(b5);
 
         JCheckBox mouseGUI = new JCheckBox();
-        mouseGUI.setText("MouseGUI");
+        mouseGUI.setText("Mouse Feedback");
         mouseGUI.setSelected(true);
         mouseGUI.addActionListener(actionEvent -> {
-            cmp.setMouseGUIVisible(mouseGUI.isSelected());
-            paintComponent();
+            try {
+                graph.setMouseGUIVisible(mouseGUI.isSelected());
+                paintComponent();
+            } catch (NullPointerException e) {
+                mouseGUI.setSelected(!mouseGUI.isSelected());
+            }
         });
         p.add(mouseGUI);
+
+        JCheckBox shaded = new JCheckBox();
+        shaded.setText("Shade graph");
+        shaded.setSelected(true);
+        shaded.addActionListener(actionEvent -> {
+            boolean selected = shaded.isSelected();
+            try {
+                graph.setRow1Shaded(selected);
+                graph.setRow3Shaded(selected);
+                graph.setRow5Shaded(selected);
+                paintComponent();
+            } catch (NullPointerException e) {
+                shaded.setSelected(!selected);
+            }
+        });
+        p.add(shaded);
 
         add(p,BorderLayout.WEST);
     }
 
+    /**
+     * Update the graph on the {@link BasicGraphCustomizer}
+     */
     private void paintComponent() {
-        instance.setGraph(cmp);
+        instance.setGraph(graph, graph.getTitle());
     }
 }

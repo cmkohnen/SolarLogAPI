@@ -7,7 +7,7 @@
     <groupId>me.meloni</groupId>
     <artifactId>SolarLogAPI</artifactId>
     <packaging>jar</packaging>
-    <version>3.8.6</version>
+    <version>4.0.0</version>
     <name>SolarLogAPI</name>
     <url>https://github.com/ChaosMelone9/SolarLogAPI</url>
     <licenses>
@@ -74,6 +74,14 @@
         </dependency>
 
         <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.19</version>
+            <scope>compile</scope>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
             <groupId>com.sun.mail</groupId>
             <artifactId>javax.mail</artifactId>
             <version>1.6.2</version>
@@ -106,6 +114,20 @@
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.2.0</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>
+                                me.meloni.SolarLogAPI.Handling.Runtime
+                            </mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
