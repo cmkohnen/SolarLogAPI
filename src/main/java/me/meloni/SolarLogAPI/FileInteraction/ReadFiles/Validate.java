@@ -1,3 +1,18 @@
+/*
+Copyright 2020 - 2021 Christoph Kohnen
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+ */
 package me.meloni.SolarLogAPI.FileInteraction.ReadFiles;
 
 import me.meloni.SolarLogAPI.FileInteraction.GetFile;
@@ -15,12 +30,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This Class includes functions to validate a file.
- * @author ChaosMelone9
+ * This class includes functions to validate a .dat or data file
+ * @author Christoph Kohnen
  * @since 0.0.1
  */
 public class Validate {
-    public static boolean isValidDataFile(File file) throws IOException {
+    /**
+     * Whether or not a .dat file is valid
+     * @param file The file which should be checked
+     * @return Whether or not it is valid
+     * @throws IOException If provided a bad file
+     */
+    public static boolean isValidDatFile(File file) throws IOException {
         boolean valid = false;
         if(file.getName().contains(".dat") & file.getName().contains("backup_data") & file.canRead()) {
                 if(FileVersion.isSupported(file)){
@@ -30,25 +51,41 @@ public class Validate {
         return valid;
     }
 
-    public static List<File> getValidFiles(List<File> files) throws IOException {
+    /**
+     * Filter valid .dat files from a list
+     * @param files The files which should be checked
+     * @return All valid files inside the provided list
+     */
+    public static List<File> getValidDatFiles(List<File> files) {
         List<File> ValidFiles = new ArrayList<>();
         int i = 0;
         int i2 = 0;
         for (File file : files) {
             i++;
             Logger.logWithoutBreakup(Logger.INFO_LEVEL_3 + String.format("Validating file %s (%s of %s)", file, i, files.size()));
-            if(isValidDataFile(file)) {
-                ValidFiles.add(file);
-                i2++;
-                Logger.logWithoutBreakup("    yes.\n");
-            } else {
-                Logger.logWithoutBreakup("    no.\n");
+            try {
+                if(isValidDatFile(file)) {
+                    ValidFiles.add(file);
+                    i2++;
+                    Logger.logWithoutBreakup("    yes.\n");
+                } else {
+                    Logger.logWithoutBreakup("    no.\n");
+                }
+            } catch (IOException e) {
+                Logger.logWithoutBreakup("    error.\n");
+                Logger.warn(String.format("Cannot validate file %s", file.getName()));
             }
         }
         Logger.log(Logger.INFO_LEVEL_3 + String.format("Done. Checked %s found %s", i, i2));
         return ValidFiles;
     }
 
+    /**
+     * Whether or not a SolarLog file is valid
+     * @param file The file which should be checked
+     * @return Whether or not the provided file is valid
+     * @throws IOException If provided a bad file
+     */
     public static boolean isValidSolarLogFile(File file) throws IOException {
         if(file.getName().contains(".solarlog")) {
             UserDefinedFileAttributeView view = Files.getFileAttributeView(GetFile.getPathFromFile(file), UserDefinedFileAttributeView.class);

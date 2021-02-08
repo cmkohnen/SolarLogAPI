@@ -6,7 +6,18 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.FileAlreadyExistsException;
 
+/**
+ * This class includes a function to write an attachment from a {@link InputStream} to the file system
+ * @author Christoph Kohnen
+ * @since 3.1.1
+ */
 public class WriteAttachment {
+    /**
+     * Writes an attachment from an {@link InputStream} to a specified location on the file system
+     * @param inputStream The stream from which to extract the attachment
+     * @param path The location, where the stream should end up
+     * @throws IOException If the file does already exist
+     */
     public static void write(InputStream inputStream, File path) throws IOException {
         if(!path.exists()) {
             FileOutputStream output = new FileOutputStream(path);
@@ -17,7 +28,7 @@ public class WriteAttachment {
             }
             output.close();
         } else {
-            throw new FileAlreadyExistsException("File " + path + "already exists!");
+            throw new FileAlreadyExistsException(String.format("File %s already exists!", path));
         }
     }
 }

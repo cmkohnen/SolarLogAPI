@@ -1,3 +1,18 @@
+/*
+Copyright 2020 - 2021 Christoph Kohnen
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+ */
 package me.meloni.SolarLogAPI.BasicGUI;
 
 import me.meloni.SolarLogAPI.DatabaseInteraction.InfluxDatabase;
@@ -6,39 +21,67 @@ import me.meloni.SolarLogAPI.SolarMap;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This Class includes a function to call a GUI capable of customizing a SolarMap to the users likes.
- * @author ChaosMelone9
+ * This class includes a function to call a GUI capable of customizing a SolarMap to the users likes.
+ * @author Christoph Kohnen
  * @since 1.0.0
  */
 public class BasicSolarMapCustomizer {
 
-    private static final JPanel filePanel = new JPanel();
+    /**
+     * Main panel to which every component gets added
+     */
+    private static final JPanel mainPanel = new JPanel();
+    /**
+     * Panel in which the upcoming result will be displayed
+     */
     private final JPanel files = new JPanel();
+    /**
+     * The main {@link SolarMap} to which all data is being added
+     */
     private final SolarMap map = new SolarMap();
+    /**
+     * Temporal boolean to wait until the user returns
+     */
     private boolean done = false;
+    /**
+     * A list of all .dat files of which all data should be extracted and added into the main {@link SolarMap}
+     */
     private final List<File> datFiles = new ArrayList<>();
+    /**
+     * A list of all tar archives of which all data should be extracted and added into the main {@link SolarMap}
+     */
     private final List<File> tarArchives = new ArrayList<>();
-    private final List<File> dataFiles = new ArrayList<>();
+    /**
+     * A list of all SolarLog files of which all data should be extracted and added into the main {@link SolarMap}
+     */
+    private final List<File> solarLogFiles = new ArrayList<>();
+    /**
+     * A list of all .eml files of which all data should be extracted and added into the main {@link SolarMap}
+     */
     private final List<File> emlFiles = new ArrayList<>();
+    /**
+     * A list of all Influx databases of which all data should be extracted and added into the main {@link SolarMap}
+     */
     private final List<InfluxDatabase> influxDatabases = new ArrayList<>();
+    /**
+     * A list of all .js files of which all data should be extracted and added into the main {@link SolarMap}
+     */
     private final List<File> jsFiles = new ArrayList<>();
 
-    public BasicSolarMapCustomizer() {
-        initPanel();
-    }
-
+    /**
+     * main function to call a GUI capable of customizing a SolarMap to the users likes.
+     * @return A customized {@link SolarMap}
+     */
     public static SolarMap solarMap() {
         JFrame f = new JFrame();
-        f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         f.setSize(300,500);
         f.setTitle("Customization");
         BasicSolarMapCustomizer basicSolarMapCustomizer = new BasicSolarMapCustomizer();
-        f.add(filePanel);
+        f.add(mainPanel);
         f.setVisible(true);
         while (!basicSolarMapCustomizer.done) {
             System.getSecurityManager();
@@ -48,8 +91,11 @@ public class BasicSolarMapCustomizer {
         return basicSolarMapCustomizer.map;
     }
 
-    private void initPanel() {
-        filePanel.setLayout(new BorderLayout());
+    /**
+     * Constructor to setup all components
+     */
+    public BasicSolarMapCustomizer() {
+        mainPanel.setLayout(new BorderLayout());
 
         JPanel buttons = new JPanel();
         buttons.setLayout(new BoxLayout(buttons, BoxLayout.Y_AXIS));
@@ -65,14 +111,10 @@ public class BasicSolarMapCustomizer {
 
         JButton addDatFiles = new JButton("Add .dat-files");
         addDatFiles.addActionListener(e -> {
-            try {
-                List<File> files = GetChosenFile.chosenDatFilesInDirectory();
-                if(!(files == null)) {
-                    datFiles.addAll(files);
-                    repaintList();
-                }
-            } catch (IOException ioException) {
-                ioException.printStackTrace();
+            List<File> files = GetChosenFile.chosenDatFilesInDirectory();
+            if(!(files == null)) {
+                datFiles.addAll(files);
+                repaintList();
             }
         });
 
@@ -98,11 +140,11 @@ public class BasicSolarMapCustomizer {
             }
         });
 
-        JButton addDataFile = new JButton("Add data file");
-        addDataFile.addActionListener(e -> {
+        JButton addSolarLogFile = new JButton("Add data file");
+        addSolarLogFile.addActionListener(e -> {
             File f = GetChosenFile.chosenSolarLogFile();
             if(!(f == null) && f.exists()) {
-                dataFiles.add(f);
+                solarLogFiles.add(f);
                 repaintList();
             }
         });
@@ -165,23 +207,23 @@ public class BasicSolarMapCustomizer {
         buttons.add(addDatFiles);
         buttons.add(addTarArchive);
         buttons.add(addTarArchives);
-        buttons.add(addDataFile);
+        buttons.add(addSolarLogFile);
         buttons.add(addEMLFile);
         buttons.add(addEMLFiles);
         buttons.add(addInfluxDB);
         buttons.add(addJSFile);
         buttons.add(addJSFiles);
 
-        filePanel.setLayout(new BorderLayout());
+        mainPanel.setLayout(new BorderLayout());
 
         files.setLayout(new BoxLayout(files, BoxLayout.Y_AXIS));
 
-        filePanel.add(files, BorderLayout.CENTER);
+        mainPanel.add(files, BorderLayout.CENTER);
 
-        filePanel.add(buttons, BorderLayout.PAGE_START);
+        mainPanel.add(buttons, BorderLayout.PAGE_START);
 
         JButton retrain = new JButton("Return");
-        filePanel.add(retrain, BorderLayout.PAGE_END);
+        mainPanel.add(retrain, BorderLayout.PAGE_END);
         retrain.addActionListener(e -> {
             try {
                 if(datFiles.size() > 0) {
@@ -190,8 +232,8 @@ public class BasicSolarMapCustomizer {
                 if(tarArchives.size() > 0) {
                     map.addFromTarArchives(tarArchives);
                 }
-                if(dataFiles.size() > 0) {
-                    map.addFromSolarLogFiles(dataFiles);
+                if(solarLogFiles.size() > 0) {
+                    map.addFromSolarLogFiles(solarLogFiles);
                 }
                 if(emlFiles.size() > 0) {
                     map.addFromEMLFiles(emlFiles);
@@ -209,10 +251,11 @@ public class BasicSolarMapCustomizer {
                 ioException.printStackTrace();
             }
         });
-
-
     }
 
+    /**
+     * Repaint the list displaying from where data should be added
+     */
     private void repaintList() {
         files.removeAll();
         files.add(new JLabel("Importing from: "));
@@ -228,9 +271,9 @@ public class BasicSolarMapCustomizer {
                 files.add(new JLabel(importTar.getName()));
             }
         }
-        if(dataFiles.size() > 0) {
-            files.add(new JLabel("data files: "));
-            for (File dataFile : dataFiles) {
+        if(solarLogFiles.size() > 0) {
+            files.add(new JLabel("SolarLog files: "));
+            for (File dataFile : solarLogFiles) {
                 files.add(new JLabel(dataFile.getName()));
             }
         }

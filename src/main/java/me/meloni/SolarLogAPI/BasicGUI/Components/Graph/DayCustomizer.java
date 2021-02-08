@@ -1,23 +1,48 @@
+/*
+Copyright 2020 - 2021 Christoph Kohnen
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+ */
 package me.meloni.SolarLogAPI.BasicGUI.Components.Graph;
 
-import me.meloni.SolarLogAPI.BasicGUI.Components.DatePicker;
 import me.meloni.SolarLogAPI.BasicGUI.BasicGraphCustomizer;
+import me.meloni.SolarLogAPI.BasicGUI.Components.DatePicker;
 import me.meloni.SolarLogAPI.DataConversion.GetStartOf;
 import me.meloni.SolarLogAPI.SolarMap;
 
 import javax.swing.*;
 import java.awt.*;
-import java.text.ParseException;
 
 /**
- * This Class includes a function to display daily graph data.
- * @author ChaosMelone9
+ * This class includes a function to display daily graph data.
+ * @author Christoph Kohnen
  * @since 1.0.0
  */
-public class DayCustomizer extends JPanel{
-    static DayView cmp = null;
+public class DayCustomizer extends JPanel {
+    /**
+     * The currently used graph
+     */
+    static DayView graph = null;
+    /**
+     * The instance of the {@link BasicGraphCustomizer}
+     */
     BasicGraphCustomizer instance;
 
+    /**
+     * Construct the JPanel and setup all components
+     * @param data The data that should be used
+     * @param instance The instance of the {@link BasicGraphCustomizer}
+     */
     public DayCustomizer(SolarMap data, BasicGraphCustomizer instance) {
         this.instance = instance;
         setLayout(new BorderLayout());
@@ -27,12 +52,8 @@ public class DayCustomizer extends JPanel{
         picker.setMaximumSize(new Dimension(200,40));
         picker.addDateChangeListener(event -> {
             if(data.includesDay(event.getNewDate())){
-                try {
-                    cmp = new DayView(data, GetStartOf.day(event.getNewDate()));
-                    paintComponent();
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
+                graph = new DayView(data, GetStartOf.day(event.getNewDate()));
+                paintComponent();
             } else {
                 if(!(event.getOldDate() == null)){
                     picker.setDate(event.getOldDate());
@@ -62,7 +83,7 @@ public class DayCustomizer extends JPanel{
         b5.setSelected(true);
         b1.addActionListener(actionEvent -> {
             try {
-                cmp.setRow1Visible(b1.isSelected());
+                graph.setRow1Visible(b1.isSelected());
                 paintComponent();
             } catch (NullPointerException e) {
                 b1.setSelected(!b1.isSelected());
@@ -70,7 +91,7 @@ public class DayCustomizer extends JPanel{
         });
         b2.addActionListener(actionEvent -> {
             try {
-                cmp.setRow2Visible(b2.isSelected());
+                graph.setRow2Visible(b2.isSelected());
                 paintComponent();
             } catch (NullPointerException e) {
                 b2.setSelected(!b2.isSelected());
@@ -78,7 +99,7 @@ public class DayCustomizer extends JPanel{
         });
         b3.addActionListener(actionEvent -> {
             try {
-                cmp.setRow3Visible(b3.isSelected());
+                graph.setRow3Visible(b3.isSelected());
                 paintComponent();
             } catch (NullPointerException e) {
                 b3.setSelected(!b3.isSelected());
@@ -86,7 +107,7 @@ public class DayCustomizer extends JPanel{
         });
         b4.addActionListener(actionEvent -> {
             try {
-                cmp.setRow4Visible(b4.isSelected());
+                graph.setRow4Visible(b4.isSelected());
                 paintComponent();
             } catch (NullPointerException e) {
                 b4.setSelected(!b4.isSelected());
@@ -94,7 +115,7 @@ public class DayCustomizer extends JPanel{
         });
         b5.addActionListener(actionEvent -> {
             try {
-                cmp.setRow5Visible(b5.isSelected());
+                graph.setRow5Visible(b5.isSelected());
                 paintComponent();
             } catch (NullPointerException e) {
                 b5.setSelected(!b5.isSelected());
@@ -111,7 +132,7 @@ public class DayCustomizer extends JPanel{
         mouseGUI.setSelected(true);
         mouseGUI.addActionListener(actionEvent -> {
             try {
-                cmp.setMouseGUIVisible(mouseGUI.isSelected());
+                graph.setMouseGUIVisible(mouseGUI.isSelected());
                 paintComponent();
             } catch (NullPointerException e) {
                 mouseGUI.setSelected(!mouseGUI.isSelected());
@@ -125,9 +146,9 @@ public class DayCustomizer extends JPanel{
         shaded.addActionListener(actionEvent -> {
             boolean selected = shaded.isSelected();
             try {
-                cmp.setRow1Shaded(selected);
-                cmp.setRow3Shaded(selected);
-                cmp.setRow5Shaded(selected);
+                graph.setRow1Shaded(selected);
+                graph.setRow3Shaded(selected);
+                graph.setRow5Shaded(selected);
                 paintComponent();
             } catch (NullPointerException e) {
                 shaded.setSelected(!selected);
@@ -138,7 +159,10 @@ public class DayCustomizer extends JPanel{
         add(p,BorderLayout.WEST);
     }
 
+    /**
+     * Update the graph on the {@link BasicGraphCustomizer}
+     */
     private void paintComponent() {
-        instance.setGraph(cmp, cmp.getTitle());
+        instance.setGraph(graph, graph.getTitle());
     }
 }

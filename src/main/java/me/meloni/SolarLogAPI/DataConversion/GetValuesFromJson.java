@@ -1,3 +1,18 @@
+/*
+Copyright 2020 - 2021 Christoph Kohnen
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+ */
 package me.meloni.SolarLogAPI.DataConversion;
 
 import org.json.simple.JSONObject;
@@ -8,9 +23,23 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+/**
+ * This class includes functions to extract all values from a JSON string found in the JSOn interface of a SolarLog
+ * @author Christoph Kohnen
+ * @since 3.3.0
+ */
 public class GetValuesFromJson {
+    /**
+     * The date format used by SolarLog
+     */
     private static final String DATEFORMAT = "dd.MM.yy HH:mm:ss";
 
+    /**
+     * Get all values from one JSON string according to the manual
+     * @param jsonInput The JSON string gotten from the SolarLog JSON interface
+     * @return All values put into a map
+     * @throws ParseException If the string is not JSON parsable
+     */
     public static Map<String, String> getMapFromJsonString(String jsonInput) throws ParseException {
         JSONParser jsonParser = new JSONParser();
         Object object = jsonParser.parse(jsonInput);
@@ -41,6 +70,13 @@ public class GetValuesFromJson {
         return data;
     }
 
+    /**
+     * Extract all important values from a JSON string according to the manual
+     * @param jsonInput The JSON string gotten from the SolarLog JSON interface
+     * @return All values in the {@link Map}<{@link Date}, {@link List}<{@link Integer}>> format
+     * @throws org.json.simple.parser.ParseException If the string is not JSON parsable
+     * @throws java.text.ParseException If the timestamp is somehow incorrect
+     */
     public static Map<Date, List<Integer>> getAsMap(String jsonInput) throws org.json.simple.parser.ParseException, java.text.ParseException {
         Map< String, String> data = getMapFromJsonString(jsonInput);
 

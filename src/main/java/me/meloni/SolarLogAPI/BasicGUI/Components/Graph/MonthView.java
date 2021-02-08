@@ -1,3 +1,18 @@
+/*
+Copyright 2020 - 2021 "Christoph Kohnen", "Hovercraft Full of Eels", "Rodrigo Azevedo"
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+ */
 package me.meloni.SolarLogAPI.BasicGUI.Components.Graph;
 
 import me.meloni.SolarLogAPI.BasicGUI.GetGraphData;
@@ -8,19 +23,24 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
-import java.text.ParseException;
 import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This Class represents the implementation of a simple graph for monthly scale.
- * @author ChaosMelone9
+ * This class represents the visualization of data in a graph mapped to a {@link JPanel}
+ *
+ * @author "Hovercraft Full of Eels", "Rodrigo Azevedo", "Christoph Kohnen"
+ *
+ * This builds upon an improved version of Hovercraft Full of Eels (https://stackoverflow.com/users/522444/hovercraft-full-of-eels)
+ * answer on StackOverflow: https://stackoverflow.com/a/8693635/753012 by Rodrigo Azevedo
+ *
  * @since 0.1.1
  */
+@SuppressWarnings({"unused", "DuplicatedCode"})
 public class MonthView extends JPanel {
 
-    private final YearMonth yearMonth;
+    private final YearMonth month;
     private final List<List<Double>> data;
 
     private Color gridColor = Color.DARK_GRAY;
@@ -51,12 +71,11 @@ public class MonthView extends JPanel {
 
     private static final Stroke GRAPH_STROKE = new BasicStroke(2f);
 
-    public MonthView(SolarMap solarMap, YearMonth month) throws ParseException {
+    public MonthView(SolarMap solarMap, YearMonth month) {
         this.data = GetGraphData.getMonthGraphData(month, solarMap.getAsMap());
-        this.yearMonth = month;
+        this.month = month;
     }
 
-    @SuppressWarnings("DuplicatedCode")
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -202,7 +221,7 @@ public class MonthView extends JPanel {
             double ExactMouseXValue = (mouseX - padding -labelPadding) / xScale;
 
             g2.setColor(labelColor);
-            String mouseDate = String.format("%s. %s. %s", (int) Math.floor(ExactMouseXValue) + 1, yearMonth.getMonthValue(), yearMonth.getYear());
+            String mouseDate = String.format("%s. %s. %s", (int) Math.floor(ExactMouseXValue) + 1, month.getMonthValue(), month.getYear());
             g2.drawString(String.format("Values at %s:", mouseDate), padding + labelPadding + valuePadding, padding + valuePadding * 2);
             int i = 2;
             if(row1Visible) {
@@ -339,7 +358,7 @@ public class MonthView extends JPanel {
     }
 
     public YearMonth getMonth() {
-        return yearMonth;
+        return month;
     }
 
     public String getTitle() {

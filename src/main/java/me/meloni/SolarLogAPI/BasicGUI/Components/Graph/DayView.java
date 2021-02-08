@@ -1,3 +1,18 @@
+/*
+Copyright 2020 - 2021 "Christoph Kohnen", "Hovercraft Full of Eels", "Rodrigo Azevedo"
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+ */
 package me.meloni.SolarLogAPI.BasicGUI.Components.Graph;
 
 import me.meloni.SolarLogAPI.BasicGUI.GetGraphData;
@@ -9,20 +24,25 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 /**
- * This Class represents the implementation of a simple graph for daily scale.
- * @author ChaosMelone9
+ * This class represents the visualization of data in a graph mapped to a {@link JPanel}
+ *
+ * @author "Hovercraft Full of Eels", "Rodrigo Azevedo", "Christoph Kohnen"
+ *
+ * This builds upon an improved version of Hovercraft Full of Eels (https://stackoverflow.com/users/522444/hovercraft-full-of-eels)
+ * answer on StackOverflow: https://stackoverflow.com/a/8693635/753012 by Rodrigo Azevedo
+ *
  * @since 0.1.0
  */
+@SuppressWarnings({"unused", "DuplicatedCode"})
 public class DayView extends JPanel {
 
-    private final Date date;
+    private final Date day;
     private final List<List<Double>> data;
 
     private Color gridColor = Color.DARK_GRAY;
@@ -57,12 +77,11 @@ public class DayView extends JPanel {
 
     private static final Stroke GRAPH_STROKE = new BasicStroke(2f);
 
-    public DayView(SolarMap solarMap, Date day) throws ParseException {
+    public DayView(SolarMap solarMap, Date day) {
         this.data = GetGraphData.getDayGraphData(GetStartOf.day(day), solarMap.getAsMap());
-        this.date = day;
+        this.day = day;
     }
 
-    @SuppressWarnings("DuplicatedCode")
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -418,7 +437,7 @@ public class DayView extends JPanel {
         }
 
     public Date getDay() {
-        return date;
+        return day;
     }
 
     public String getTitle() {

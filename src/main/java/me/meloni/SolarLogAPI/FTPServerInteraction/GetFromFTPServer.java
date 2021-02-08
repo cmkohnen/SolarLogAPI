@@ -1,3 +1,18 @@
+/*
+Copyright 2020 - 2021 Christoph Kohnen
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+ */
 package me.meloni.SolarLogAPI.FTPServerInteraction;
 
 import me.meloni.SolarLogAPI.FileInteraction.WorkingDirectory;
@@ -12,7 +27,20 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This is used to request and download JS-files directly from an FTP-Server storing backups given the credentials.
+ * @author Christoph Kohnen
+ * @since 3.8.0
+ */
 public class GetFromFTPServer {
+    /**
+     *
+     * @param host The hostname of the FTP-Backup server
+     * @param user Your username
+     * @param password Your password
+     * @return List of files downloaded into the {@link WorkingDirectory}
+     * @throws IOException Is thrown when the FTP-Server is unreachable or the files can't be saved to your file system
+     */
     public static List<File> getJSFilesFromFTPServer(String host, String user, String password) throws IOException {
         FTPClient ftp = new FTPClient();
         Logger.log(Logger.INFO_LEVEL_2 + String.format("Connecting to FTP Server at %s...", host));
