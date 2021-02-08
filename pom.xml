@@ -7,7 +7,7 @@
     <groupId>me.meloni</groupId>
     <artifactId>SolarLogAPI</artifactId>
     <packaging>jar</packaging>
-    <version>4.0.0-rc1</version>
+    <version>4.0.0-rc2</version>
     <name>SolarLogAPI</name>
     <url>https://github.com/ChaosMelone9/SolarLogAPI</url>
     <licenses>
@@ -114,6 +114,20 @@
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.2.0</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>
+                                me.meloni.SolarLogAPI.Handling.Runtime
+                            </mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
