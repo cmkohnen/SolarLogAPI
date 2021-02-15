@@ -34,7 +34,7 @@ This will guide you through a very basic process of being able to use data for y
 Sadly this project is not hosted anywhere (yet), so you have to import it on your own. I'll assume you use Maven for this case, steps for other platforms or IDEs are well documented in the internet. To import type the following while replacing both {VERSION} tags with your desired version.
 
 ```
-mvn install:install-file -Dfile=SolarLogAPI-4.0.0.jar -DgroupId=me.meloni -DartifactId=SolarLogAPI -Dversion=4.0.0 -Dpackaging=jar
+mvn install:install-file -Dfile=SolarLogAPI-4.0.1.jar -DgroupId=me.meloni -DartifactId=SolarLogAPI -Dversion=4.0.1 -Dpackaging=jar
 ```
 
 Now it is installed in your local repository, and you are free to add it as a dependency for your project.
@@ -44,7 +44,7 @@ Simply drop this in your pom.xml (Change the {VERSION} Tag here too):
 <dependency>
     <groupId>me.meloni</groupId>
     <artifactId>SolarLogAPI</artifactId>
-    <version>4.0.0</version>
+    <version>4.0.1</version>
 </dependency>
 ```
 
