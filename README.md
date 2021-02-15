@@ -69,7 +69,7 @@ Now you can work with the map further on.
 If you even want a basic Graph for display usages simply run the following:
 
 ```java
-JPanel graph = new DayView(solarMap.getDayGraphData({YOURDATE}));
+JPanel graph = new DayView(solarMap, {YOURDATE});
 ```
 
 There is also implementation of some UI Interfaces:
