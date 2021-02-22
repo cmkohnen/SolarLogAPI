@@ -43,13 +43,13 @@ mvn install:install-file -Dfile=SolarLogAPI-$version.jar -DgroupId=me.meloni -Da
 ```
 
 Now it is installed in your local repository, and you are free to add it as a dependency for your project.
-Simply drop this in your pom.xml (Change the {VERSION} Tag here too):
+Simply drop this in your pom.xml:
 
 ```xml
 <dependency>
     <groupId>me.meloni</groupId>
     <artifactId>SolarLogAPI</artifactId>
-    <version>4.0.1</version>
+    <version>4.0.2</version>
 </dependency>
 ```
 
