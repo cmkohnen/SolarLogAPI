@@ -31,10 +31,15 @@ This will guide you through a very basic process of being able to use data for y
 
 ### Importing 
 
-Sadly this project is not hosted anywhere (yet), so you have to import it on your own. I'll assume you use Maven for this case, steps for other platforms or IDEs are well documented in the internet. To import type the following while replacing both {VERSION} tags with your desired version.
+Sadly this project is not hosted anywhere (yet), so you have to import it on your own. I'll assume you use Maven for this case, steps for other platforms or IDEs are well documented in the internet. To import type the following:
 
 ```
-mvn install:install-file -Dfile=SolarLogAPI-4.0.1.jar -DgroupId=me.meloni -DartifactId=SolarLogAPI -Dversion=4.0.1 -Dpackaging=jar
+export version=4.0.2
+#If you haven't downloaded the binary run the following:
+wget "https://github.com/ChaosMelone9/SolarLogAPI/releases/download/$version/SolarLogAPI-$version.jar"
+
+#RUn this to install into your local repository
+mvn install:install-file -Dfile=SolarLogAPI-$version.jar -DgroupId=me.meloni -DartifactId=SolarLogAPI -Dversion=$version -Dpackaging=jar
 ```
 
 Now it is installed in your local repository, and you are free to add it as a dependency for your project.
