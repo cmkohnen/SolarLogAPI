@@ -81,7 +81,7 @@ public class WorkingDirectory {
         if(directory.isDirectory()) {
             if(!directory.exists()) {
                 throw new FileNotFoundException();
-            }
+            } else workingDirectory = directory;
         } else throw new NotDirectoryException(String.format("%s is no directory.",directory.getName()));
     }
 
