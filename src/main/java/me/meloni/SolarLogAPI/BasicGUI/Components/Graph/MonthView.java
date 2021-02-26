@@ -214,7 +214,7 @@ public class MonthView extends JPanel {
 
         if(mouseX >= labelPadding + padding & mouseX <= getWidth() - padding & mouseY >= padding & mouseY <= getHeight() - padding & mouseGUI & getVisibleRows() > 0){
             g2.setStroke(stroke);
-            g2.setColor(backgroundColor);
+            g2.setColor(graphBackgroundColor);
             g2.fillRect(padding + labelPadding, padding, 300, ((valuePadding + 12) * getVisibleRows()) + 20);
             g2.setColor(gridColor);
             g2.drawRect(padding + labelPadding, padding, 300, ((valuePadding + 12) * getVisibleRows()) + 20);
