@@ -195,16 +195,6 @@ public class DayView extends JPanel {
                 }
             }
         }
-        if(row2Visible) {
-            g2.setColor(row2Color);
-            for (int i = 0; i < row2.size() - 1; i++) {
-                int x1 = row2.get(i).x;
-                int y1 = row2.get(i).y;
-                int x2 = row2.get(i + 1).x;
-                int y2 = row2.get(i + 1).y;
-                g2.drawLine(x1, y1, x2, y2);
-            }
-        }
         if(row3Visible) {
             g2.setColor(row3Color);
             if (row3Shaded) {
@@ -227,16 +217,6 @@ public class DayView extends JPanel {
                 }
             }
         }
-        if(row4Visible) {
-            g2.setColor(row4Color);
-            for (int i = 0; i < row4.size() - 1; i++) {
-                int x1 = row4.get(i).x;
-                int y1 = row4.get(i).y;
-                int x2 = row4.get(i + 1).x;
-                int y2 = row4.get(i + 1).y;
-                g2.drawLine(x1, y1, x2, y2);
-            }
-        }
         if(row5Visible) {
             g2.setColor(row5Color);
             if (row5Shaded) {
@@ -257,6 +237,26 @@ public class DayView extends JPanel {
                     int y2 = row5.get(i + 1).y;
                     g2.drawLine(x1, y1, x2, y2);
                 }
+            }
+        }
+        if(row2Visible) {
+            g2.setColor(row2Color);
+            for (int i = 0; i < row2.size() - 1; i++) {
+                int x1 = row2.get(i).x;
+                int y1 = row2.get(i).y;
+                int x2 = row2.get(i + 1).x;
+                int y2 = row2.get(i + 1).y;
+                g2.drawLine(x1, y1, x2, y2);
+            }
+        }
+        if(row4Visible) {
+            g2.setColor(row4Color);
+            for (int i = 0; i < row4.size() - 1; i++) {
+                int x1 = row4.get(i).x;
+                int y1 = row4.get(i).y;
+                int x2 = row4.get(i + 1).x;
+                int y2 = row4.get(i + 1).y;
+                g2.drawLine(x1, y1, x2, y2);
             }
         }
 
