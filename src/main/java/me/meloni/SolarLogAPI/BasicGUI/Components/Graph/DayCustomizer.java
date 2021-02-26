@@ -71,11 +71,11 @@ public class DayCustomizer extends JPanel {
         JCheckBox b3 = new JCheckBox();
         JCheckBox b4 = new JCheckBox();
         JCheckBox b5 = new JCheckBox();
-        b1.setText("verbrauchw");
-        b2.setText("verbrauchkwh");
-        b3.setText("leistungw");
-        b4.setText("ertragkwh");
-        b5.setText("energieverbrauchw");
+        b1.setText("consumption");
+        b2.setText("consumption sum");
+        b3.setText("production");
+        b4.setText("production sum");
+        b5.setText("own consumption");
         b1.setSelected(true);
         b2.setSelected(true);
         b3.setSelected(true);

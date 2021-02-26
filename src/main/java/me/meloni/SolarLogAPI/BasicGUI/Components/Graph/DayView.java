@@ -263,9 +263,9 @@ public class DayView extends JPanel {
         if(mouseX >= labelPadding + padding & mouseX <= getWidth() - labelPadding - padding & mouseY >= padding & mouseY <= getHeight() - padding - labelPadding & mouseGUI & getVisibleRows() > 0){
             g2.setStroke(stroke);
             g2.setColor(graphBackgroundColor);
-            g2.fillRect(padding + labelPadding, padding, 200, ((valuePadding + 12) * getVisibleRows()) + 20);
+            g2.fillRect(padding + labelPadding, padding, 300, ((valuePadding + 12) * getVisibleRows()) + 20);
             g2.setColor(gridColor);
-            g2.drawRect(padding + labelPadding, padding, 200, ((valuePadding + 12) * getVisibleRows()) + 20);
+            g2.drawRect(padding + labelPadding, padding, 300, ((valuePadding + 12) * getVisibleRows()) + 20);
             double ExactMouseXValue = (mouseX - padding -labelPadding) / xScale;
 
             g2.setColor(labelColor);
@@ -273,23 +273,23 @@ public class DayView extends JPanel {
 
             int i = 2;
             if(row1Visible) {
-                g2.drawString(String.format("verbrauchw: %s", Math.round(data.get((int)ExactMouseXValue).get(0))), padding + labelPadding + valuePadding, padding + (valuePadding * 2) * i);
+                g2.drawString(String.format("consumption: %s W", Math.round(data.get((int)ExactMouseXValue).get(0))), padding + labelPadding + valuePadding, padding + (valuePadding * 2) * i);
                 i++;
             }
             if(row2Visible) {
-                g2.drawString(String.format("verbrauchkwh: %s", Math.round(data.get((int)ExactMouseXValue).get(1))), padding + labelPadding + valuePadding, padding + (valuePadding * 2) * i);
+                g2.drawString(String.format("consumption sum: %s kWh", Math.round(data.get((int)ExactMouseXValue).get(1))), padding + labelPadding + valuePadding, padding + (valuePadding * 2) * i);
                 i++;
             }
             if(row3Visible) {
-                g2.drawString(String.format("leistungw: %s", Math.round(data.get((int)ExactMouseXValue).get(2))), padding + labelPadding + valuePadding, padding + (valuePadding * 2) * i);
+                g2.drawString(String.format("production: %s W", Math.round(data.get((int)ExactMouseXValue).get(2))), padding + labelPadding + valuePadding, padding + (valuePadding * 2) * i);
                 i++;
             }
             if(row4Visible) {
-                g2.drawString(String.format("ertragkwh: %s", Math.round(data.get((int)ExactMouseXValue).get(3))), padding + labelPadding + valuePadding, padding + (valuePadding * 2) * i);
+                g2.drawString(String.format("production sum: %s kWh", Math.round(data.get((int)ExactMouseXValue).get(3))), padding + labelPadding + valuePadding, padding + (valuePadding * 2) * i);
                 i++;
             }
             if(row5Visible) {
-                g2.drawString(String.format("energieverbrauchw: %s", Math.round(data.get((int)ExactMouseXValue).get(4))), padding + labelPadding + valuePadding, padding + (valuePadding * 2) * i);
+                g2.drawString(String.format("own consumption: %s W", Math.round(data.get((int)ExactMouseXValue).get(4))), padding + labelPadding + valuePadding, padding + (valuePadding * 2) * i);
             }
         }
 

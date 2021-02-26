@@ -216,9 +216,9 @@ public class YearView extends JPanel {
         if(mouseX >= labelPadding + padding & mouseX <= getWidth() - padding & mouseY >= padding & mouseY <= getHeight() - padding & mouseGUI & getVisibleRows() > 0){
             g2.setStroke(stroke);
             g2.setColor(backgroundColor);
-            g2.fillRect(padding + labelPadding, padding, 200, ((valuePadding + 12) * getVisibleRows()) + 20);
+            g2.fillRect(padding + labelPadding, padding, 300, ((valuePadding + 12) * getVisibleRows()) + 20);
             g2.setColor(gridColor);
-            g2.drawRect(padding + labelPadding, padding, 200, ((valuePadding + 12) * getVisibleRows()) + 20);
+            g2.drawRect(padding + labelPadding, padding, 300, ((valuePadding + 12) * getVisibleRows()) + 20);
             double ExactMouseXValue = (mouseX - padding -labelPadding) / xScale;
 
             g2.setColor(labelColor);
@@ -226,15 +226,15 @@ public class YearView extends JPanel {
             g2.drawString(String.format("Values at %s:", StringUtils.capitalize(month.toLowerCase())), padding + labelPadding + valuePadding, padding + valuePadding * 2);
             int i = 2;
             if(row1Visible) {
-                g2.drawString(String.format("Verbrauch kWH: %s", Math.round(data.get((int)ExactMouseXValue).get(0))), padding + labelPadding + valuePadding, padding + (valuePadding * 2) * i);
+                g2.drawString(String.format("consumption : %s kWH", Math.round(data.get((int)ExactMouseXValue).get(0))), padding + labelPadding + valuePadding, padding + (valuePadding * 2) * i);
                 i++;
             }
             if(row2Visible) {
-                g2.drawString(String.format("EigenVerbrauch kWH: %s", Math.round(data.get((int)ExactMouseXValue).get(0))), padding + labelPadding + valuePadding, padding + (valuePadding * 2) * i);
+                g2.drawString(String.format("own consumption: %s kWH", Math.round(data.get((int)ExactMouseXValue).get(0))), padding + labelPadding + valuePadding, padding + (valuePadding * 2) * i);
                 i++;
             }
             if(row3Visible) {
-                g2.drawString(String.format("Produktion kWH: %s", Math.round(data.get((int)ExactMouseXValue).get(0))), padding + labelPadding + valuePadding, padding + (valuePadding * 2) * i);
+                g2.drawString(String.format("production: %s kWH", Math.round(data.get((int)ExactMouseXValue).get(0))), padding + labelPadding + valuePadding, padding + (valuePadding * 2) * i);
             }
         }
 

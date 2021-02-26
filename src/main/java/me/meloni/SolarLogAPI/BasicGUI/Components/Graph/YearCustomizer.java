@@ -65,9 +65,9 @@ public class YearCustomizer extends JPanel {
         JCheckBox b1 = new JCheckBox();
         JCheckBox b2 = new JCheckBox();
         JCheckBox b3 = new JCheckBox();
-        b1.setText("Verbrauch kWH");
-        b2.setText("EigenVerbrauch kWH");
-        b3.setText("Produktion kWH");
+        b1.setText("consumption");
+        b2.setText("own consumption");
+        b3.setText("production");
         b1.setSelected(true);
         b2.setSelected(true);
         b3.setSelected(true);
