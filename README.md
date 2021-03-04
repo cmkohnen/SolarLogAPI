@@ -60,28 +60,41 @@ This project is structured around the SolarMap object. You can easily add data t
 Here's an example:
 
 ```java
-SolarMap solarMap = new SolarMap();
+import me.meloni.SolarLogAPI.BasicGUI.GetChosenFile;
+import me.meloni.SolarLogAPI.SolarMap;
 
-File dataFile = GetFile.validChosenDataFile();
+import java.io.File;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
-solarMap.addFromDataFile(dataFile);
 
-Map<Date, List<Integer>> asMap = solarMap.getAsMap();
+public class Class {
+    public static Map<Date, List<Integer>> getSolarData() {
+        SolarMap solarMap = new SolarMap();
+
+        File dataFile = GetChosenFile.chosenSolarLogFile();
+
+        solarMap.addFromDataFile(dataFile);
+
+        return solarMap.getAsMap();
+    }
+}
 ```
 
 Now you can work with the map further on.
 
 If you even want a basic Graph for display usages simply run the following:
 
-```java
+```
 JPanel graph = new DayView(solarMap, {YOURDATE});
 ```
 
 There is also implementation of some UI Interfaces:
-```java
+```
 SolarMap solarMap = BasicSolarMapCustomizer.solarMap();
 ```
 or 
-```java
+```
 GraphCustomizer.visualize(BasicSolarMapCustomizer.solarMap());
 ```
