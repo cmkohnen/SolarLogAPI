@@ -34,7 +34,7 @@ This will guide you through a very basic process of being able to use data for y
 Sadly this project is not hosted anywhere (yet), so you have to import it on your own. I'll assume you use Maven for this case, steps for other platforms or IDEs are well documented in the internet. To import type the following:
 
 ```
-export version=4.0.5
+export version=4.0.6
 #If you haven't downloaded the binary run the following:
 wget "https://github.com/ChaosMelone9/SolarLogAPI/releases/download/$version/SolarLogAPI-$version.jar"
 
@@ -49,7 +49,7 @@ Simply drop this in your pom.xml:
 <dependency>
     <groupId>me.meloni</groupId>
     <artifactId>SolarLogAPI</artifactId>
-    <version>4.0.5</version>
+    <version>4.0.6</version>
 </dependency>
 ```
 
