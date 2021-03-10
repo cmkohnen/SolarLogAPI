@@ -18,6 +18,7 @@ package me.meloni.SolarLogAPI.BasicGUI.Components.Graph;
 import me.meloni.SolarLogAPI.BasicGUI.BasicGraphCustomizer;
 import me.meloni.SolarLogAPI.BasicGUI.Components.DatePicker;
 import me.meloni.SolarLogAPI.DataConversion.GetStartOf;
+import me.meloni.SolarLogAPI.Inverter;
 import me.meloni.SolarLogAPI.SolarMap;
 
 import javax.swing.*;
@@ -38,6 +39,8 @@ public class DayCustomizer extends JPanel {
      */
     BasicGraphCustomizer instance;
 
+    Inverter inverter;
+
     /**
      * Construct the JPanel and setup all components
      * @param data The data that should be used
@@ -46,13 +49,14 @@ public class DayCustomizer extends JPanel {
     public DayCustomizer(SolarMap data, BasicGraphCustomizer instance) {
         this.instance = instance;
         setLayout(new BorderLayout());
+        this.inverter = data.total;
 
         DatePicker picker = new DatePicker();
-        picker.addVetoPolicy(data);
+        picker.addVetoPolicy(data.get(inverter));
         picker.setMaximumSize(new Dimension(200,40));
         picker.addDateChangeListener(event -> {
-            if(data.includesDay(event.getNewDate())){
-                graph = new DayView(data, GetStartOf.day(event.getNewDate()));
+            if(data.get(inverter).includesDay(event.getNewDate())){
+                graph = new DayView(data.get(inverter), GetStartOf.day(event.getNewDate()));
                 paintComponent();
             } else {
                 if(!(event.getOldDate() == null)){

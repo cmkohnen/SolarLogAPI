@@ -16,17 +16,14 @@ limitations under the License.
 package me.meloni.SolarLogAPI.DatabaseInteraction;
 
 import me.meloni.SolarLogAPI.Handling.Logger;
-import me.meloni.SolarLogAPI.SolarMap;
 import org.influxdb.InfluxDB;
 import org.influxdb.InfluxDBFactory;
 import org.influxdb.dto.BatchPoints;
-import org.influxdb.dto.Point;
 import org.influxdb.dto.Query;
 import org.influxdb.dto.QueryResult;
 import org.influxdb.impl.InfluxDBResultMapper;
 
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 
 /**
  * This class provides functionality to read and write data from or to an {@link InfluxDB} database.
@@ -78,11 +75,11 @@ public class InfluxDbInteraction {
         db.setDatabase(database);
     }
 
-    /**
+    /*
      * Write a {@link SolarMap} to the used {@link InfluxDB}
      * @param solarMap the {@link SolarMap} which should be written
      * @throws NullPointerException If something goes wrong with the database connection
-     */
+     *
     public void write(SolarMap solarMap) throws NullPointerException {
         this.batchPoints = batchPoints();
         solarMap.getAsMap().forEach((date, values) -> {
@@ -105,6 +102,8 @@ public class InfluxDbInteraction {
         db.write(batchPoints);
         Logger.log(Logger.INFO_LEVEL_3 + "done.");
     }
+
+     */
 
     /**
       * Query the set {@link InfluxDB} and convert to a {@link Map}

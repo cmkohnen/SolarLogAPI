@@ -18,6 +18,7 @@ package me.meloni.SolarLogAPI.BasicGUI;
 import me.meloni.SolarLogAPI.BasicGUI.Components.Graph.DayView;
 import me.meloni.SolarLogAPI.BasicGUI.Components.Graph.MonthView;
 import me.meloni.SolarLogAPI.BasicGUI.Components.Graph.YearView;
+import me.meloni.SolarLogAPI.InverterMap;
 import me.meloni.SolarLogAPI.SolarMap;
 
 import javax.swing.*;
@@ -36,7 +37,7 @@ public class Visualizer {
      * @param data A {@link SolarMap} containing all data
      * @param day The day that should be visualized
      */
-    public static void visualizeDay(SolarMap data, Date day) {
+    public static void visualizeDay(InverterMap data, Date day) {
         JFrame f = new JFrame(day.toString());
         DayView component = new DayView(data, day);
         f.add(component);
@@ -51,7 +52,7 @@ public class Visualizer {
      * @param data A {@link SolarMap} containing all data
      * @param month The month that should be visualized
      */
-    public static void visualizeMonth(SolarMap data, YearMonth month) {
+    public static void visualizeMonth(InverterMap data, YearMonth month) {
         JFrame f = new JFrame(month.toString());
         MonthView component = new MonthView(data, month);
         f.add(component);
@@ -66,7 +67,7 @@ public class Visualizer {
      * @param data A {@link SolarMap} containing all data
      * @param year The year that should be visualized
      */
-    public static void visualizeYear(SolarMap data, Year year) {
+    public static void visualizeYear(InverterMap data, Year year) {
         JFrame f = new JFrame(year.toString());
         YearView component = new YearView(data, year);
         f.add(component);

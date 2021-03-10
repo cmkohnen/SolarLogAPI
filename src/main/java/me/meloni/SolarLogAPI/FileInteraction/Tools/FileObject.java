@@ -1,16 +1,17 @@
 package me.meloni.SolarLogAPI.FileInteraction.Tools;
 
+import me.meloni.SolarLogAPI.Inverter;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
  * DO NOT TOUCH
  * This class represents the object used to store data in permanent files. Changing it causes all old files to be incompatible.
  * @author ChaosMelone9
- * @version 2
+ * @version 3
  * @since 2.0.0
  */
 public class FileObject implements Serializable {
@@ -25,7 +26,7 @@ public class FileObject implements Serializable {
      * This constructor can form an FileObject from a data-map.
      * @since 1.0.0
      */
-    public FileObject(Map<Date, List<Integer>> data) {
+    public FileObject(Map<Inverter, Map<Date, Map<String, Integer>>> data) {
         this.object.put("data",data);
     }
 
@@ -35,15 +36,15 @@ public class FileObject implements Serializable {
      * @return SolarMap
      */
     @SuppressWarnings("unchecked")
-    public Map<Date, List<Integer>> getData()
+    public Map<Inverter, Map<Date, Map<String, Integer>>> getData()
     {
         Object o = object.get("data");
-        Map<Date, List<Integer>> map = new HashMap<>();
+        Map<Inverter, Map<Date, Map<String, Integer>>> map = new HashMap<>();
         if(o instanceof Map) {
             /*
             This is an unchecked operation. This CAN fail and produce a ClassCastException in runtime use, BUT if used as intended this should work.
              */
-            map = (Map<Date, List<Integer>>) o;
+            map = (Map<Inverter, Map<Date, Map<String, Integer>>>) o;
         }
         return (map);
     }

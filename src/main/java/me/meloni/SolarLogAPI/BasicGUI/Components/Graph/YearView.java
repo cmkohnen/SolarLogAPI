@@ -16,7 +16,7 @@ limitations under the License.
 package me.meloni.SolarLogAPI.BasicGUI.Components.Graph;
 
 import me.meloni.SolarLogAPI.BasicGUI.GetGraphData;
-import me.meloni.SolarLogAPI.SolarMap;
+import me.meloni.SolarLogAPI.InverterMap;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.swing.*;
@@ -72,8 +72,8 @@ public class YearView extends JPanel {
 
     private static final Stroke GRAPH_STROKE = new BasicStroke(2f);
 
-    public YearView(SolarMap solarMap, Year year) {
-        this.data = GetGraphData.getYearGraphData(year, solarMap.getAsMap());
+    public YearView(InverterMap inverterMap, Year year) {
+        this.data = GetGraphData.getYearGraphData(year, inverterMap.getAsMap());
         this.year = year;
     }
 

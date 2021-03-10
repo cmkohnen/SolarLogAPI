@@ -17,6 +17,7 @@ package me.meloni.SolarLogAPI.BasicGUI.Components.Graph;
 
 import me.meloni.SolarLogAPI.BasicGUI.BasicGraphCustomizer;
 import me.meloni.SolarLogAPI.BasicGUI.Components.YearPicker;
+import me.meloni.SolarLogAPI.Inverter;
 import me.meloni.SolarLogAPI.SolarMap;
 
 import javax.swing.*;
@@ -38,6 +39,8 @@ public class YearCustomizer extends JPanel {
      */
     BasicGraphCustomizer instance;
 
+    Inverter inverter;
+
     /**
      * Construct the JPanel and setup all components
      * @param data The data that should be used
@@ -46,13 +49,14 @@ public class YearCustomizer extends JPanel {
     public YearCustomizer(SolarMap data, BasicGraphCustomizer instance) {
         this.instance = instance;
         setLayout(new BorderLayout());
+        this.inverter = data.total;
 
         YearPicker picker = new YearPicker();
         picker.setMaximumSize(new Dimension(200,40));
         picker.addActionListener(event -> {
             Year year = picker.getYear();
-            if(year != null && data.includesYear(year)) {
-                graph = new YearView(data, year);
+            if(year != null && data.get(inverter).includesYear(year)) {
+                graph = new YearView(data.get(inverter), year);
                 paintComponent();
             }
         });

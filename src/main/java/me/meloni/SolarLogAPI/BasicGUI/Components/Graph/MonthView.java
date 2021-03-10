@@ -16,7 +16,7 @@ limitations under the License.
 package me.meloni.SolarLogAPI.BasicGUI.Components.Graph;
 
 import me.meloni.SolarLogAPI.BasicGUI.GetGraphData;
-import me.meloni.SolarLogAPI.SolarMap;
+import me.meloni.SolarLogAPI.InverterMap;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.swing.*;
@@ -71,8 +71,8 @@ public class MonthView extends JPanel {
 
     private static final Stroke GRAPH_STROKE = new BasicStroke(2f);
 
-    public MonthView(SolarMap solarMap, YearMonth month) {
-        this.data = GetGraphData.getMonthGraphData(month, solarMap.getAsMap());
+    public MonthView(InverterMap inverterMap, YearMonth month) {
+        this.data = GetGraphData.getMonthGraphData(month, inverterMap.getAsMap());
         this.month = month;
     }
 

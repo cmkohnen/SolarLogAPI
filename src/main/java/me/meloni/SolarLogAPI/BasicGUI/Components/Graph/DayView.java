@@ -18,7 +18,7 @@ package me.meloni.SolarLogAPI.BasicGUI.Components.Graph;
 import me.meloni.SolarLogAPI.BasicGUI.GetGraphData;
 import me.meloni.SolarLogAPI.DataConversion.Entries;
 import me.meloni.SolarLogAPI.DataConversion.GetStartOf;
-import me.meloni.SolarLogAPI.SolarMap;
+import me.meloni.SolarLogAPI.InverterMap;
 
 import javax.swing.*;
 import java.awt.*;
@@ -77,8 +77,8 @@ public class DayView extends JPanel {
 
     private static final Stroke GRAPH_STROKE = new BasicStroke(2f);
 
-    public DayView(SolarMap solarMap, Date day) {
-        this.data = GetGraphData.getDayGraphData(GetStartOf.day(day), solarMap.getAsMap());
+    public DayView(InverterMap inverterMap, Date day) {
+        this.data = GetGraphData.getDayGraphData(GetStartOf.day(day), inverterMap.getAsMap());
         this.day = day;
     }
 

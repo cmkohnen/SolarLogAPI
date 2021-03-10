@@ -18,6 +18,7 @@ package me.meloni.SolarLogAPI.BasicGUI.Components;
 import com.github.lgooddatepicker.components.DatePickerSettings;
 import me.meloni.SolarLogAPI.DataConversion.Entries;
 import me.meloni.SolarLogAPI.DataConversion.GetStartOf;
+import me.meloni.SolarLogAPI.InverterMap;
 import me.meloni.SolarLogAPI.SolarMap;
 
 import java.util.Date;
@@ -33,7 +34,7 @@ public class DatePicker extends com.github.lgooddatepicker.components.DatePicker
      * Filter all usable dates based on a {@link SolarMap}
      * @param data The map from which all available dates should be determined
      */
-    public void addVetoPolicy(SolarMap data) {
+    public void addVetoPolicy(InverterMap data) {
         DatePickerSettings settings = this.getSettings();
         settings.setVetoPolicy(date -> {
             Date dateAsDate = GetStartOf.day(date);

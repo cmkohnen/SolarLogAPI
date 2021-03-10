@@ -15,15 +15,6 @@ limitations under the License.
  */
 package me.meloni.SolarLogAPI.DatabaseInteraction;
 
-import me.meloni.SolarLogAPI.Handling.Logger;
-import me.meloni.SolarLogAPI.SolarMap;
-
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.text.SimpleDateFormat;
-
 /**
  * This class provides functionality to read and write data from or to an mySQL database.
  * @author Christoph Kohnen
@@ -39,7 +30,7 @@ public class MySQLInteraction {
      */
     private static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
-    /**
+    /*
      * Write data to an mySQL database
      * @param host The host of the database
      * @param user Your username
@@ -48,7 +39,7 @@ public class MySQLInteraction {
      * @param table The desired table
      * @param map The data as {@link SolarMap} you want to write
      * @throws SQLException If something with the database goes wrong
-     */
+     *
     public static void write(String host, String user, String password, String database, String table, SolarMap map) throws SQLException {
         Connection conn = DriverManager.getConnection(host,user,password);
         Statement st = conn.createStatement();
@@ -65,4 +56,6 @@ public class MySQLInteraction {
         });
         conn.close();
     }
+
+     */
 }

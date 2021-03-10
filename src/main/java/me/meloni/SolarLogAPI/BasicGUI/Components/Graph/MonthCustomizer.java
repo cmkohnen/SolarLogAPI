@@ -17,6 +17,7 @@ package me.meloni.SolarLogAPI.BasicGUI.Components.Graph;
 
 import me.meloni.SolarLogAPI.BasicGUI.BasicGraphCustomizer;
 import me.meloni.SolarLogAPI.BasicGUI.Components.MonthPicker;
+import me.meloni.SolarLogAPI.Inverter;
 import me.meloni.SolarLogAPI.SolarMap;
 
 import javax.swing.*;
@@ -38,6 +39,8 @@ public class MonthCustomizer extends JPanel {
      */
     BasicGraphCustomizer instance;
 
+    Inverter inverter;
+
     /**
      * Construct the JPanel and setup all components
      * @param data The data that should be used
@@ -46,14 +49,15 @@ public class MonthCustomizer extends JPanel {
     public MonthCustomizer(SolarMap data, BasicGraphCustomizer instance) {
         this.instance = instance;
         setLayout(new BorderLayout());
+        this.inverter = data.total;
 
 
         MonthPicker picker = new MonthPicker();
         picker.setSize(new Dimension(getWidth(), 80));
         picker.addActionListener(event -> {
             YearMonth month = picker.getMonth();
-            if(month != null && data.includesMonth(month)) {
-                graph = new MonthView(data, month);
+            if(month != null && data.get(inverter).includesMonth(month)) {
+                graph = new MonthView(data.get(inverter), month);
                 paintComponent();
             }
         });

@@ -30,13 +30,14 @@ import java.util.Map;
  * @since 0.1.0
  */
 public class GetGraphData {
+    //TODO Rework collection of Graph data
     /**
      * Get the data for an graph to visualize data on daily base
      * @param day The day for which data should be gotten for
      * @param data A map containing all data
      * @return The data for the specified day
      */
-    public static List<List<Double>> getDayGraphData(Date day, Map<Date, List<Integer>> data) {
+    public static List<List<Double>> getDayGraphData(Date day, Map<Date, Map<String, Integer>> data) {
         List<Date> timestamps = Entries.getEntriesPerDay(day);
 
         List<List<Double>> values = new ArrayList<>();
@@ -75,7 +76,7 @@ public class GetGraphData {
      * @param data A map containing all data
      * @return The data for the specified month
      */
-    public static List<List<Double>> getMonthGraphData(YearMonth month, Map<Date, List<Integer>> data) {
+    public static List<List<Double>> getMonthGraphData(YearMonth month, Map<Date, Map<String, Integer>> data) {
         List<Date> timestamps = Entries.getDaysPerMonth(month);
 
         List<List<Double>> values = new ArrayList<>();
@@ -113,7 +114,7 @@ public class GetGraphData {
      * @param data A map containing all data
      * @return The data for the specified year
      */
-    public static List<List<Double>> getYearGraphData(Year year, Map<Date, List<Integer>> data) {
+    public static List<List<Double>> getYearGraphData(Year year, Map<Date, Map<String, Integer>> data) {
         List<List<Double>> values = new ArrayList<>();
 
         List<YearMonth> yearMonths = Entries.getMonthsPerYear(year);

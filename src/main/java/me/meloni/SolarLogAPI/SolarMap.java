@@ -15,10 +15,7 @@ limitations under the License.
  */
 package me.meloni.SolarLogAPI;
 
-import me.meloni.SolarLogAPI.DataConversion.*;
 import me.meloni.SolarLogAPI.DatabaseInteraction.InfluxDbInteraction;
-import me.meloni.SolarLogAPI.DatabaseInteraction.MySQLInteraction;
-import me.meloni.SolarLogAPI.DatabaseInteraction.SQLQuery;
 import me.meloni.SolarLogAPI.FTPServerInteraction.GetFromFTPServer;
 import me.meloni.SolarLogAPI.FileInteraction.ReadFiles.GetFromEML;
 import me.meloni.SolarLogAPI.FileInteraction.ReadFiles.GetFromTar;
@@ -26,7 +23,6 @@ import me.meloni.SolarLogAPI.FileInteraction.ReadFiles.ReadFileObject;
 import me.meloni.SolarLogAPI.FileInteraction.Tools.FileObject;
 import me.meloni.SolarLogAPI.FileInteraction.WriteFiles.WriteFileObject;
 import me.meloni.SolarLogAPI.Handling.Logger;
-import me.meloni.SolarLogAPI.SolarLogInteraction.GetJsonFromSolarLog;
 import org.influxdb.InfluxDB;
 import org.json.simple.JSONObject;
 
@@ -36,9 +32,6 @@ import java.net.URL;
 import java.nio.file.NoSuchFileException;
 import java.sql.SQLException;
 import java.text.ParseException;
-import java.time.LocalDate;
-import java.time.Year;
-import java.time.YearMonth;
 import java.util.*;
 import java.util.function.BiConsumer;
 
@@ -56,7 +49,8 @@ public class SolarMap {
     /**
      * The main object to store data. This is according to the {@link Map}<{@link Date}, {@link List}<{@link Integer}>> format
      */
-    private Map<Date, List<Integer>> data = new HashMap<>();
+    private Map<Inverter, InverterMap> data = new HashMap<>();
+    public final Inverter total = new Inverter("Total", "Total", 1, 0, 0, false);
     /**
      * This stores the time the solarMap was created on.
      */
@@ -71,7 +65,7 @@ public class SolarMap {
      * @author Christoph Kohnen
      * @param map The data in {@link Map}<{@link Date}, {@link List}<{@link Integer}>> format
      */
-    public SolarMap(Map<Date, List<Integer>> map) { init();this.data = map;}
+    public SolarMap(Map<Inverter, InverterMap> map) { init();this.data = map;}
 
     /**
      * Instantiates using a {@link FileObject}
@@ -80,7 +74,9 @@ public class SolarMap {
      */
     public SolarMap(FileObject fileObject) {
         init();
-        this.data = fileObject.getData();
+        Map<Inverter, InverterMap> map = new HashMap<>();
+        fileObject.getData().forEach((inverter, dateMapMap) -> map.put(inverter, new InverterMap(dateMapMap, inverter)));
+        this.data = map;
         Date created = (Date) fileObject.getInformation("creation");
         if(created != null) {
             this.createdOn = created;
@@ -129,7 +125,7 @@ public class SolarMap {
      * @author Christoph Kohnen
      * @param map The map from which this {@link SolarMap} should be set
      */
-    public void setFromMap(Map<Date, List<Integer>> map) {
+    public void setFromMap(Map<Inverter, InverterMap> map) {
         data = map;
     }
 
@@ -139,8 +135,8 @@ public class SolarMap {
      * @param timestamp The timestamp on which
      * @param values The values for that timestamp
      */
-    public void setOnDate(Date timestamp, List<Integer> values) {
-        data.put(timestamp, values);
+    public void setOnDate(Inverter inverter, Date timestamp, Map<String, Integer> values) {
+        data.get(inverter).setOnDate(timestamp, values);
     }
 
     /**
@@ -148,7 +144,7 @@ public class SolarMap {
      * @author Cristoph Kohnen
      * @param map The map from which all data should be added
      */
-    public void addFromMap(Map<Date, List<Integer>> map) {
+    public void addFromMap(Map<Inverter, InverterMap> map) {
         map.forEach((date, integers) -> data.putIfAbsent(date, integers));
     }
 
@@ -180,7 +176,7 @@ public class SolarMap {
     public void addFromDatFile(File datFile) throws IOException {
         if(datFile.exists()) {
             Logger.log(Logger.INFO_LEVEL_2 + String.format("Adding to %s from .dat file %s", id.toString(), datFile.getName()));
-            addFromMap(GetFromDat.getAsMapFromDatFile(datFile));
+            //addFromMap(GetFromDat.getAsMapFromDatFile(datFile));
         }
     }
 
@@ -234,7 +230,9 @@ public class SolarMap {
      */
     public void addFromFileObject(FileObject fileObject) {
         Logger.log(Logger.INFO_LEVEL_2 + String.format("Adding to %s from FileObject", id.toString()));
-        addFromMap(fileObject.getData());
+        Map<Inverter, InverterMap> map = new HashMap<>();
+        fileObject.getData().forEach((inverter, dateMapMap) -> map.put(inverter, new InverterMap(dateMapMap, inverter)));
+        addFromMap(map);
     }
 
     /**
@@ -278,7 +276,7 @@ public class SolarMap {
     public void addFromInfluxDB(String server, String username, String password, String database) {
         InfluxDbInteraction influxDbInteraction = new InfluxDbInteraction(server,username,password);
         influxDbInteraction.setDatabase(database);
-        addFromMap(influxDbInteraction.read());
+        //addFromMap(influxDbInteraction.read());
         influxDbInteraction.close();
     }
 
@@ -291,7 +289,7 @@ public class SolarMap {
     public void addFromInfluxDB(InfluxDB influxDB, String database) {
         InfluxDbInteraction influxDbInteraction = new InfluxDbInteraction(influxDB);
         influxDbInteraction.setDatabase(database);
-        addFromMap(influxDbInteraction.read());
+        //addFromMap(influxDbInteraction.read());
         influxDbInteraction.close();
     }
 
@@ -327,7 +325,7 @@ public class SolarMap {
     @SuppressWarnings("SpellCheckingInspection")
     public void addFromSolarLog(URL solarLogURL) throws IOException, org.json.simple.parser.ParseException, ParseException {
         Logger.log(Logger.INFO_LEVEL_2 + String.format("Adding to %s from SolarLog at %s", id.toString(), solarLogURL.toString()));
-        addFromMap(GetValuesFromJson.getAsMap(GetJsonFromSolarLog.getFromSolarLogInterface(solarLogURL)));
+        //addFromMap(GetValuesFromJson.getAsMap(GetJsonFromSolarLog.getFromSolarLogInterface(solarLogURL)));
     }
 
     /**
@@ -337,7 +335,7 @@ public class SolarMap {
      * @throws IOException if provided a bad file
      */
     public void addFromJSFile(File jsFile) throws IOException {
-        addFromMap(GetFromDat.getAsMapFromJSFile(jsFile));
+        //addFromMap(GetFromDat.getAsMapFromJSFile(jsFile));
     }
 
     /**
@@ -397,7 +395,7 @@ public class SolarMap {
         InfluxDbInteraction influxDbInteraction = new InfluxDbInteraction(server, username, password);
         influxDbInteraction.setBatchPointLimit(batchPointLimit);
         influxDbInteraction.setDatabase(database);
-        influxDbInteraction.write(this);
+        //influxDbInteraction.write(this);
         influxDbInteraction.close();
     }
 
@@ -412,11 +410,11 @@ public class SolarMap {
         Logger.log(Logger.INFO_LEVEL_2 + String.format("Writing %s to InfluxDB", id.toString()));
         InfluxDbInteraction influxDbInteraction = new InfluxDbInteraction(influxDB);
         influxDbInteraction.setBatchPointLimit(batchPointLimit);
-        influxDbInteraction.write(this);
+        //influxDbInteraction.write(this);
         influxDbInteraction.close();
     }
 
-    /**
+    /*
      * Write SQL query to file
      * @author Cristoph Kohnen
      * @param database The database to which should be written
@@ -429,11 +427,13 @@ public class SolarMap {
      * @param value5 The name of the fifth file
      * @return The file the query has been written to
      * @throws IOException If the process is not permitted to write into the working directory
-     **/
+
     public File writeSQLQueryToFile(String database, String table, String key, String value1, String value2, String value3, String value4, String value5) throws IOException {
         Logger.log(Logger.INFO_LEVEL_2 + String.format("Writing SQL query to file for %s", id.toString()));
         return SQLQuery.getWriteQuery(database,table,key,value1,value2,value3,value4,value5,this);
     }
+
+     */
 
     /**
      * Write to an MySQL database
@@ -447,7 +447,7 @@ public class SolarMap {
      **/
     public void writeToMySQLDatabase(String host, String user, String password, String database, String table) throws SQLException {
         Logger.log(Logger.INFO_LEVEL_2 + String.format("Writing %s to MySQL database %S", id.toString(), host));
-        MySQLInteraction.write(host,user,password,database,table,this);
+        //MySQLInteraction.write(host,user,password,database,table,this);
     }
 
 
@@ -458,7 +458,7 @@ public class SolarMap {
      * @author Cristoph Kohnen
      * @return All data in the {@link Map}<{@link Date}, {@link List}<{@link Integer}>> format
      */
-    public Map<Date, List<Integer>> getAsMap() {
+    public Map<Inverter, InverterMap> getAsMap() {
         return data;
     }
 
@@ -468,8 +468,8 @@ public class SolarMap {
      * @param timestamp The timestamp of which data should be retrieved
      * @return The values for the specified timestamp
      */
-    public List<Integer> getValuesOnDate(Date timestamp) {
-        return data.get(timestamp);
+    public Map<String, Integer> getValuesOnDate(Inverter inverter, Date timestamp) {
+        return data.get(inverter).getValuesOnDate(timestamp);
     }
 
     /**
@@ -479,8 +479,8 @@ public class SolarMap {
      * @param value The index of the value that should be retrieved
      * @return The value on that timestamp
      */
-    public Integer getValueOnDate(Date timestamp, Integer value) {
-        return getValuesOnDate(timestamp).get(value);
+    public Integer getValueOnDate(Inverter inverter, Date timestamp, String value) {
+        return getValuesOnDate(inverter, timestamp).get(value);
     }
 
     /**
@@ -489,37 +489,42 @@ public class SolarMap {
      * @return All data as a {@link FileObject}
      */
     public FileObject getAsFileObject() {
-        FileObject fileObject = new FileObject(this.getAsMap());
+        Map<Inverter, Map<Date, Map<String, Integer>>> map = new HashMap<>();
+        getAsMap().forEach((inverter, inverterMap) -> map.put(inverter, inverterMap.getAsMap()));
+        FileObject fileObject = new FileObject(map);
         fileObject.putInformation("created", createdOn);
         fileObject.putInformation("id", id);
         return fileObject;
     }
 
-    /**
+    /*
      * Return a {@link JSONObject} for external use
      * @author Cristoph Kohnen
      * @return All data as a {@link JSONObject}
-     */
+     *
     public JSONObject getAsJSON() {
         return ConvertJson.convertMapToJson(getAsMap());
     }
+     */
 
-    /**
+    /*
      * Return a {@link JSONObject} as string for compatibility
      * @author Cristoph Kohnen
      * @return All data as a {@link JSONObject} converted to a string
-     */
+     *
     public String getAsJSONString() {
         return getAsJSON().toJSONString();
     }
+     */
 
-    /**
+
+    /*
      * Get Only Data from a specific timeframe
      * @author Cristoph Kohnen
      * @param firstTimestamp The start of the timeframe
      * @param lastTimestamp The end of the timeframe
      * @return All data between the two specified timestamps
-     */
+     *
     public SolarMap getInTimeframe(Date firstTimestamp, Date lastTimestamp) {
         Map<Date, List<Integer>> map = new HashMap<>();
         data.forEach((date, integers) -> {
@@ -529,6 +534,7 @@ public class SolarMap {
         });
         return new SolarMap(map);
     }
+    */
 
 
 
@@ -536,11 +542,10 @@ public class SolarMap {
     /**
      * Get on specific timestamp
      * @author Cristoph Kohnen
-     * @param timestamp The timestamp of which data should be retrieved
      * @return The values for the specified timestamp
      */
-    public List<Integer> get(Date timestamp) {
-        return data.get(timestamp);
+    public InverterMap get(Inverter inverter) {
+        return data.get(inverter);
     }
 
     /**
@@ -550,78 +555,26 @@ public class SolarMap {
      * @param value The index of the value that should be retrieved
      * @return The value on that timestamp
      */
-    public int getValue(Date timestamp, int value) {
-        return get(timestamp).get(value);
+    public int getValue(Inverter inverter, Date timestamp, String value) {
+        return get(inverter).get(timestamp).get(value);
     }
 
     /**
      * Whether or not a specific timestamp is included
      * @author Cristoph Kohnen
-     * @param timestamp The timestamp that should be checked
      * @return Whether or not the specified timestamp is included
      */
-    public boolean containsKey(Date timestamp) {
-        return data.containsKey(timestamp);
+    public boolean containsKey(Inverter inverter) {
+        return data.containsKey(inverter);
     }
 
     /**
      * Whether or not a specific timestamp is included
      * @author Cristoph Kohnen
-     * @param timestamp The timestamp that should be checked
      * @return Whether or not the specified timestamp is included
      */
-    public boolean includes(Date timestamp) {
-        return containsKey(timestamp);
-    }
-
-    /**
-     * Whether or not a day is included
-     * @author Cristoph Kohnen
-     * @param day The day that should be checked
-     * @return Whether or not the specified day is included
-     */
-    public boolean includesDay(Date day) {
-        return includes(GetStartOf.day(day));
-    }
-
-    /**
-     * Whether or not a day is included
-     * @author Cristoph Kohnen
-     * @param day The day that should be checked
-     * @return Whether or not the specified day is included
-     */
-    public boolean includesDay(LocalDate day) {
-        return includes(GetStartOf.day(day));
-    }
-
-    /**
-     * Whether or not a month is included
-     * @author Cristoph Kohnen
-     * @param month The month that should be checked
-     * @return Whether or not the specified month is included
-     */
-    public boolean includesMonth(YearMonth month) {
-        for (Date date : Entries.getDaysPerMonth(month)) {
-            if(includesDay(date)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * Whether or not a year is included
-     * @author Cristoph Kohnen
-     * @param year The year that should be checked
-     * @return Whether or not the specified year is included
-     */
-    public boolean includesYear(Year year) {
-        for (YearMonth month : Entries.getMonthsPerYear(year)) {
-            if (includesMonth(month)) {
-                return true;
-            }
-        }
-        return false;
+    public boolean includes(Inverter inverter) {
+        return containsKey(inverter);
     }
 
     /**
@@ -674,7 +627,7 @@ public class SolarMap {
      * @author Cristoph Kohnen
      * @return All values as a {@link Collection}
      */
-    public Collection<List<Integer>> values() {
+    public Collection<InverterMap> values() {
         return data.values();
     }
 
@@ -695,7 +648,7 @@ public class SolarMap {
      * Same as getAsMap().forEach()
      * @author Cristoph Kohnen
      */
-    public void forEach(BiConsumer<Date, List<Integer>> consumer) {
+    public void forEach(BiConsumer<Inverter, InverterMap> consumer) {
         data.forEach(consumer);
     }
 
