@@ -64,22 +64,46 @@ public class GetFromJS {
                         // Temperature, Index amount of strings * 2 + 2
                         values.put("Temperature", Integer.valueOf(strings.get(inverterStrings*2 + 2)));
                     }
+                } else if(inverter.function == 1) {
+                    values.put("SunExposure", Integer.valueOf(strings.get(0)));
+                    values.put("ModuleTemperature", Integer.valueOf(strings.get(1)));
+                    values.put("OutdoorTemperature", Integer.valueOf(strings.get(2)));
+                    values.put("WindSpeed", Integer.valueOf(strings.get(3)));
                 } else if(inverter.function == 2) {
-                    //global pac, Index 0
-                    values.put("ConsPAC", Integer.valueOf(strings.get(0)));
-                    // PDCs, Index string + 1
-                    for(int j = 0; j < inverterStrings; j++) {
-                        values.put(String.format("ConsPDC%s", (j + 1)), Integer.valueOf(strings.get(j + 1)));
-                    }
-                    // Yield for the day, Index amount of strings + 1
-                    values.put("ConsYieldDay", Integer.parseInt(strings.get(inverterStrings + 1)));
-                    // UDCs, Index amount of strings + 2 + string
-                    for(int j = 0; j < inverterStrings; j++) {
-                        values.put(String.format("ConsUDC%s", (j + 1)), Integer.valueOf(strings.get(inverterStrings) + 2 + j));
-                    }
-                    if (inverter.temperature) {
-                        // Temperature, Index amount of strings * 2 + 2
-                        values.put("Temperature", Integer.valueOf(strings.get(inverterStrings*2 + 2)));
+                    if (inverter.functionType == 0) {
+                        //total PAC, Index 0
+                        values.put("TotalPAC", Integer.valueOf(strings.get(0)));
+                        // PDCs, Index string + 1
+                        for(int j = 0; j < inverterStrings; j++) {
+                            values.put(String.format("TotalPDC%s", (j + 1)), Integer.valueOf(strings.get(j + 1)));
+                        }
+                        // Yield for the day, Index amount of strings + 1
+                        values.put("TotalYieldDay", Integer.parseInt(strings.get(inverterStrings + 1)));
+                        // UDCs, Index amount of strings + 2 + string
+                        for(int j = 0; j < inverterStrings; j++) {
+                            values.put(String.format("TotalUDC%s", (j + 1)), Integer.valueOf(strings.get(inverterStrings) + 2 + j));
+                        }
+                        if (inverter.temperature) {
+                            // Temperature, Index amount of strings * 2 + 2
+                            values.put("Temperature", Integer.valueOf(strings.get(inverterStrings*2 + 2)));
+                        }
+                    } else {
+                        //total ConsPAC, Index 0
+                        values.put("ConsPAC", Integer.valueOf(strings.get(0)));
+                        // PDCs, Index string + 1
+                        for(int j = 0; j < inverterStrings; j++) {
+                            values.put(String.format("ConsPDC%s", (j + 1)), Integer.valueOf(strings.get(j + 1)));
+                        }
+                        // Yield for the day, Index amount of strings + 1
+                        values.put("ConsYieldDay", Integer.parseInt(strings.get(inverterStrings + 1)));
+                        // UDCs, Index amount of strings + 2 + string
+                        for(int j = 0; j < inverterStrings; j++) {
+                            values.put(String.format("ConsUDC%s", (j + 1)), Integer.valueOf(strings.get(inverterStrings) + 2 + j));
+                        }
+                        if (inverter.temperature) {
+                            // Temperature, Index amount of strings * 2 + 2
+                            values.put("Temperature", Integer.valueOf(strings.get(inverterStrings*2 + 2)));
+                        }
                     }
                 } else {
                     Logger.warn("Unsupported inverter function!");
@@ -97,7 +121,16 @@ public class GetFromJS {
             if (line.startsWith("WRInfo") && !(StringUtils.substringBetween(line, "(" , ")") == null)) {
                 try {
                     List<String> values = Arrays.asList(StringUtils.substringBetween(line, "(", ")").split(","));
-                    inverters.add(new Inverter(values.get(0), values.get(4), Integer.parseInt(values.get(5)), Integer.parseInt(values.get(11)), values.get(12).equals("1")));
+                    String type = values.get(0);
+                    String identifier = values.get(4);
+                    int strings = Integer.parseInt(values.get(5));
+                    int function = Integer.parseInt(values.get(11));
+                    int functionType = 0;
+                    if(function == 2) {
+                        functionType = Integer.parseInt(values.get(values.size() - 1));
+                    }
+                    boolean temperature = values.get(12).equals("1");
+                    inverters.add(new Inverter(type, identifier, strings, function, functionType, temperature));
                 } catch (ArrayIndexOutOfBoundsException ignored) {
                     //Code will get here by multiple strings ("WRInfo[1][6]=new Array("String 1","String 2")"), can be ignored
                 }
