@@ -70,6 +70,7 @@ public class DayCustomizer extends JPanel {
         JPanel p = new JPanel();
         p.setLayout(new BoxLayout(p,BoxLayout.Y_AXIS));
 
+        /*
         JCheckBox b1 = new JCheckBox();
         JCheckBox b2 = new JCheckBox();
         JCheckBox b3 = new JCheckBox();
@@ -159,6 +160,8 @@ public class DayCustomizer extends JPanel {
             }
         });
         p.add(shaded);
+
+         */
 
         add(p,BorderLayout.WEST);
     }

@@ -1,5 +1,8 @@
 package me.meloni.SolarLogAPI;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Inverter {
     public String type;
     public String identifier;
@@ -15,5 +18,17 @@ public class Inverter {
         this.function = function;
         this.functionType = functionType;
         this.temperature = temperature;
+    }
+
+    @Override
+    public String toString() {
+        Map<String, String> map = new HashMap<>();
+        map.put("type", type);
+        map.put("identifier", identifier);
+        map.put("strings", String.valueOf(strings));
+        map.put("function", String.valueOf(function));
+        map.put("functionType", String.valueOf(functionType));
+        map.put("temperature", String.valueOf(temperature));
+        return map.toString();
     }
 }

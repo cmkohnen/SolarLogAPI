@@ -15,7 +15,8 @@ limitations under the License.
  */
 package me.meloni.SolarLogAPI;
 
-import me.meloni.SolarLogAPI.DatabaseInteraction.InfluxDbInteraction;
+import me.meloni.SolarLogAPI.DatabaseInteraction.InfluxDBInteraction;
+import me.meloni.SolarLogAPI.DatabaseInteraction.InfluxDatabase;
 import me.meloni.SolarLogAPI.FTPServerInteraction.GetFromFTPServer;
 import me.meloni.SolarLogAPI.FileInteraction.ReadFiles.GetFromEML;
 import me.meloni.SolarLogAPI.FileInteraction.ReadFiles.GetFromTar;
@@ -23,7 +24,6 @@ import me.meloni.SolarLogAPI.FileInteraction.ReadFiles.ReadFileObject;
 import me.meloni.SolarLogAPI.FileInteraction.Tools.FileObject;
 import me.meloni.SolarLogAPI.FileInteraction.WriteFiles.WriteFileObject;
 import me.meloni.SolarLogAPI.Handling.Logger;
-import org.influxdb.InfluxDB;
 import org.json.simple.JSONObject;
 
 import java.io.File;
@@ -145,7 +145,16 @@ public class SolarMap {
      * @param map The map from which all data should be added
      */
     public void addFromMap(Map<Inverter, InverterMap> map) {
-        map.forEach((date, integers) -> data.putIfAbsent(date, integers));
+        map.forEach((inverter, inverterMap) -> addFromInverterMap(inverterMap));
+    }
+
+    public void addFromInverterMap(InverterMap inverterMap) {
+        InverterMap newMap = data.get(inverterMap.getInverter());
+        if (newMap == null) newMap = new InverterMap(inverterMap.getInverter());
+        newMap.addFromInverterMap(inverterMap);
+        //Logger.log(newMap);
+        data.put(newMap.getInverter(), newMap);
+        //Logger.info(data);
     }
 
     /**
@@ -266,34 +275,6 @@ public class SolarMap {
     }
 
     /**
-     * Add from an {@link InfluxDB} using host, credentials and database
-     * @author Cristoph Kohnen
-     * @param server The host of the {@link InfluxDB}
-     * @param username Your username
-     * @param password Your password
-     * @param database The desired database
-     */
-    public void addFromInfluxDB(String server, String username, String password, String database) {
-        InfluxDbInteraction influxDbInteraction = new InfluxDbInteraction(server,username,password);
-        influxDbInteraction.setDatabase(database);
-        //addFromMap(influxDbInteraction.read());
-        influxDbInteraction.close();
-    }
-
-    /**
-     * Add from an {@link InfluxDB} using a connected instance
-     * @author Cristoph Kohnen
-     * @param influxDB The instance which is connected to
-     * @param database The desired database
-     */
-    public void addFromInfluxDB(InfluxDB influxDB, String database) {
-        InfluxDbInteraction influxDbInteraction = new InfluxDbInteraction(influxDB);
-        influxDbInteraction.setDatabase(database);
-        //addFromMap(influxDbInteraction.read());
-        influxDbInteraction.close();
-    }
-
-    /**
      * Add from an .eml file
      * @author Cristoph Kohnen
      * @param emlFile The file from which all data should be added
@@ -380,60 +361,18 @@ public class SolarMap {
         WriteFileObject.write(solarLogFile, getAsFileObject());
     }
 
-    /**
-     * Write to an {@link InfluxDB}
-     * @author Cristoph Kohnen
-     * @param server The url of the {@link InfluxDB}. This should include "http://" and port number
-     * @param username Your username
-     * @param password Your password
-     * @param database The desired database
-     * @param batchPointLimit The limit of {@link org.influxdb.dto.BatchPoints} that can be written to the {@link InfluxDB} in parallel
-     * @throws NullPointerException If something goes wrong with the connection to the database
-     */
-    public void writeToInfluxDBDataBase(String server, String username, String password, String database, int batchPointLimit) throws NullPointerException {
-        Logger.log(Logger.INFO_LEVEL_2 + String.format("Writing %s to InfluxDB %s", id.toString(), server));
-        InfluxDbInteraction influxDbInteraction = new InfluxDbInteraction(server, username, password);
-        influxDbInteraction.setBatchPointLimit(batchPointLimit);
-        influxDbInteraction.setDatabase(database);
-        //influxDbInteraction.write(this);
-        influxDbInteraction.close();
-    }
-
-    /**
-     * Write to an {@link InfluxDB} database
-     * @author Cristoph Kohnen
-     * @param influxDB The {@link InfluxDB} to which should be written. This should have the database already set
-     * @param batchPointLimit The limit of {@link org.influxdb.dto.BatchPoints} that can be written to the {@link InfluxDB} in parallel
-     * @throws NullPointerException If something goes wrong with the connection to the database
-     **/
-    public void writeToInfluxDBDataBase(InfluxDB influxDB, int batchPointLimit) throws NullPointerException {
+    public void writeToInfluxDB(String url, String token, String bucket, String org) {
         Logger.log(Logger.INFO_LEVEL_2 + String.format("Writing %s to InfluxDB", id.toString()));
-        InfluxDbInteraction influxDbInteraction = new InfluxDbInteraction(influxDB);
-        influxDbInteraction.setBatchPointLimit(batchPointLimit);
-        //influxDbInteraction.write(this);
-        influxDbInteraction.close();
+        InfluxDBInteraction influxDbInteraction = new InfluxDBInteraction(token, bucket, org, url);
+        influxDbInteraction.write(this);
     }
 
-    /*
-     * Write SQL query to file
-     * @author Cristoph Kohnen
-     * @param database The database to which should be written
-     * @param table The table to which should be written
-     * @param key The key which should be used
-     * @param value1 The name of the first value
-     * @param value2 The name of the second value
-     * @param value3 The name of the third value
-     * @param value4 The name of the fourth file
-     * @param value5 The name of the fifth file
-     * @return The file the query has been written to
-     * @throws IOException If the process is not permitted to write into the working directory
-
-    public File writeSQLQueryToFile(String database, String table, String key, String value1, String value2, String value3, String value4, String value5) throws IOException {
-        Logger.log(Logger.INFO_LEVEL_2 + String.format("Writing SQL query to file for %s", id.toString()));
-        return SQLQuery.getWriteQuery(database,table,key,value1,value2,value3,value4,value5,this);
+    public void writeToInfluxDB(InfluxDatabase influxDB) {
+        Logger.log(Logger.INFO_LEVEL_2 + String.format("Writing %s to InfluxDB", id.toString()));
+        InfluxDBInteraction influxDbInteraction = new InfluxDBInteraction(influxDB.token, influxDB.bucket, influxDB.org, influxDB.url);
+        influxDbInteraction.write(this);
     }
 
-     */
 
     /**
      * Write to an MySQL database

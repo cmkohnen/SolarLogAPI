@@ -16,6 +16,7 @@ limitations under the License.
 package me.meloni.SolarLogAPI.BasicGUI;
 
 import me.meloni.SolarLogAPI.DataConversion.Entries;
+import me.meloni.SolarLogAPI.Handling.Logger;
 
 import java.time.Year;
 import java.time.YearMonth;
@@ -39,33 +40,23 @@ public class GetGraphData {
      */
     public static List<List<Double>> getDayGraphData(Date day, Map<Date, Map<String, Integer>> data) {
         List<Date> timestamps = Entries.getEntriesPerDay(day);
-
+        List<String> rows = new ArrayList<>();
+        data.get(timestamps.get(0)).forEach((s, integer) -> rows.add(s));
         List<List<Double>> values = new ArrayList<>();
 
-        for (Date timestamp : timestamps) {
-            try {
-                List<Double> currentData = new ArrayList<>();
-                int consPac = data.get(timestamp).get(0);
-                int consYieldDay = data.get(timestamp).get(1);
-                int Pac = data.get(timestamp).get(2);
-                int yieldDay = data.get(timestamp).get(3);
-                int ownConsumption = data.get(timestamp).get(4);
-
-                currentData.add((double) consPac);
-                currentData.add((double) consYieldDay);
-                currentData.add((double) Pac);
-                currentData.add((double) yieldDay);
-                currentData.add((double) ownConsumption);
-                values.add(currentData);
-            } catch (NullPointerException ignored) {
-                List<Double> currentData = new ArrayList<>();
-                currentData.add((double) 0);
-                currentData.add((double) 0);
-                currentData.add((double) 0);
-                currentData.add((double) 0);
-                currentData.add((double) 0);
-                values.add(currentData);
+        for (String row : rows) {
+            List<Double> rowData = new ArrayList<>();
+            for (Date timestamp : timestamps) {
+                try {
+                    int value = data.get(timestamp).get(row);
+                    rowData.add((double) value);
+                } catch (NullPointerException e) {
+                    int value = 0;
+                    rowData.add((double) value);
+                }
             }
+            Logger.info(rowData);
+            values.add(rowData);
         }
         return values;
     }

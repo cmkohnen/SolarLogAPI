@@ -240,7 +240,7 @@ public class BasicSolarMapCustomizer {
                 }
                 if(influxDatabases.size() > 0) {
                     for (InfluxDatabase influxDatabase : influxDatabases) {
-                        map.addFromInfluxDB(influxDatabase.getInfluxDB(), influxDatabase.getDatabase());
+                        //map.addFromInfluxDB(influxDatabase.getInfluxDB(), influxDatabase.getDatabase());
                     }
                 }
                 if(jsFiles.size() > 0) {
@@ -286,7 +286,7 @@ public class BasicSolarMapCustomizer {
         if(influxDatabases.size() > 0) {
             files.add(new JLabel("InfluxDBs: "));
             for (InfluxDatabase influxDatabase : influxDatabases) {
-                files.add(new JLabel(influxDatabase.getInfluxDB().version()));
+                files.add(new JLabel(influxDatabase.bucket));
             }
         }
         if(jsFiles.size() > 0) {

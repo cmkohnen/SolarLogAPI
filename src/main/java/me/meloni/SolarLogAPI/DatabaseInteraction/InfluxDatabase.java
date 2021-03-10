@@ -15,46 +15,22 @@ limitations under the License.
  */
 package me.meloni.SolarLogAPI.DatabaseInteraction;
 
-import org.influxdb.InfluxDB;
 
 /**
- * This is an interface to store information about a connected {@link InfluxDB}
+ * This is an interface to store information about an InfluxDB
  * @author Christoph Kohnen
  * @since 3.2.0
  */
 public class InfluxDatabase {
-    /**
-     * The {@link InfluxDB} to which should be connected
-     */
-    private final InfluxDB influxDB;
-    /**
-     * The desired database as string
-     */
-    private final String database;
+    public final String url;
+    public final String token;
+    public final String bucket;
+    public final String org;
 
-    /**
-     * Instantiate by providing an {@link InfluxDB} and database as string
-     * @param influxDB The DB which should be connected to
-     * @param database The desired database which should be used
-     */
-    public InfluxDatabase(InfluxDB influxDB, String database) {
-        this.influxDB = influxDB;
-        this.database = database;
-    }
-
-    /**
-     * Get the desired database as String
-     * @return The desired database
-     */
-    public String getDatabase() {
-        return database;
-    }
-
-    /**
-     * Get the {@link InfluxDB}
-     * @return The {@link InfluxDB}
-     */
-    public InfluxDB getInfluxDB() {
-        return influxDB;
+    public InfluxDatabase(String url, String token, String bucket, String org) {
+        this.url = url;
+        this.token = token;
+        this.bucket = bucket;
+        this.org = org;
     }
 }

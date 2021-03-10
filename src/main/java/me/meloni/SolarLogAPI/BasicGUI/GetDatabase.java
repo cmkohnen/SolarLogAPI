@@ -17,13 +17,11 @@ package me.meloni.SolarLogAPI.BasicGUI;
 
 import me.meloni.SolarLogAPI.DatabaseInteraction.InfluxDatabase;
 import me.meloni.SolarLogAPI.DatabaseInteraction.SQLDatabase;
-import org.influxdb.InfluxDB;
-import org.influxdb.InfluxDBFactory;
 
 import javax.swing.*;
 
 /**
- * This class provides an interactive way to get an {@link InfluxDB} or SQL database.
+ * This class provides an interactive way to get an InfluxDB or SQL database.
  * @author Christoph Kohnen
  * @since 3.0.5
  */
@@ -34,16 +32,10 @@ public class GetDatabase {
      */
     public static InfluxDatabase influxDatabase() {
         String server = JOptionPane.showInputDialog("Server?");
-        String username = JOptionPane.showInputDialog("User?");
-        String password = JOptionPane.showInputDialog("Password?");
-        try {
-            InfluxDB db = InfluxDBFactory.connect(server, username, password);
-            String database = JOptionPane.showInputDialog("Database?");
-            db.setDatabase(database);
-            return new InfluxDatabase(db, database);
-        } catch (IllegalArgumentException e) {
-            throw new NullPointerException("No such database");
-        }
+        String token = JOptionPane.showInputDialog("Token?");
+        String bucket = JOptionPane.showInputDialog("Bucket?");
+        String org = JOptionPane.showInputDialog("Org?");
+        return new InfluxDatabase(server,token,bucket,org);
     }
 
     /**
