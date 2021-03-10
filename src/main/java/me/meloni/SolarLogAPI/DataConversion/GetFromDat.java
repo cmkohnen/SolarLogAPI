@@ -34,7 +34,7 @@ import java.util.*;
  * @since 0.0.1
  */
 @SuppressWarnings("DuplicatedCode")
-public class GetData  {
+public class GetFromDat {
     /**
      * The format in which the timestamp is stored inside the .dat files
      */
@@ -84,6 +84,7 @@ public class GetData  {
         return data;
     }
 
+    //TODO remove due to relocation
     /**
      * Get all data from a .js file in the {@link Map}<{@link Date}, {@link List}<{@link Integer}>> format. Such file is usually found on a FTP-Backup server
      * @param file The file from which the data should be extracted

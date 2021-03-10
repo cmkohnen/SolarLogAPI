@@ -180,7 +180,7 @@ public class SolarMap {
     public void addFromDatFile(File datFile) throws IOException {
         if(datFile.exists()) {
             Logger.log(Logger.INFO_LEVEL_2 + String.format("Adding to %s from .dat file %s", id.toString(), datFile.getName()));
-            addFromMap(GetData.getAsMapFromDatFile(datFile));
+            addFromMap(GetFromDat.getAsMapFromDatFile(datFile));
         }
     }
 
@@ -337,7 +337,7 @@ public class SolarMap {
      * @throws IOException if provided a bad file
      */
     public void addFromJSFile(File jsFile) throws IOException {
-        addFromMap(GetData.getAsMapFromJSFile(jsFile));
+        addFromMap(GetFromDat.getAsMapFromJSFile(jsFile));
     }
 
     /**
