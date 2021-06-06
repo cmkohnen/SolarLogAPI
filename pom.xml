@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.github.chaosmelone9</groupId>
+    <groupId>com.github.chaosmelone9.solarlogapi</groupId>
     <artifactId>SolarLogAPI</artifactId>
     <packaging>jar</packaging>
     <version>5.0.0-Snapshot1</version>
@@ -50,7 +50,7 @@
                     <archive>
                         <manifest>
                             <mainClass>
-                                com.github.chaosmelone9.runtime.Main
+                                com.github.chaosmelone9.solarlogapi.runtime.Main
                             </mainClass>
                         </manifest>
                     </archive>
